@@ -100,7 +100,7 @@ export default function Navbar() {
           {/* <div className="w-7 h-7 rounded-lg bg-emerald-700 flex items-center justify-center">
             <span className="text-white text-xs font-bold">R</span>
           </div> */}
-          <Logo className="w-7 h-7 text-emerald-700" />
+          <Logo className="w-7 h-7" />
           <span className="font-serif text-lg text-stone-900 group-hover:text-emerald-700 transition-colors">
             RéviseDiet
           </span>
@@ -136,7 +136,7 @@ export default function Navbar() {
 
                 {/* Dropdown */}
                 {isOpen && (
-                  <div className="absolute top-[calc(100%+8px)] left-0 bg-white border border-stone-100 rounded-2xl shadow-xl shadow-stone-100 p-2 min-w-[260px] z-50">
+                  <div className="absolute top-[calc(100%+8px)] left-0 bg-white border border-stone-100 rounded-2xl shadow-sm shadow-stone-100 p-2 min-w-[260px] z-50">
                     {item.sections.map((section, si) => (
                       <div key={section.title}>
                         {si > 0 && <div className="h-px bg-stone-100 my-2" />}

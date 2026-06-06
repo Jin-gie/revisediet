@@ -17,7 +17,7 @@ const SECTIONS = [
     description:
       "Des profils patients générés aléatoirement. Tu calcules, tu construis, tu justifies. L'app te dit ce qui cloche.",
     cta: "Lancer un cas →",
-    ctaHref: "/s-entrainer/cas/aleatoire",
+    ctaHref: "/cas/aleatoire",
     ctaStyle: "bg-emerald-700 text-white hover:bg-emerald-800",
     items: [
       { emoji: "🎯", label: "Cas cliniques interactifs", href: "/cas" },
@@ -163,17 +163,17 @@ export default function HomePage() {
         </p>
         <div className="flex items-center justify-center gap-3 flex-wrap animate-fade-up animation-delay-200">
           <Link
-            href="/s-entrainer/cas/aleatoire"
+            href="/cas/aleatoire"
             className="bg-emerald-700 text-white font-medium px-6 py-3 rounded-xl hover:bg-emerald-800 transition-colors text-sm"
           >
             Lancer un cas clinique →
           </Link>
-          <Link
+          {/* <Link
             href="/apprendre"
             className="bg-white border border-stone-200 text-stone-700 font-medium px-6 py-3 rounded-xl hover:border-stone-300 hover:bg-stone-50 transition-all text-sm"
           >
             Explorer les fiches
-          </Link>
+          </Link> */}
         </div>
       </section>
 
@@ -192,9 +192,9 @@ export default function HomePage() {
       <section className="max-w-4xl mx-auto px-6 mt-16">
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-serif text-2xl text-stone-900">Accès rapide aux fiches</h2>
-          <Link href="/apprendre" className="text-sm text-emerald-700 hover:underline">
+          {/* <Link href="/apprendre" className="text-sm text-emerald-700 hover:underline">
             Voir tout →
-          </Link>
+          </Link> */}
         </div>
         <div className="grid md:grid-cols-2 gap-8">
           <FicheGrid title="Populations" items={POPULATIONS} />
@@ -220,7 +220,7 @@ export default function HomePage() {
               Femme, 72 ans, IRC stade 3, diabétique de type 2 — calcule ses besoins et construis sa ration.
             </p>
             <Link
-              href="/s-entrainer/cas/du-jour"
+              href="/cas/du-jour"
               className="inline-flex items-center gap-2 bg-white text-emerald-800 font-medium text-sm px-5 py-2.5 rounded-xl hover:bg-emerald-50 transition-colors"
             >
               Commencer le cas du jour →
@@ -233,9 +233,9 @@ export default function HomePage() {
       <section className="max-w-4xl mx-auto px-6 mt-16">
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-serif text-2xl text-stone-900">Outils</h2>
-          <Link href="/outils" className="text-sm text-emerald-700 hover:underline">
+          {/* <Link href="/outils" className="text-sm text-emerald-700 hover:underline">
             Voir tout →
-          </Link>
+          </Link> */}
         </div>
         <div className="grid sm:grid-cols-3 gap-4">
           {TOOLS.map((tool) => (

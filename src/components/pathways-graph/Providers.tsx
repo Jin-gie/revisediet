@@ -63,7 +63,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   
   return (
     <PathwayContext.Provider value={{active, toggle}}>
-      <SidebarProvider>
+      <SidebarProvider className="border-r-0">
         {/* Sidebar */}
         <Sidebar className="border-r-0">
           <div style={{

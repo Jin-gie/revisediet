@@ -43,7 +43,7 @@ export const POPULATIONS: Population[] = [
     description: "Homme ou femme de 18 à 59 ans sans pathologie particulière.",
     tags: ["Référence", "18–59 ans"],
     aet: {
-      description: "L'AET varie selon le sexe, l'âge et le NAP. Valeurs pour NAP modéré (1,6).",
+      description: "L'AET varie selon le sexe, l'âge et le NAP. Valeurs pour NAP modéré (1,63).",
       valeurs: [
         { profil: "Femme (NAP 1,4)", kcal: "1 800 kcal" },
         { profil: "Femme (NAP 1,6)", kcal: "2 000 kcal" },

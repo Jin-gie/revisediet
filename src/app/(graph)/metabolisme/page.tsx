@@ -6,7 +6,7 @@ import { Providers } from "@/components/pathways-graph/Providers";
 
 export default function Page() {
   return (
-    <div className="h-full">
+    <div className="h-full bg-[#020817]">
       <Providers>
         <Flow />
       </Providers>

@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getPopulation, POPULATIONS } from "@/data/populations";
+import { getPopulation, Population, POPULATIONS } from "@/data/populations";
+import { useState } from "react";
+import AETCalculatrice from "@/components/AETCalculatrice";
+import { kcalToKj } from "@/lib/calculs";
 
 export async function generateStaticParams() {
   return POPULATIONS.map((p) => ({ slug: p.slug }));
@@ -18,7 +21,7 @@ function AETTable({ valeurs }: { valeurs: { profil: string; kcal: string }[] }) 
       ))}
     </div>
   );
-}
+};
 
 // ── Donut macronutriments (SVG pur) ──────────────────────────────────────────
 function MacroDonut({ macros }: { macros: { label: string; percent: number; color: string }[] }) {
@@ -112,6 +115,11 @@ export default async function PopulationPage({
   const pop = getPopulation(slug);
   if (!pop) notFound();
 
+  const refFemme =
+    pop.aet.valeurs.find((v) => v.profil.includes("Femme") && v.profil.includes("1,6"))?.kcal ?? "—";
+  const refHomme =
+    pop.aet.valeurs.find((v) => v.profil.includes("Homme") && v.profil.includes("1,6"))?.kcal ?? "—";
+
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
       {/* Fil d'Ariane */}
@@ -145,28 +153,45 @@ export default async function PopulationPage({
         {/* AET */}
         <Section title="Apport énergétique total (AET)" emoji="🔥">
           <p className="text-sm text-stone-400 mb-4">{pop.aet.description}</p>
-          <AETTable valeurs={pop.aet.valeurs} />
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-3">
+              {[{ label: "Femme", val: refFemme }, { label: "Homme", val: refHomme }].map((r) => {
+                const kcal = parseInt(r.val.replace(/\s/g, ""));
+                const kj = isNaN(kcal) ? null : kcalToKj(kcal);
+                return (
+                  <div key={r.label} className="bg-stone-50 rounded-xl p-4 text-center border border-stone-100">
+                    <p className="text-xs text-stone-400 mb-1">NAP 1,63 — {r.label}</p>
+                    <p className="font-serif text-2xl text-emerald-700">{r.val}</p>
+                    {kj && <p className="text-xs text-stone-400 mt-0.5">{kj.toLocaleString("fr-FR")} kJ</p>}
+                  </div>
+                );
+              })}
+            </div>
+            <AETCalculatrice />
+          </div>
         </Section>
 
         {/* Macronutriments */}
         <Section title="Répartition des macronutriments" emoji="📊">
-          <MacroDonut macros={pop.macros} />
-          <ul className="mt-6 space-y-1.5">
-            {pop.macrosNotes.map((note) => (
-              <li key={note} className="flex items-start gap-2 text-sm text-stone-500">
-                <span className="text-emerald-400 mt-0.5">•</span>
-                {note}
-              </li>
-            ))}
-          </ul>
+          <div className="flex flex-col md:flex-row md:justify-between">
+            <MacroDonut macros={pop.macros} />
+            <ul className="mt-6 space-y-1.5">
+              {pop.macrosNotes.map((note) => (
+                <li key={note} className="flex items-start gap-2 text-sm text-stone-500">
+                  <span className="text-emerald-400 mt-0.5">•</span>
+                  {note}
+                </li>
+              ))}
+            </ul>
+          </div>
         </Section>
 
         {/* Micronutriments */}
         <Section title="Micronutriments clés" emoji="💊">
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {pop.micronutriments.map((m) => (
               <div key={m.nutrient} className="border border-stone-100 rounded-xl p-4">
-                <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
+                <div className="flex flex-wrap items-start gap-2 mb-2">
                   <h3 className="font-medium text-stone-800">{m.nutrient}</h3>
                   <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg tabular-nums">
                     {m.valeur}
