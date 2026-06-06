@@ -48,27 +48,27 @@ export default function RootLayout({
             <div>
               <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">S'entraîner</p>
               <ul className="space-y-2 text-sm text-stone-500">
-                <li><a href="/s-entrainer/cas/du-jour" className="hover:text-emerald-700 transition-colors">Cas du jour</a></li>
-                <li><a href="/s-entrainer/cas" className="hover:text-emerald-700 transition-colors">Catalogue de cas</a></li>
-                <li><a href="/s-entrainer/rations" className="hover:text-emerald-700 transition-colors">Atelier rations</a></li>
-                <li><a href="/s-entrainer/quiz" className="hover:text-emerald-700 transition-colors">Quiz rapide</a></li>
+                <li><a href="/cas/du-jour" className="hover:text-emerald-700 transition-colors">Cas du jour</a></li>
+                <li><a href="/cas" className="hover:text-emerald-700 transition-colors">Catalogue de cas</a></li>
+                <li><a href="/rations" className="hover:text-emerald-700 transition-colors">Atelier rations</a></li>
+                <li><a href="/quiz" className="hover:text-emerald-700 transition-colors">Quiz rapide</a></li>
               </ul>
             </div>
             <div>
               <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Apprendre</p>
               <ul className="space-y-2 text-sm text-stone-500">
-                <li><a href="/apprendre/populations" className="hover:text-emerald-700 transition-colors">Fiches populations</a></li>
-                <li><a href="/apprendre/pathologies" className="hover:text-emerald-700 transition-colors">Fiches pathologies</a></li>
-                <li><a href="/apprendre/flashcards" className="hover:text-emerald-700 transition-colors">Flashcards</a></li>
-                <li><a href="/apprendre/glossaire" className="hover:text-emerald-700 transition-colors">Glossaire</a></li>
+                <li><a href="/populations" className="hover:text-emerald-700 transition-colors">Fiches populations</a></li>
+                <li><a href="/pathologies" className="hover:text-emerald-700 transition-colors">Fiches pathologies</a></li>
+                <li><a href="/flashcards" className="hover:text-emerald-700 transition-colors">Flashcards</a></li>
+                <li><a href="/glossaire" className="hover:text-emerald-700 transition-colors">Glossaire</a></li>
               </ul>
             </div>
             <div>
               <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Outils</p>
               <ul className="space-y-2 text-sm text-stone-500">
-                <li><a href="/outils/calculateur" className="hover:text-emerald-700 transition-colors">Calculateur</a></li>
-                <li><a href="/outils/ciqual" className="hover:text-emerald-700 transition-colors">Table Ciqual</a></li>
-                <li><a href="/outils/metabolisme" className="hover:text-emerald-700 transition-colors">Voies métaboliques</a></li>
+                <li><a href="/calculateur" className="hover:text-emerald-700 transition-colors">Calculateur</a></li>
+                <li><a href="/ciqual" className="hover:text-emerald-700 transition-colors">Table Ciqual</a></li>
+                <li><a href="/metabolisme" className="hover:text-emerald-700 transition-colors">Voies métaboliques</a></li>
               </ul>
             </div>
           </div>

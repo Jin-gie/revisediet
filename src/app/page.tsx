@@ -20,10 +20,10 @@ const SECTIONS = [
     ctaHref: "/s-entrainer/cas/aleatoire",
     ctaStyle: "bg-emerald-700 text-white hover:bg-emerald-800",
     items: [
-      { emoji: "🎯", label: "Cas cliniques interactifs", href: "/s-entrainer/cas" },
-      { emoji: "🍽️", label: "Atelier rations", href: "/s-entrainer/rations" },
-      { emoji: "🔍", label: "Ration à corriger", href: "/s-entrainer/rations/corriger" },
-      { emoji: "⚡", label: "Quiz rapide", href: "/s-entrainer/quiz" },
+      { emoji: "🎯", label: "Cas cliniques interactifs", href: "/cas" },
+      { emoji: "🍽️", label: "Atelier rations", href: "/rations" },
+      { emoji: "🔍", label: "Ration à corriger", href: "/rations/corriger" },
+      { emoji: "⚡", label: "Quiz rapide", href: "/quiz" },
     ],
   },
   {
@@ -36,36 +36,36 @@ const SECTIONS = [
     ctaHref: "/apprendre",
     ctaStyle: "bg-stone-900 text-white hover:bg-stone-800",
     items: [
-      { emoji: "👥", label: "Fiches populations", href: "/apprendre/populations" },
-      { emoji: "🩺", label: "Fiches pathologies", href: "/apprendre/pathologies" },
-      { emoji: "🃏", label: "Flashcards ANC & valeurs", href: "/apprendre/flashcards" },
-      { emoji: "📐", label: "Références & formules", href: "/apprendre/references" },
+      { emoji: "👥", label: "Fiches populations", href: "/populations" },
+      { emoji: "🩺", label: "Fiches pathologies", href: "/pathologies" },
+      { emoji: "🃏", label: "Flashcards ANC & valeurs", href: "/flashcards" },
+      { emoji: "📐", label: "Références & formules", href: "/references" },
     ],
   },
 ];
 
 const POPULATIONS = [
-  { emoji: "🧑", label: "Adulte sain", href: "/apprendre/populations/adulte" },
-  { emoji: "👶", label: "Enfant / ado", href: "/apprendre/populations/enfant" },
-  { emoji: "🤰", label: "Femme enceinte", href: "/apprendre/populations/grossesse" },
-  { emoji: "👴", label: "Personne âgée", href: "/apprendre/populations/personne-agee" },
-  { emoji: "🏃", label: "Sportif", href: "/apprendre/populations/sportif" },
-  { emoji: "🌿", label: "Végétarien / vegan", href: "/apprendre/populations/vegetarien" },
+  { emoji: "🧑", label: "Adulte sain", href: "/populations/adulte" },
+  { emoji: "👶", label: "Enfant / ado", href: "/populations/enfant" },
+  { emoji: "🤰", label: "Femme enceinte", href: "/populations/grossesse" },
+  { emoji: "👴", label: "Personne âgée", href: "/populations/personne-agee" },
+  { emoji: "🏃", label: "Sportif", href: "/populations/sportif" },
+  { emoji: "🌿", label: "Végétarien / vegan", href: "/populations/vegetarien" },
 ];
 
 const PATHOLOGIES = [
-  { emoji: "🩸", label: "Diabète (1 & 2)", href: "/apprendre/pathologies/diabete" },
-  { emoji: "⚖️", label: "Obésité / surpoids", href: "/apprendre/pathologies/obesite" },
-  { emoji: "❤️", label: "MCV", href: "/apprendre/pathologies/mcv" },
-  { emoji: "🫘", label: "IRC / maladies rénales", href: "/apprendre/pathologies/irc" },
-  { emoji: "📉", label: "Dénutrition", href: "/apprendre/pathologies/denutrition" },
-  { emoji: "🔄", label: "TCA", href: "/apprendre/pathologies/tca" },
+  { emoji: "🩸", label: "Diabète (1 & 2)", href: "/pathologies/diabete" },
+  { emoji: "⚖️", label: "Obésité / surpoids", href: "/pathologies/obesite" },
+  { emoji: "❤️", label: "MCV", href: "/pathologies/mcv" },
+  { emoji: "🫘", label: "IRC / maladies rénales", href: "/pathologies/irc" },
+  { emoji: "📉", label: "Dénutrition", href: "/pathologies/denutrition" },
+  { emoji: "🔄", label: "TCA", href: "/pathologies/tca" },
 ];
 
 const TOOLS = [
-  { emoji: "🧮", label: "Calculateur de besoins", sub: "AET, IMC, NAP", href: "/outils/calculateur" },
-  { emoji: "🥦", label: "Table Ciqual", sub: "Valeurs nutritionnelles", href: "/outils/ciqual" },
-  { emoji: "🔬", label: "Voies métaboliques", sub: "Visualisation React Flow", href: "/outils/metabolisme" },
+  { emoji: "🧮", label: "Calculateur de besoins", sub: "AET, IMC, NAP", href: "/calculateur" },
+  { emoji: "🥦", label: "Table Ciqual", sub: "Valeurs nutritionnelles", href: "/ciqual" },
+  { emoji: "🔬", label: "Voies métaboliques", sub: "Visualisation React Flow", href: "/metabolisme" },
 ];
 
 // ── Composants ────────────────────────────────────────────────────────────────
