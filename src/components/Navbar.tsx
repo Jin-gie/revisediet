@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
+import Logo from "@/assets/logo.svg";
 
 const NAV_ITEMS = [
   {
@@ -96,9 +97,10 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-7 h-7 rounded-lg bg-emerald-700 flex items-center justify-center">
+          {/* <div className="w-7 h-7 rounded-lg bg-emerald-700 flex items-center justify-center">
             <span className="text-white text-xs font-bold">R</span>
-          </div>
+          </div> */}
+          <Logo className="w-7 h-7 text-emerald-700" />
           <span className="font-serif text-lg text-stone-900 group-hover:text-emerald-700 transition-colors">
             RéviseDiet
           </span>
