@@ -154,9 +154,9 @@ export default function HomePage() {
           <span>🌱</span> Outil de révision BTS Diététique
         </div>
         <h1 className="font-serif text-5xl md:text-6xl leading-[1.08] text-stone-900 mb-5 animate-fade-up">
-          Révise la nutrition
-          <br />
-          <em className="text-emerald-700">comme en stage</em>
+          Révise pour le BTS diététique
+          {/* <br />
+          <em className="text-emerald-700">comme en stage</em> */}
         </h1>
         <p className="text-base text-stone-400 max-w-md mx-auto leading-relaxed mb-8 animate-fade-up animation-delay-100">
           Cas cliniques interactifs, fiches populations & pathologies, atelier rations. Tout ce qu'il faut pour le BTS — sans s'ennuyer.
