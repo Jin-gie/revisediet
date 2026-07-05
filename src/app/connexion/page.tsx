@@ -3,8 +3,10 @@
 import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
+import { Suspense } from "react"
 
-export default function ConnexionPage() {
+
+function ConnexionForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get("redirect") || "/suivi"
@@ -97,5 +99,13 @@ export default function ConnexionPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ConnexionPage() {
+  return (
+    <Suspense fallback={<div className="min-h-[70vh]" />}>
+      <ConnexionForm />
+    </Suspense>
   )
 }
