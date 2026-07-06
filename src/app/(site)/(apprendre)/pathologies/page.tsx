@@ -106,9 +106,9 @@ export default function PathologiesPage() {
                 </div>
                 <p className="text-xs text-stone-400 mb-3 leading-relaxed line-clamp-2">{patho.description}</p>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md ${GRAVITE_STYLE[patho.gravite]}`}>
+                  {/* <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md ${GRAVITE_STYLE[patho.gravite]}`}>
                     ● {patho.gravite}
-                  </span>
+                  </span> */}
                   {patho.tags.map((tag) => (
                     <span key={tag} className="text-[10px] font-medium bg-stone-50 text-stone-500 px-2 py-0.5 rounded-md border border-stone-100">
                       {tag}

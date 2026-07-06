@@ -6,8 +6,6 @@ export async function generateStaticParams() {
   return PATHOLOGIES.map((p) => ({ slug: p.slug }))
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
 const GRAVITE_STYLE: Record<string, string> = {
   "faible":      "bg-emerald-50 text-emerald-700 border-emerald-100",
   "modérée":     "bg-amber-50 text-amber-700 border-amber-100",
@@ -15,9 +13,7 @@ const GRAVITE_STYLE: Record<string, string> = {
   "très élevée": "bg-red-50 text-red-700 border-red-100",
 }
 
-// ── Composants ─────────────────────────────────────────────────────────────────
-
-function Section({ id, title, emoji, children }: { id?:string;title: string; emoji: string; children: React.ReactNode }) {
+function Section({ id, title, emoji, children }: { id?: string; title: string; emoji: string; children: React.ReactNode }) {
   return (
     <div id={id} className="bg-white border border-stone-100 rounded-2xl p-6 scroll-mt-20">
       <h2 className="font-serif text-xl text-stone-900 mb-5 flex items-center gap-2">
@@ -37,21 +33,11 @@ function Bullet({ children }: { children: React.ReactNode }) {
   )
 }
 
-function Alert({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-100 rounded-xl px-4 py-3 text-sm text-amber-800">
-      <span className="flex-shrink-0 mt-0.5">⚠️</span>
-      <span>{children}</span>
-    </div>
-  )
-}
-
-// ── Résumé rapide ──────────────────────────────────────────────────────────────
+// ── Résumé ────────────────────────────────────────────────────────────────────
 
 function ResumeCard({ patho }: { patho: Pathologie }) {
   return (
     <div className="bg-white border border-stone-100 rounded-2xl overflow-hidden">
-      {/* Header */}
       <div className="bg-stone-50 border-b border-stone-100 px-6 py-5 flex items-start gap-4">
         <span className="text-4xl flex-shrink-0">{patho.emoji}</span>
         <div className="min-w-0">
@@ -61,21 +47,22 @@ function ResumeCard({ patho }: { patho: Pathologie }) {
                 {tag}
               </span>
             ))}
-            <span className={`text-[10px] font-semibold px-2.5 py-0.5 rounded-full border ${GRAVITE_STYLE[patho.gravite]}`}>
-              Gravité {patho.gravite}
-            </span>
+            {patho.gravite && (
+              <span className={`text-[10px] font-semibold px-2.5 py-0.5 rounded-full border ${GRAVITE_STYLE[patho.gravite]}`}>
+                Gravité {patho.gravite}
+              </span>
+            )}
           </div>
           <h1 className="font-serif text-3xl text-stone-900">{patho.label}</h1>
         </div>
       </div>
 
-      {/* Résumé en grille */}
       <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-stone-100">
         {[
-          { label: "Définition", value: patho.resume.definition },
-          { label: "Mécanisme clé", value: patho.resume.mecanismeCle },
-          { label: "Population cible", value: patho.resume.populationCible },
-          { label: "Prévalence", value: patho.resume.prevalence },
+          { label: "Définition",     value: patho.resume.definition },
+          { label: "Mécanisme clé",  value: patho.resume.mecanismeCle },
+          { label: "Épidémiologie",  value: patho.resume.epidemiologie },
+          { label: "Étiologie",      value: patho.resume.etiologie },
         ].map((item) => (
           <div key={item.label} className="px-6 py-4">
             <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1.5">{item.label}</p>
@@ -93,7 +80,9 @@ function PhysiopathologieSection({ patho }: { patho: Pathologie }) {
   const { physiopathologie } = patho
   return (
     <Section id="physiopathologie" title="Physiopathologie" emoji="🔬">
-      <p className="text-sm text-stone-400 leading-relaxed mb-6">{physiopathologie.introduction}</p>
+      {physiopathologie.introduction && (
+        <p className="text-sm text-stone-400 leading-relaxed mb-6">{physiopathologie.introduction}</p>
+      )}
 
       {physiopathologie.subtypes ? (
         <div className="space-y-6">
@@ -104,56 +93,45 @@ function PhysiopathologieSection({ patho }: { patho: Pathologie }) {
               </div>
               <div className="px-5 py-4">
                 <p className="text-sm text-stone-500 leading-relaxed mb-4">{sub.description}</p>
-                <div className="space-y-3">
-                  {sub.etapes.map((etape) => (
-                    <div key={etape.numero} className="flex gap-3">
-                      <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
-                        {etape.numero}
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-stone-800 mb-0.5">{etape.titre}</p>
-                        <p className="text-xs text-stone-500 leading-relaxed">{etape.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <EtapesList etapes={sub.etapes} />
               </div>
             </div>
           ))}
         </div>
       ) : physiopathologie.etapes ? (
-        <div className="space-y-3">
-          {physiopathologie.etapes.map((etape) => (
-            <div key={etape.numero} className="flex gap-3">
-              <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
-                {etape.numero}
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-stone-800 mb-0.5">{etape.titre}</p>
-                <p className="text-xs text-stone-500 leading-relaxed">{etape.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <EtapesList etapes={physiopathologie.etapes} />
       ) : null}
     </Section>
   )
 }
 
+function EtapesList({ etapes }: { etapes: { numero: number; titre: string; description: string }[] }) {
+  return (
+    <div className="space-y-3">
+      {etapes.map((etape) => (
+        <div key={etape.numero} className="flex gap-3">
+          <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+            {etape.numero}
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-stone-800 mb-0.5">{etape.titre}</p>
+            <p className="text-xs text-stone-500 leading-relaxed">{etape.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
-export default async function PathologiePage({ 
-  params 
-}: { 
-  params: Promise<{ slug: string }>; 
-}) {
-  const { slug } = await params;
+export default async function PathologiePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
   const patho = getPathologie(slug)
   if (!patho) notFound()
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
-      {/* Fil d'Ariane */}
       <div className="flex items-center gap-2 text-xs text-stone-400 mb-8">
         <Link href="/pathologies" className="hover:text-emerald-700 transition-colors">
           Fiches pathologies
@@ -163,14 +141,14 @@ export default async function PathologiePage({
       </div>
 
       <div className="flex gap-8 items-start flex-row-reverse">
-        {/* Menu latéral — caché sur mobile */}
+
+        {/* Menu latéral */}
         <nav className="hidden lg:block sticky top-24 w-44 flex-shrink-0">
           <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Sur cette page</p>
           <ul className="space-y-1">
             {[
               { id: "physiopathologie", label: "Physiopathologie" },
-              { id: "facteurs-risque",  label: "Facteurs de risque" },
-              { id: "signes-cliniques", label: "Signes cliniques" },
+              ...(patho.facteursRisque ? [{ id: "facteurs-risque", label: "Facteurs de risque" }] : []),
               { id: "diagnostic",       label: "Diagnostic" },
               { id: "complications",    label: "Complications" },
               { id: "traitement",       label: "Traitement" },
@@ -187,66 +165,81 @@ export default async function PathologiePage({
             ))}
           </ul>
         </nav>
-        
+
         {/* Contenu */}
         <div className="min-w-0 flex-1 space-y-5">
-        
-          {/* Résumé */}
+
           <ResumeCard patho={patho} />
 
-          {/* Physiopathologie */}
           <PhysiopathologieSection patho={patho} />
 
-          {/* Facteurs de risque */}
-          <Section id="facteurs-risque" title="Facteurs de risque" emoji="⚠️">
-            <div className="space-y-5">
-              {patho.facteursRisque.map((groupe) => (
-                <div key={groupe.groupe}>
-                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">{groupe.groupe}</p>
-                  <ul className="space-y-1.5">
-                    {groupe.items.map((item) => <Bullet key={item}>{item}</Bullet>)}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </Section>
-
-          {/* Signes cliniques */}
-          <Section id="signes-cliniques" title="Signes cliniques" emoji="🩺">
-            <div className="grid sm:grid-cols-2 gap-2">
-              {patho.signesCliniques.map((sc) => (
-                <div key={sc.signe} className="border border-stone-100 rounded-xl px-4 py-3">
-                  <p className="text-sm font-semibold text-stone-800">{sc.signe}</p>
-                  {sc.detail && <p className="text-xs text-stone-400 mt-0.5 leading-relaxed">{sc.detail}</p>}
-                </div>
-              ))}
-            </div>
-          </Section>
+          {/* Facteurs de risque — optionnel */}
+          {patho.facteursRisque && (
+            <Section id="facteurs-risque" title="Facteurs de risque" emoji="⚠️">
+              {patho.facteursRisque.introduction && (
+                <p className="text-sm text-stone-400 leading-relaxed mb-4">{patho.facteursRisque.introduction}</p>
+              )}
+              <div className="space-y-5">
+                {patho.facteursRisque.groupes.map((groupe) => (
+                  <div key={groupe.groupe}>
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">{groupe.groupe}</p>
+                    <ul className="space-y-1.5">
+                      {groupe.items.map((item) => <Bullet key={item}>{item}</Bullet>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          )}
 
           {/* Diagnostic */}
           <Section id="diagnostic" title="Diagnostic" emoji="🔍">
             <div className="space-y-5">
+
+              {/* Critères */}
               <div>
                 <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Critères de définition</p>
                 <ul className="space-y-1.5">
                   {patho.diagnostic.criteresDefinition.map((c) => (
                     <li key={c} className="flex items-start gap-2 text-sm text-stone-600">
-                      <span className="text-red-400 mt-0.5 flex-shrink-0 font-bold">→</span>
+                      <span className="text-emerald-600 mt-0.5 flex-shrink-0 font-bold">→</span>
                       <span>{c}</span>
                     </li>
                   ))}
                 </ul>
               </div>
+
+              {/* Clinique */}
               <div>
-                <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Examen clinique</p>
-                <ul className="space-y-1.5">
-                  {patho.diagnostic.examensClinic.map((e) => <Bullet key={e}>{e}</Bullet>)}
-                </ul>
+                <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Examen clinique</p>
+                <div className="grid sm:grid-cols-2 gap-2">
+                  {patho.diagnostic.clinique.map((sc) => (
+                    <div key={sc.signe} className="border border-stone-100 rounded-xl px-4 py-3">
+                      <p className="text-sm font-semibold text-stone-800">
+                        {sc.emoji && <span className="mr-1.5">{sc.emoji}</span>}
+                        {sc.signe}
+                      </p>
+                      {sc.detail && <p className="text-xs text-stone-400 mt-0.5 leading-relaxed">{sc.detail}</p>}
+                    </div>
+                  ))}
+                </div>
               </div>
+
+              {/* Enquête alimentaire */}
+              {patho.diagnostic.enqueteAlimentaire && (
+                <div>
+                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Enquête alimentaire</p>
+                  <ul className="space-y-1.5">
+                    {patho.diagnostic.enqueteAlimentaire.map((e) => <Bullet key={e}>{e}</Bullet>)}
+                  </ul>
+                </div>
+              )}
+
+              {/* Paraclinique */}
               <div>
                 <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Examens paracliniques</p>
                 <div className="space-y-2">
-                  {patho.diagnostic.examensParacliniques.map((ex) => (
+                  {patho.diagnostic.paraclinique.map((ex) => (
                     <div key={ex.nom} className="border border-stone-100 rounded-xl p-4">
                       <p className="text-sm font-semibold text-stone-800 mb-1">{ex.nom}</p>
                       <p className="text-xs text-stone-500 leading-relaxed">{ex.detail}</p>
@@ -259,25 +252,27 @@ export default async function PathologiePage({
                   ))}
                 </div>
               </div>
+
             </div>
           </Section>
 
           {/* Complications */}
           <Section id="complications" title="Complications" emoji="🚨">
-            <div className="space-y-4">
-              {(["aiguë", "chronique"] as const).map((type) => {
+            <div className="space-y-5">
+              {Array.from(new Set(patho.complications.map((c) => c.type))).map((type) => {
                 const items = patho.complications.filter((c) => c.type === type)
-                if (!items.length) return null
+                const isAigue = type.toLowerCase().includes("aiguë") || type.toLowerCase().includes("aigue") || type.toLowerCase().includes("métabolique")
                 return (
                   <div key={type}>
-                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">
-                      Complications {type === "aiguë" ? "aiguës" : "chroniques"}
-                    </p>
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">{type}</p>
                     <div className="space-y-2">
                       {items.map((c) => (
-                        <div key={c.nom} className={`border rounded-xl p-4 ${type === "aiguë" ? "border-red-100 bg-red-50/30" : "border-stone-100"}`}>
-                          <p className="text-sm font-semibold text-stone-800 mb-1">{c.nom}</p>
-                          <p className="text-xs text-stone-500 leading-relaxed">{c.description}</p>
+                        <div key={c.nom} className={`border rounded-xl p-4 ${isAigue ? "border-red-100 bg-red-50/30" : "border-stone-100"}`}>
+                          <p className="text-sm font-semibold text-stone-800 mb-1">
+                            {c.emoji && <span className="mr-1.5">{c.emoji}</span>}
+                            {c.nom}
+                          </p>
+                          {c.description && <p className="text-xs text-stone-500 leading-relaxed">{c.description}</p>}
                         </div>
                       ))}
                     </div>
@@ -290,50 +285,57 @@ export default async function PathologiePage({
           {/* Traitement */}
           <Section id="traitement" title="Traitement" emoji="💊">
             <div className="space-y-5">
+
               <div>
                 <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Objectifs</p>
                 <ul className="space-y-1.5">
                   {patho.traitement.objectifs.map((o) => <Bullet key={o}>{o}</Bullet>)}
                 </ul>
               </div>
+
               <div>
                 <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Mesures hygiéno-diététiques</p>
                 <ul className="space-y-1.5">
                   {patho.traitement.mesuresHygienoDiet.map((m) => <Bullet key={m}>{m}</Bullet>)}
                 </ul>
               </div>
-              {patho.traitement.medicaments && (
-                <div>
-                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Médicaments</p>
-                  <div className="space-y-2">
-                    {patho.traitement.medicaments.map((med) => (
-                      <div key={med.famille} className="border border-stone-100 rounded-xl p-4">
-                        <p className="text-sm font-semibold text-stone-800 mb-1">{med.famille}</p>
-                        <p className="text-xs text-stone-500 mb-2 leading-relaxed">{med.mecanisme}</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {med.exemples.map((ex) => (
-                            <span key={ex} className="text-[11px] bg-stone-50 text-stone-600 px-2 py-0.5 rounded-md border border-stone-100">{ex}</span>
-                          ))}
+
+              {[
+                { key: "medicaments",       label: "Médicaments" },
+                { key: "chirurgie",         label: "Chirurgie" },
+                { key: "autresTraitements", label: "Autres traitements" },
+              ].map(({ key, label }) => {
+                const items = patho.traitement[key as keyof typeof patho.traitement] as { famille: string; mecanisme: string; exemples?: string[] }[] | undefined
+                if (!items?.length) return null
+                return (
+                  <div key={key}>
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">{label}</p>
+                    <div className="space-y-2">
+                      {items.map((item) => (
+                        <div id={item.famille} key={item.famille} className="border border-stone-100 rounded-xl p-4">
+                          <p className="text-sm font-semibold text-stone-800 mb-1">{item.famille}</p>
+                          <p className="text-xs text-stone-500 leading-relaxed mb-2">{item.mecanisme}</p>
+                          {item.exemples && (
+                            <div className="flex flex-wrap gap-1.5">
+                              {item.exemples.map((ex) => (
+                                <span key={ex} className="text-[11px] bg-stone-50 text-stone-600 px-2 py-0.5 rounded-md border border-stone-100">{ex}</span>
+                              ))}
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
-              {patho.traitement.autresTraitements && (
-                <div>
-                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Autres traitements</p>
-                  <ul className="space-y-1.5">
-                    {patho.traitement.autresTraitements.map((a) => <Bullet key={a}>{a}</Bullet>)}
-                  </ul>
-                </div>
-              )}
+                )
+              })}
+
               <div>
                 <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Surveillance</p>
                 <ul className="space-y-1.5">
                   {patho.traitement.surveillance.map((s) => <Bullet key={s}>{s}</Bullet>)}
                 </ul>
               </div>
+
             </div>
           </Section>
 
@@ -347,6 +349,25 @@ export default async function PathologiePage({
                     {patho.dietetique.objectifsNutritionnels.map((o) => <Bullet key={o}>{o}</Bullet>)}
                   </ul>
                 </div>
+                {patho.dietetique.aet && (
+                  <div>
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">AET</p>
+                    <p className="text-sm text-stone-600">{patho.dietetique.aet}</p>
+                  </div>
+                )}
+                {patho.dietetique.macros && (
+                  <div>
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Macronutriments</p>
+                    <div className="space-y-2">
+                      {patho.dietetique.macros.map((m) => (
+                        <div key={m.label} className="flex items-start gap-3 text-sm">
+                          <span className="font-medium text-stone-700 w-28 flex-shrink-0">{m.label}</span>
+                          <span className="text-stone-500">{m.recommandation}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {patho.dietetique.alimentsFavoriser && (
                   <div>
                     <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Aliments à favoriser</p>
@@ -370,10 +391,18 @@ export default async function PathologiePage({
                     </ul>
                   </div>
                 )}
+                {patho.dietetique.conseilsPratiques && (
+                  <div>
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Conseils pratiques</p>
+                    <ul className="space-y-1.5">
+                      {patho.dietetique.conseilsPratiques.map((c) => <Bullet key={c}>{c}</Bullet>)}
+                    </ul>
+                  </div>
+                )}
               </div>
             </Section>
           ) : (
-            <div className="border border-dashed border-stone-200 rounded-2xl p-6 text-center">
+            <div id="dietetique" className="border border-dashed border-stone-200 rounded-2xl p-6 text-center scroll-mt-20">
               <span className="text-2xl block mb-2">🥗</span>
               <p className="text-sm font-medium text-stone-500 mb-1">Diététique thérapeutique</p>
               <p className="text-xs text-stone-400">
@@ -386,7 +415,7 @@ export default async function PathologiePage({
       </div>
 
       {/* Navigation */}
-      <div className="flex items-center justify-between pt-4">
+      <div className="flex items-center justify-between pt-8">
         <Link href="/pathologies" className="flex items-center gap-2 text-sm text-stone-400 hover:text-emerald-700 transition-colors">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
             <path d="M10 4L6 8l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
