@@ -3,6 +3,8 @@ import Link from "next/link"
 import { getPathologie, PATHOLOGIES, type Pathologie } from "@/data/pathologies"
 import dynamic from "next/dynamic"
 import MdxWrapper from "@/components/mdx/MdxWrapper"
+import { useState } from "react"
+import PathologieModeToggle from "@/components/PathologieModeToggle"
 
 export async function generateStaticParams() {
   return PATHOLOGIES.map((p) => ({ slug: p.slug }))
@@ -150,214 +152,151 @@ export default async function PathologiePage({ params }: { params: Promise<{ slu
         <span className="text-stone-600">{patho.labelCourt}</span>
       </div>
 
-      <div className="flex gap-8 items-start flex-row-reverse">
+      <PathologieModeToggle patho={patho}>
+        <div className="flex gap-8 items-start flex-row-reverse">
+          {/* Menu latéral */}
+          <nav className="hidden lg:block sticky top-24 w-44 flex-shrink-0">
+            <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Sur cette page</p>
+            <ul className="space-y-1">
+              {[
+                { id: "physiopathologie", label: "Physiopathologie" },
+                ...(patho.facteursRisque ? [{ id: "facteurs-risque", label: "Facteurs de risque" }] : []),
+                { id: "diagnostic",       label: "Diagnostic" },
+                { id: "complications",    label: "Complications" },
+                { id: "traitement",       label: "Traitement" },
+                { id: "dietetique",       label: "Diététique" },
+              ].map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    className="block text-xs text-stone-400 hover:text-emerald-700 py-1 px-2 rounded-lg hover:bg-emerald-50 transition-all"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        {/* Menu latéral */}
-        <nav className="hidden lg:block sticky top-24 w-44 flex-shrink-0">
-          <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Sur cette page</p>
-          <ul className="space-y-1">
-            {[
-              { id: "physiopathologie", label: "Physiopathologie" },
-              ...(patho.facteursRisque ? [{ id: "facteurs-risque", label: "Facteurs de risque" }] : []),
-              { id: "diagnostic",       label: "Diagnostic" },
-              { id: "complications",    label: "Complications" },
-              { id: "traitement",       label: "Traitement" },
-              { id: "dietetique",       label: "Diététique" },
-            ].map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  className="block text-xs text-stone-400 hover:text-emerald-700 py-1 px-2 rounded-lg hover:bg-emerald-50 transition-all"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          {/* Contenu */}
+          <div className="min-w-0 flex-1 space-y-5">
 
-        {/* Contenu */}
-        <div className="min-w-0 flex-1 space-y-5">
+            <ResumeCard patho={patho} />
 
-          <ResumeCard patho={patho} />
+            {/* Facteurs de risque — optionnel */}
+            {patho.facteursRisque && (
+              <Section id="facteurs-risque" title="Facteurs de risque" emoji="⚠️">
+                {patho.facteursRisque.introduction && (
+                  <p className="text-sm text-stone-400 leading-relaxed mb-4">{patho.facteursRisque.introduction}</p>
+                )}
+                <div className="space-y-5">
+                  {patho.facteursRisque.groupes.map((groupe) => (
+                    <div key={groupe.groupe}>
+                      <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">{groupe.groupe}</p>
+                      <ul className="space-y-1.5">
+                        {groupe.items.map((item) => <Bullet key={item}>{item}</Bullet>)}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </Section>
+            )}
 
-          {/* Facteurs de risque — optionnel */}
-          {patho.facteursRisque && (
-            <Section id="facteurs-risque" title="Facteurs de risque" emoji="⚠️">
-              {patho.facteursRisque.introduction && (
-                <p className="text-sm text-stone-400 leading-relaxed mb-4">{patho.facteursRisque.introduction}</p>
-              )}
+            {PhysiopathologieMdx ? (
+              <Section id="physiopathologie" title="Physiopathologie" emoji="🔬">
+                <MdxWrapper>
+                  <PhysiopathologieMdx />
+                </MdxWrapper>
+              </Section>
+            ) : (
+              <PhysiopathologieSection patho={patho} />
+            )}
+
+
+            {/* Diagnostic */}
+            <Section id="diagnostic" title="Diagnostic" emoji="🔍">
               <div className="space-y-5">
-                {patho.facteursRisque.groupes.map((groupe) => (
-                  <div key={groupe.groupe}>
-                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">{groupe.groupe}</p>
+
+                {/* Critères */}
+                <div>
+                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Critères de définition</p>
+                  <ul className="space-y-1.5">
+                    {patho.diagnostic.criteresDefinition.map((c) => (
+                      <li key={c} className="flex items-start gap-2 text-sm text-stone-600">
+                        <span className="text-emerald-600 mt-0.5 flex-shrink-0 font-bold">→</span>
+                        <span>{c}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Clinique */}
+                <div>
+                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Examen clinique</p>
+                  <div className="grid sm:grid-cols-2 gap-2">
+                    {patho.diagnostic.clinique.map((sc) => (
+                      <div key={sc.signe} className="border border-stone-100 rounded-xl px-4 py-3">
+                        <p className="text-sm font-semibold text-stone-800">
+                          {sc.emoji && <span className="mr-1.5">{sc.emoji}</span>}
+                          {sc.signe}
+                        </p>
+                        {sc.detail && <p className="text-xs text-stone-400 mt-0.5 leading-relaxed">{sc.detail}</p>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Enquête alimentaire */}
+                {patho.diagnostic.enqueteAlimentaire && (
+                  <div>
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Enquête alimentaire</p>
                     <ul className="space-y-1.5">
-                      {groupe.items.map((item) => <Bullet key={item}>{item}</Bullet>)}
+                      {patho.diagnostic.enqueteAlimentaire.map((e) => <Bullet key={e}>{e}</Bullet>)}
                     </ul>
                   </div>
-                ))}
-              </div>
-            </Section>
-          )}
+                )}
 
-          {PhysiopathologieMdx ? (
-            <Section id="physiopathologie" title="Physiopathologie" emoji="🔬">
-              <MdxWrapper>
-                <PhysiopathologieMdx />
-              </MdxWrapper>
-            </Section>
-          ) : (
-            <PhysiopathologieSection patho={patho} />
-          )}
-
-
-          {/* Diagnostic */}
-          <Section id="diagnostic" title="Diagnostic" emoji="🔍">
-            <div className="space-y-5">
-
-              {/* Critères */}
-              <div>
-                <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Critères de définition</p>
-                <ul className="space-y-1.5">
-                  {patho.diagnostic.criteresDefinition.map((c) => (
-                    <li key={c} className="flex items-start gap-2 text-sm text-stone-600">
-                      <span className="text-emerald-600 mt-0.5 flex-shrink-0 font-bold">→</span>
-                      <span>{c}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Clinique */}
-              <div>
-                <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Examen clinique</p>
-                <div className="grid sm:grid-cols-2 gap-2">
-                  {patho.diagnostic.clinique.map((sc) => (
-                    <div key={sc.signe} className="border border-stone-100 rounded-xl px-4 py-3">
-                      <p className="text-sm font-semibold text-stone-800">
-                        {sc.emoji && <span className="mr-1.5">{sc.emoji}</span>}
-                        {sc.signe}
-                      </p>
-                      {sc.detail && <p className="text-xs text-stone-400 mt-0.5 leading-relaxed">{sc.detail}</p>}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Enquête alimentaire */}
-              {patho.diagnostic.enqueteAlimentaire && (
+                {/* Paraclinique */}
                 <div>
-                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Enquête alimentaire</p>
-                  <ul className="space-y-1.5">
-                    {patho.diagnostic.enqueteAlimentaire.map((e) => <Bullet key={e}>{e}</Bullet>)}
-                  </ul>
-                </div>
-              )}
-
-              {/* Paraclinique */}
-              <div>
-                <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Examens paracliniques</p>
-                <div className="grid sm:grid-cols-2 gap-2">
-                  {patho.diagnostic.paraclinique.map((ex) => (
-                    <div key={ex.nom} className="border border-stone-100 rounded-xl p-4">
-                      <p className="text-sm font-semibold text-stone-800 mb-1">
-                        {ex.emoji && <span className="mr-1.5">{ex.emoji}</span>}
-                        {ex.nom}
-                      </p>
-                      <p className="text-xs text-stone-500 leading-relaxed">{ex.detail}</p>
-                      {ex.valeursSeuil && (
-                        <p className="text-xs text-emerald-700 bg-emerald-50 px-2.5 py-1.5 rounded-lg mt-2 font-medium">
-                          {ex.valeursSeuil}
+                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Examens paracliniques</p>
+                  <div className="grid sm:grid-cols-2 gap-2">
+                    {patho.diagnostic.paraclinique.map((ex) => (
+                      <div key={ex.nom} className="border border-stone-100 rounded-xl p-4">
+                        <p className="text-sm font-semibold text-stone-800 mb-1">
+                          {ex.emoji && <span className="mr-1.5">{ex.emoji}</span>}
+                          {ex.nom}
                         </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-          </Section>
-
-          {/* Complications */}
-          <Section id="complications" title="Complications" emoji="🚨">
-            <div className="space-y-5">
-              {Array.from(new Set(patho.complications.map((c) => c.type))).map((type) => {
-                const items = patho.complications.filter((c) => c.type === type)
-                const isAigue = type.toLowerCase().includes("aiguë") || type.toLowerCase().includes("aigue") || type.toLowerCase().includes("métabolique")
-                return (
-                  <div key={type}>
-                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">{type}</p>
-                    <div className="grid sm:grid-cols-2 gap-2">
-                      {items.map((c) => (
-                        <div key={c.nom} className={`border rounded-xl p-4 ${isAigue ? "border-red-100 bg-red-50/30" : "border-stone-100"}`}>
-                          <p className="text-sm font-semibold text-stone-800 mb-1">
-                            {c.emoji && <span className="mr-1.5">{c.emoji}</span>}
-                            {c.nom}
+                        <p className="text-xs text-stone-500 leading-relaxed">{ex.detail}</p>
+                        {ex.valeursSeuil && (
+                          <p className="text-xs text-emerald-700 bg-emerald-50 px-2.5 py-1.5 rounded-lg mt-2 font-medium">
+                            {ex.valeursSeuil}
                           </p>
-                          {c.description && <p className="text-xs text-stone-500 leading-relaxed">{c.description}</p>}
-                        </div>
-                      ))}
-                    </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                )
-              })}
-            </div>
-          </Section>
+                </div>
 
-          {/* Traitement */}
-          {TraitementMdx ? (
-            <Section id="traitement" title="Traitement" emoji="💊">
-                <MdxWrapper>
-                  <TraitementMdx />
-                </MdxWrapper>
+              </div>
             </Section>
-          ) : (
-            <Section id="traitement" title="Traitement" emoji="💊">
+
+            {/* Complications */}
+            <Section id="complications" title="Complications" emoji="🚨">
               <div className="space-y-5">
-
-                <div>
-                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Objectifs</p>
-                  <ul className="space-y-1.5">
-                    {patho.traitement.objectifs.map((o) => <Bullet key={o}>{o}</Bullet>)}
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Surveillance</p>
-                  <ul className="space-y-1.5">
-                    {patho.traitement.surveillance.map((s) => <Bullet key={s}>{s}</Bullet>)}
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Mesures hygiéno-diététiques</p>
-                  <ul className="space-y-1.5">
-                    {patho.traitement.mesuresHygienoDiet.map((m) => <Bullet key={m}>{m}</Bullet>)}
-                  </ul>
-                </div>
-
-                {[
-                  { key: "medicaments",       label: "Médicaments" },
-                  { key: "chirurgie",         label: "Chirurgie" },
-                  { key: "autresTraitements", label: "Autres traitements" },
-                ].map(({ key, label }) => {
-                  const items = patho.traitement[key as keyof typeof patho.traitement] as { famille: string; mecanisme: string; exemples?: string[] }[] | undefined
-                  if (!items?.length) return null
+                {Array.from(new Set(patho.complications.map((c) => c.type))).map((type) => {
+                  const items = patho.complications.filter((c) => c.type === type)
+                  const isAigue = type.toLowerCase().includes("aiguë") || type.toLowerCase().includes("aigue") || type.toLowerCase().includes("métabolique")
                   return (
-                    <div key={key}>
-                      <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">{label}</p>
+                    <div key={type}>
+                      <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">{type}</p>
                       <div className="grid sm:grid-cols-2 gap-2">
-                        {items.map((item) => (
-                          <div id={item.famille} key={item.famille} className="border border-stone-100 rounded-xl p-4">
-                            <p className="text-sm font-semibold text-stone-800 mb-1">{item.famille}</p>
-                            <p className="text-xs text-stone-500 leading-relaxed mb-2">{item.mecanisme}</p>
-                            {item.exemples && (
-                              <div className="flex flex-wrap gap-1.5">
-                                {item.exemples.map((ex) => (
-                                  <span key={ex} className="text-[11px] bg-stone-50 text-stone-600 px-2 py-0.5 rounded-md border border-stone-100">{ex}</span>
-                                ))}
-                              </div>
-                            )}
+                        {items.map((c) => (
+                          <div key={c.nom} className={`border rounded-xl p-4 ${isAigue ? "border-red-100 bg-red-50/30" : "border-stone-100"}`}>
+                            <p className="text-sm font-semibold text-stone-800 mb-1">
+                              {c.emoji && <span className="mr-1.5">{c.emoji}</span>}
+                              {c.nom}
+                            </p>
+                            {c.description && <p className="text-xs text-stone-500 leading-relaxed">{c.description}</p>}
                           </div>
                         ))}
                       </div>
@@ -366,82 +305,146 @@ export default async function PathologiePage({ params }: { params: Promise<{ slu
                 })}
               </div>
             </Section>
-          )}
 
-          {/* Diététique thérapeutique */}
-          {patho.dietetique ? (
-            <Section id="dietetique" title="Diététique thérapeutique" emoji="🥗">
-              <div className="space-y-4">
-                <div>
-                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Objectifs nutritionnels</p>
-                  <ul className="space-y-1.5">
-                    {patho.dietetique.objectifsNutritionnels.map((o) => <Bullet key={o}>{o}</Bullet>)}
-                  </ul>
-                </div>
-                {patho.dietetique.aet && (
+            {/* Traitement */}
+            {TraitementMdx ? (
+              <Section id="traitement" title="Traitement" emoji="💊">
+                  <MdxWrapper>
+                    <TraitementMdx />
+                  </MdxWrapper>
+              </Section>
+            ) : (
+              <Section id="traitement" title="Traitement" emoji="💊">
+                <div className="space-y-5">
+
                   <div>
-                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">AET</p>
-                    <p className="text-sm text-stone-600">{patho.dietetique.aet}</p>
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Objectifs</p>
+                    <ul className="space-y-1.5">
+                      {patho.traitement.objectifs.map((o) => <Bullet key={o}>{o}</Bullet>)}
+                    </ul>
                   </div>
-                )}
-                {patho.dietetique.macros && (
+
                   <div>
-                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Macronutriments</p>
-                    <div className="space-y-2">
-                      {patho.dietetique.macros.map((m) => (
-                        <div key={m.label} className="flex items-start gap-3 text-sm">
-                          <span className="font-medium text-stone-700 w-28 flex-shrink-0">{m.label}</span>
-                          <span className="text-stone-500">{m.recommandation}</span>
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Surveillance</p>
+                    <ul className="space-y-1.5">
+                      {patho.traitement.surveillance.map((s) => <Bullet key={s}>{s}</Bullet>)}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Mesures hygiéno-diététiques</p>
+                    <ul className="space-y-1.5">
+                      {patho.traitement.mesuresHygienoDiet.map((m) => <Bullet key={m}>{m}</Bullet>)}
+                    </ul>
+                  </div>
+
+                  {[
+                    { key: "medicaments",       label: "Médicaments" },
+                    { key: "chirurgie",         label: "Chirurgie" },
+                    { key: "autresTraitements", label: "Autres traitements" },
+                  ].map(({ key, label }) => {
+                    const items = patho.traitement[key as keyof typeof patho.traitement] as { famille: string; mecanisme: string; exemples?: string[] }[] | undefined
+                    if (!items?.length) return null
+                    return (
+                      <div key={key}>
+                        <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">{label}</p>
+                        <div className="grid sm:grid-cols-2 gap-2">
+                          {items.map((item) => (
+                            <div id={item.famille} key={item.famille} className="border border-stone-100 rounded-xl p-4">
+                              <p className="text-sm font-semibold text-stone-800 mb-1">{item.famille}</p>
+                              <p className="text-xs text-stone-500 leading-relaxed mb-2">{item.mecanisme}</p>
+                              {item.exemples && (
+                                <div className="flex flex-wrap gap-1.5">
+                                  {item.exemples.map((ex) => (
+                                    <span key={ex} className="text-[11px] bg-stone-50 text-stone-600 px-2 py-0.5 rounded-md border border-stone-100">{ex}</span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {patho.dietetique.alimentsFavoriser && (
-                  <div>
-                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Aliments à favoriser</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {patho.dietetique.alimentsFavoriser.map((a) => (
-                        <span key={a} className="text-xs bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-lg border border-emerald-100">{a}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {patho.dietetique.alimentsLimiter && (
-                  <div>
-                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Aliments à limiter</p>
-                    <ul className="space-y-1.5">
-                      {patho.dietetique.alimentsLimiter.map((a) => (
-                        <li key={a} className="flex items-start gap-2 text-sm text-stone-600">
-                          <span className="text-red-400 mt-0.5 flex-shrink-0">✕</span>
-                          {a}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {patho.dietetique.conseilsPratiques && (
-                  <div>
-                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Conseils pratiques</p>
-                    <ul className="space-y-1.5">
-                      {patho.dietetique.conseilsPratiques.map((c) => <Bullet key={c}>{c}</Bullet>)}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </Section>
-          ) : (
-            <div id="dietetique" className="border border-dashed border-stone-200 rounded-2xl p-6 text-center scroll-mt-20">
-              <span className="text-2xl block mb-2">🥗</span>
-              <p className="text-sm font-medium text-stone-500 mb-1">Diététique thérapeutique</p>
-              <p className="text-xs text-stone-400">
-                Cette section sera disponible une fois le cours de diététique thérapeutique complété.
-              </p>
-            </div>
-          )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </Section>
+            )}
 
+            {/* Diététique thérapeutique */}
+            {patho.dietetique ? (
+              <Section id="dietetique" title="Diététique thérapeutique" emoji="🥗">
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Objectifs nutritionnels</p>
+                    <ul className="space-y-1.5">
+                      {patho.dietetique.objectifsNutritionnels.map((o) => <Bullet key={o}>{o}</Bullet>)}
+                    </ul>
+                  </div>
+                  {patho.dietetique.aet && (
+                    <div>
+                      <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">AET</p>
+                      <p className="text-sm text-stone-600">{patho.dietetique.aet}</p>
+                    </div>
+                  )}
+                  {patho.dietetique.macros && (
+                    <div>
+                      <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Macronutriments</p>
+                      <div className="space-y-2">
+                        {patho.dietetique.macros.map((m) => (
+                          <div key={m.label} className="flex items-start gap-3 text-sm">
+                            <span className="font-medium text-stone-700 w-28 flex-shrink-0">{m.label}</span>
+                            <span className="text-stone-500">{m.recommandation}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {patho.dietetique.alimentsFavoriser && (
+                    <div>
+                      <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Aliments à favoriser</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {patho.dietetique.alimentsFavoriser.map((a) => (
+                          <span key={a} className="text-xs bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-lg border border-emerald-100">{a}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {patho.dietetique.alimentsLimiter && (
+                    <div>
+                      <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Aliments à limiter</p>
+                      <ul className="space-y-1.5">
+                        {patho.dietetique.alimentsLimiter.map((a) => (
+                          <li key={a} className="flex items-start gap-2 text-sm text-stone-600">
+                            <span className="text-red-400 mt-0.5 flex-shrink-0">✕</span>
+                            {a}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {patho.dietetique.conseilsPratiques && (
+                    <div>
+                      <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Conseils pratiques</p>
+                      <ul className="space-y-1.5">
+                        {patho.dietetique.conseilsPratiques.map((c) => <Bullet key={c}>{c}</Bullet>)}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </Section>
+            ) : (
+              <div id="dietetique" className="border border-dashed border-stone-200 rounded-2xl p-6 text-center scroll-mt-20">
+                <span className="text-2xl block mb-2">🥗</span>
+                <p className="text-sm font-medium text-stone-500 mb-1">Diététique thérapeutique</p>
+                <p className="text-xs text-stone-400">
+                  Cette section sera disponible une fois le cours de diététique thérapeutique complété.
+                </p>
+              </div>
+            )}
+
+          </div>
         </div>
-      </div>
+      </PathologieModeToggle>
 
       {/* Navigation */}
       <div className="flex items-center justify-between pt-8">

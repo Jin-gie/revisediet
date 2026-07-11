@@ -95,4 +95,13 @@ export type Pathologie = {
     traitement?: boolean
     dietetique?: boolean
   }
+
+  flash?: {
+  definition: string
+  motsClés: string[]
+  sections: {
+    titre: string
+    items: string[]
+  }[]
+}
 }

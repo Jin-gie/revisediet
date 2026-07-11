@@ -94,4 +94,62 @@ export const diabeteType1: Pathologie = {
   ],
 
   dietetique: undefined,
+
+
+  flash: {
+  definition: "Hyperglycémie chronique par carence absolue en insuline (destruction auto-immune des cellules β).",
+  motsClés: [
+    "Maladie auto-immune", "Cellules β", "Îlots de Langerhans", "Insulinopénie",
+    "HLA-DR3 / DR4", "GAD65", "Lymphocytes T", "Auto-anticorps (anti-IA2, anti-GAD, anti-insuline, ICA)",
+    "Cellules glucodépendantes (hépatocytes, neurones, GR)",
+  ],
+  sections: [
+    {
+      titre: "Physiopathologie",
+      items: [
+        "Facteurs génétiques (HLA) + environnementaux → réponse auto-immune → destruction cellules β",
+        "Auto-anticorps = marqueurs, pas cause → lymphocytes T détruisent",
+        "Phase asymptomatique 5–10 ans → symptômes à 80 % destruction",
+        "Absence insuline → ↗ NGG, ↗ glycogénolyse, ↘ utilisation glucose → hyperglycémie",
+        "Mécanismes compensatoires → lipolyse → AGL → cétogenèse → acidocétose",
+        "Voie des polyols : glucose → sorbitol (aldose réductase) → fructose (sorbitol DH)",
+        "Glycation : base de Schiff → Amadori (HbA1c) → produits de Maillard",
+        "↗ Stress oxydatif : ↘ vit C, ↘ glutathion réductase",
+        "Glycosurie → polyurie → polydipsie",
+      ],
+    },
+    {
+      titre: "Diagnostic",
+      items: [
+        "Glycémie à jeun ≥ 1,26 g/L × 2 OU postprandiale > 1,40 g/L OU > 2 g/L avec symptômes",
+        "HGPO si glycémie à jeun entre 1,1 et 1,26 g/L",
+        "HbA1c normale : 4–6 %",
+        "Insulinémie à jeun < 15 mU/L (effondrée dans DT1)",
+        "Auto-anticorps DT1 : anti-îlots (75 %), anti-insuline, anti-GAD, anti-IA2",
+        "Clinique : polyurie, polydipsie, amaigrissement, asthénie, haleine fruitée",
+      ],
+    },
+    {
+      titre: "Complications",
+      items: [
+        "Aiguës : acidocétose (glycémie > 13,5 mmol/L, cétonurie), coma hypoglycémique",
+        "Infectieuses : tuberculose, infections urinaires, mycoses",
+        "Microangiopathies : rétinopathie (1re cause cécité), néphropathie, neuropathie",
+        "Macroangiopathies : athérosclérose → AVC, IDM indolore, AOMI (1re cause décès)",
+        "Autres : cataracte, glaucome, dyslipoprotéinémies (↑ LDL + hypertriglycéridémie)",
+      ],
+    },
+    {
+      titre: "Traitement",
+      items: [
+        "Insulinothérapie à vie (obligatoire DT1) : analogues rapides + lents",
+        "Conventionnel : 2–3 rapides + 1–2 lentes/j",
+        "Fonctionnel : 4–5 injections/j ou pompe à insuline",
+        "Boucle fermée : CGM + pompe + algorithme",
+        "Surveillance : HbA1c < 7 %, glycémie, fond d'œil, bilan rénal",
+        "Régime contrôlé en glucides + activité physique adaptée",
+      ],
+    },
+  ],
+},
 }
