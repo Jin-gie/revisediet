@@ -1,10 +1,17 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { getPathologie, PATHOLOGIES, type Pathologie } from "@/data/pathologies"
+import dynamic from "next/dynamic"
+import MdxWrapper from "@/components/mdx/MdxWrapper"
 
 export async function generateStaticParams() {
   return PATHOLOGIES.map((p) => ({ slug: p.slug }))
 }
+
+const getMdxSection = (slug: string, section: string) =>
+  dynamic(() => import(`@/data/pathologies/${slug}/${section}.mdx`), {
+    ssr: true,
+  })
 
 const GRAVITE_STYLE: Record<string, string> = {
   "faible":      "bg-emerald-50 text-emerald-700 border-emerald-100",
@@ -47,11 +54,6 @@ function ResumeCard({ patho }: { patho: Pathologie }) {
                 {tag}
               </span>
             ))}
-            {patho.gravite && (
-              <span className={`text-[10px] font-semibold px-2.5 py-0.5 rounded-full border ${GRAVITE_STYLE[patho.gravite]}`}>
-                Gravité {patho.gravite}
-              </span>
-            )}
           </div>
           <h1 className="font-serif text-3xl text-stone-900">{patho.label}</h1>
         </div>
@@ -130,6 +132,14 @@ export default async function PathologiePage({ params }: { params: Promise<{ slu
   const patho = getPathologie(slug)
   if (!patho) notFound()
 
+  const PhysiopathologieMdx = patho.mdx?.physiopathologie
+    ? getMdxSection(patho.slug, "physiopathologie")
+    : null
+
+  const TraitementMdx = patho.mdx?.traitement
+    ? getMdxSection(patho.slug, "traitement")
+    : null
+
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
       <div className="flex items-center gap-2 text-xs text-stone-400 mb-8">
@@ -171,8 +181,6 @@ export default async function PathologiePage({ params }: { params: Promise<{ slu
 
           <ResumeCard patho={patho} />
 
-          <PhysiopathologieSection patho={patho} />
-
           {/* Facteurs de risque — optionnel */}
           {patho.facteursRisque && (
             <Section id="facteurs-risque" title="Facteurs de risque" emoji="⚠️">
@@ -191,6 +199,17 @@ export default async function PathologiePage({ params }: { params: Promise<{ slu
               </div>
             </Section>
           )}
+
+          {PhysiopathologieMdx ? (
+            <Section id="physiopathologie" title="Physiopathologie" emoji="🔬">
+              <MdxWrapper>
+                <PhysiopathologieMdx />
+              </MdxWrapper>
+            </Section>
+          ) : (
+            <PhysiopathologieSection patho={patho} />
+          )}
+
 
           {/* Diagnostic */}
           <Section id="diagnostic" title="Diagnostic" emoji="🔍">
@@ -238,10 +257,13 @@ export default async function PathologiePage({ params }: { params: Promise<{ slu
               {/* Paraclinique */}
               <div>
                 <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Examens paracliniques</p>
-                <div className="space-y-2">
+                <div className="grid sm:grid-cols-2 gap-2">
                   {patho.diagnostic.paraclinique.map((ex) => (
                     <div key={ex.nom} className="border border-stone-100 rounded-xl p-4">
-                      <p className="text-sm font-semibold text-stone-800 mb-1">{ex.nom}</p>
+                      <p className="text-sm font-semibold text-stone-800 mb-1">
+                        {ex.emoji && <span className="mr-1.5">{ex.emoji}</span>}
+                        {ex.nom}
+                      </p>
                       <p className="text-xs text-stone-500 leading-relaxed">{ex.detail}</p>
                       {ex.valeursSeuil && (
                         <p className="text-xs text-emerald-700 bg-emerald-50 px-2.5 py-1.5 rounded-lg mt-2 font-medium">
@@ -265,7 +287,7 @@ export default async function PathologiePage({ params }: { params: Promise<{ slu
                 return (
                   <div key={type}>
                     <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">{type}</p>
-                    <div className="space-y-2">
+                    <div className="grid sm:grid-cols-2 gap-2">
                       {items.map((c) => (
                         <div key={c.nom} className={`border rounded-xl p-4 ${isAigue ? "border-red-100 bg-red-50/30" : "border-stone-100"}`}>
                           <p className="text-sm font-semibold text-stone-800 mb-1">
@@ -283,61 +305,68 @@ export default async function PathologiePage({ params }: { params: Promise<{ slu
           </Section>
 
           {/* Traitement */}
-          <Section id="traitement" title="Traitement" emoji="💊">
-            <div className="space-y-5">
+          {TraitementMdx ? (
+            <Section id="traitement" title="Traitement" emoji="💊">
+                <MdxWrapper>
+                  <TraitementMdx />
+                </MdxWrapper>
+            </Section>
+          ) : (
+            <Section id="traitement" title="Traitement" emoji="💊">
+              <div className="space-y-5">
 
-              <div>
-                <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Objectifs</p>
-                <ul className="space-y-1.5">
-                  {patho.traitement.objectifs.map((o) => <Bullet key={o}>{o}</Bullet>)}
-                </ul>
-              </div>
+                <div>
+                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Objectifs</p>
+                  <ul className="space-y-1.5">
+                    {patho.traitement.objectifs.map((o) => <Bullet key={o}>{o}</Bullet>)}
+                  </ul>
+                </div>
 
-              <div>
-                <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Mesures hygiéno-diététiques</p>
-                <ul className="space-y-1.5">
-                  {patho.traitement.mesuresHygienoDiet.map((m) => <Bullet key={m}>{m}</Bullet>)}
-                </ul>
-              </div>
+                <div>
+                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Surveillance</p>
+                  <ul className="space-y-1.5">
+                    {patho.traitement.surveillance.map((s) => <Bullet key={s}>{s}</Bullet>)}
+                  </ul>
+                </div>
 
-              {[
-                { key: "medicaments",       label: "Médicaments" },
-                { key: "chirurgie",         label: "Chirurgie" },
-                { key: "autresTraitements", label: "Autres traitements" },
-              ].map(({ key, label }) => {
-                const items = patho.traitement[key as keyof typeof patho.traitement] as { famille: string; mecanisme: string; exemples?: string[] }[] | undefined
-                if (!items?.length) return null
-                return (
-                  <div key={key}>
-                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">{label}</p>
-                    <div className="space-y-2">
-                      {items.map((item) => (
-                        <div id={item.famille} key={item.famille} className="border border-stone-100 rounded-xl p-4">
-                          <p className="text-sm font-semibold text-stone-800 mb-1">{item.famille}</p>
-                          <p className="text-xs text-stone-500 leading-relaxed mb-2">{item.mecanisme}</p>
-                          {item.exemples && (
-                            <div className="flex flex-wrap gap-1.5">
-                              {item.exemples.map((ex) => (
-                                <span key={ex} className="text-[11px] bg-stone-50 text-stone-600 px-2 py-0.5 rounded-md border border-stone-100">{ex}</span>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
+                <div>
+                  <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Mesures hygiéno-diététiques</p>
+                  <ul className="space-y-1.5">
+                    {patho.traitement.mesuresHygienoDiet.map((m) => <Bullet key={m}>{m}</Bullet>)}
+                  </ul>
+                </div>
+
+                {[
+                  { key: "medicaments",       label: "Médicaments" },
+                  { key: "chirurgie",         label: "Chirurgie" },
+                  { key: "autresTraitements", label: "Autres traitements" },
+                ].map(({ key, label }) => {
+                  const items = patho.traitement[key as keyof typeof patho.traitement] as { famille: string; mecanisme: string; exemples?: string[] }[] | undefined
+                  if (!items?.length) return null
+                  return (
+                    <div key={key}>
+                      <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">{label}</p>
+                      <div className="grid sm:grid-cols-2 gap-2">
+                        {items.map((item) => (
+                          <div id={item.famille} key={item.famille} className="border border-stone-100 rounded-xl p-4">
+                            <p className="text-sm font-semibold text-stone-800 mb-1">{item.famille}</p>
+                            <p className="text-xs text-stone-500 leading-relaxed mb-2">{item.mecanisme}</p>
+                            {item.exemples && (
+                              <div className="flex flex-wrap gap-1.5">
+                                {item.exemples.map((ex) => (
+                                  <span key={ex} className="text-[11px] bg-stone-50 text-stone-600 px-2 py-0.5 rounded-md border border-stone-100">{ex}</span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
-
-              <div>
-                <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Surveillance</p>
-                <ul className="space-y-1.5">
-                  {patho.traitement.surveillance.map((s) => <Bullet key={s}>{s}</Bullet>)}
-                </ul>
+                  )
+                })}
               </div>
-
-            </div>
-          </Section>
+            </Section>
+          )}
 
           {/* Diététique thérapeutique */}
           {patho.dietetique ? (
