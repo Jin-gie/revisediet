@@ -22,7 +22,7 @@ export default function PathologiesPage() {
       !search ||
       p.label.toLowerCase().includes(search.toLowerCase()) ||
       p.description.toLowerCase().includes(search.toLowerCase())
-    const matchTag = !activeTag || p.tags.includes(activeTag)
+    const matchTag = !activeTag || (p.tags as string[]).includes(activeTag)
     return matchSearch && matchTag
   })
 
