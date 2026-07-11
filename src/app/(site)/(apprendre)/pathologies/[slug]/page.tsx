@@ -82,6 +82,7 @@ function ResumeCard({ patho }: { patho: Pathologie }) {
 
 function PhysiopathologieSection({ patho }: { patho: Pathologie }) {
   const { physiopathologie } = patho
+  if (!physiopathologie) return null
   return (
     <Section id="physiopathologie" title="Physiopathologie" emoji="🔬">
       {physiopathologie.introduction && (
@@ -105,6 +106,68 @@ function PhysiopathologieSection({ patho }: { patho: Pathologie }) {
       ) : physiopathologie.etapes ? (
         <EtapesList etapes={physiopathologie.etapes} />
       ) : null}
+    </Section>
+  )
+}
+
+function TraitementSection({patho} : {patho: Pathologie}) {
+  const {traitement} = patho
+  if (!traitement) return null
+
+  return (
+    <Section id="traitement" title="Traitement" emoji="💊">
+      <div className="space-y-5">
+
+        <div>
+          <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Objectifs</p>
+          <ul className="space-y-1.5">
+            {traitement.objectifs.map((o) => <Bullet key={o}>{o}</Bullet>)}
+          </ul>
+        </div>
+
+        <div>
+          <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Surveillance</p>
+          <ul className="space-y-1.5">
+            {traitement.surveillance.map((s) => <Bullet key={s}>{s}</Bullet>)}
+          </ul>
+        </div>
+
+        <div>
+          <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Mesures hygiéno-diététiques</p>
+          <ul className="space-y-1.5">
+            {traitement.mesuresHygienoDiet.map((m) => <Bullet key={m}>{m}</Bullet>)}
+          </ul>
+        </div>
+
+        {[
+          { key: "medicaments",       label: "Médicaments" },
+          { key: "chirurgie",         label: "Chirurgie" },
+          { key: "autresTraitements", label: "Autres traitements" },
+        ].map(({ key, label }) => {
+          const items = traitement[key as keyof typeof patho.traitement] as { famille: string; mecanisme: string; exemples?: string[] }[] | undefined
+          if (!items?.length) return null
+          return (
+            <div key={key}>
+              <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">{label}</p>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {items.map((item) => (
+                  <div id={item.famille} key={item.famille} className="border border-stone-100 rounded-xl p-4">
+                    <p className="text-sm font-semibold text-stone-800 mb-1">{item.famille}</p>
+                    <p className="text-xs text-stone-500 leading-relaxed mb-2">{item.mecanisme}</p>
+                    {item.exemples && (
+                      <div className="flex flex-wrap gap-1.5">
+                        {item.exemples.map((ex) => (
+                          <span key={ex} className="text-[11px] bg-stone-50 text-stone-600 px-2 py-0.5 rounded-md border border-stone-100">{ex}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        })}
+      </div>
     </Section>
   )
 }
@@ -314,60 +377,7 @@ export default async function PathologiePage({ params }: { params: Promise<{ slu
                   </MdxWrapper>
               </Section>
             ) : (
-              <Section id="traitement" title="Traitement" emoji="💊">
-                <div className="space-y-5">
-
-                  <div>
-                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Objectifs</p>
-                    <ul className="space-y-1.5">
-                      {patho.traitement.objectifs.map((o) => <Bullet key={o}>{o}</Bullet>)}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Surveillance</p>
-                    <ul className="space-y-1.5">
-                      {patho.traitement.surveillance.map((s) => <Bullet key={s}>{s}</Bullet>)}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2.5">Mesures hygiéno-diététiques</p>
-                    <ul className="space-y-1.5">
-                      {patho.traitement.mesuresHygienoDiet.map((m) => <Bullet key={m}>{m}</Bullet>)}
-                    </ul>
-                  </div>
-
-                  {[
-                    { key: "medicaments",       label: "Médicaments" },
-                    { key: "chirurgie",         label: "Chirurgie" },
-                    { key: "autresTraitements", label: "Autres traitements" },
-                  ].map(({ key, label }) => {
-                    const items = patho.traitement[key as keyof typeof patho.traitement] as { famille: string; mecanisme: string; exemples?: string[] }[] | undefined
-                    if (!items?.length) return null
-                    return (
-                      <div key={key}>
-                        <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">{label}</p>
-                        <div className="grid sm:grid-cols-2 gap-2">
-                          {items.map((item) => (
-                            <div id={item.famille} key={item.famille} className="border border-stone-100 rounded-xl p-4">
-                              <p className="text-sm font-semibold text-stone-800 mb-1">{item.famille}</p>
-                              <p className="text-xs text-stone-500 leading-relaxed mb-2">{item.mecanisme}</p>
-                              {item.exemples && (
-                                <div className="flex flex-wrap gap-1.5">
-                                  {item.exemples.map((ex) => (
-                                    <span key={ex} className="text-[11px] bg-stone-50 text-stone-600 px-2 py-0.5 rounded-md border border-stone-100">{ex}</span>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </Section>
+              <TraitementSection patho={patho} />
             )}
 
             {/* Diététique thérapeutique */}
