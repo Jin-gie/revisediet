@@ -4,6 +4,7 @@ import { krebsNodes, krebsEdges } from './krebs'
 import { ureaNodes, ureaEdges } from './urea'
 import { glycolysisOnlyMetabolites, krebsOnlyMetabolites, metabolites, ureaOnlyMetabolites } from './metabolites'
 import { betaoxydationEdges, betaoxydationNodes } from './betaoxydation'
+import { AGbiosynthesisEdges, AGbiosynthesisNodes } from './agbiosynthesis'
 
 // Dédoublonnage des nœuds par id (un métabolite partagé ne doit apparaître qu'une fois)
 function deduplicateNodes(nodes: MetaboliteNode[]): MetaboliteNode[] {
@@ -14,14 +15,16 @@ const allNodes = deduplicateNodes([
   ...glycolysisNodes, 
   ...krebsNodes, 
   ...ureaNodes,
-  ...betaoxydationNodes
+  ...betaoxydationNodes,
+  ...AGbiosynthesisNodes,
 ])
 
 const allEdges: MetaboliteEdge[] = [
   ...glycolysisEdges, 
   ...krebsEdges, 
   ...ureaEdges,
-  ...betaoxydationEdges
+  ...betaoxydationEdges,
+  ...AGbiosynthesisEdges,
 ]
 
 export function getPathwayElements(active: Pathway[]) {

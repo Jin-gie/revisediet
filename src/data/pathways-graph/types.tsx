@@ -7,7 +7,7 @@ export type Colors = {
   text: string;
 }
 
-export type Pathway = 'glycolysis' | 'krebs' | 'urea' | 'betaoxydation'
+export type Pathway = 'glycolysis' | 'krebs' | 'urea' | 'betaoxydation' | 'AGbiosynthesis'
 
 export type PathwayConfig = {
 	id: Pathway

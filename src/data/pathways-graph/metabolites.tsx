@@ -257,6 +257,181 @@ export const betaoxydationOnlyMetabolites: Record<string, MetaboliteNode> = {
   },
 }
 
+export const AGbiosynthesisOnlyMetabolites: Record<string, MetaboliteNode> = {
+
+  // ── Étape 1 : Synthèse du malonyl-CoA ─────────────────────────────────────
+
+  malonylcoa: {
+    id: 'malonylcoa',
+    type: 'metabolite',
+    position: { x: 2900, y: 750 },
+    data: {
+      label: 'Malonyl-CoA',
+      pathways: ['AGbiosynthesis'],
+      formula: 'C₂₄H₃₈N₇O₁₉P₃S',
+      description: 'Formé par carboxylation irréversible de l\'acétyl-CoA (acétyl-CoA carboxylase, ACC). Étape régulatrice clé de la biosynthèse des acides gras. Plus réactif que l\'acétyl-CoA.',
+    },
+  },
+
+  // ── Hélice de Wakil — intermédiaires ──────────────────────────────────────
+
+  malonyl_acp: {
+    id: 'malonyl_acp',
+    type: 'metabolite',
+    position: { x: 3100, y: 900 },
+    data: {
+      label: 'Malonyl-ACP',
+      pathways: ['AGbiosynthesis'],
+      formula: 'Malonyl-S-ACP',
+      description: 'Le groupement malonyl est transféré du CoA vers l\'ACP (protéine de transport d\'acyle). L\'ACP est liée à la vitamine B5 (acide pantothénique).',
+    },
+  },
+  acetyl_ec: {
+    id: 'acetyl_ec',
+    type: 'metabolite',
+    position: { x: 2900, y: 900 },
+    data: {
+      label: 'Acétyl-EC',
+      pathways: ['AGbiosynthesis'],
+      formula: 'Acétyl-S-EC',
+      description: 'L\'acétyl-CoA de départ est transféré sur le site EC (enzyme de condensation) de l\'acide gras synthase.',
+    },
+  },
+  ketoacyl_acp: {
+    id: 'ketoacyl_acp',
+    type: 'metabolite',
+    position: { x: 3100, y: 1100 },
+    data: {
+      label: 'β-cétoacyl-ACP',
+      pathways: ['AGbiosynthesis'],
+      formula: 'R-CO-CH₂-S-ACP',
+      description: 'Formé par condensation de l\'acétyl-EC et du malonyl-ACP. Libération d\'un CO₂. Addition de 2 carbones à la chaîne.',
+    },
+  },
+  hydroxyacyl_acp: {
+    id: 'hydroxyacyl_acp',
+    type: 'metabolite',
+    position: { x: 3100, y: 1280 },
+    data: {
+      label: 'D-β-hydroxyacyl-ACP',
+      pathways: ['AGbiosynthesis'],
+      formula: 'R-CHOH-CH₂-S-ACP',
+      description: 'Réduction du β-cétoacyl-ACP par la β-cétoacyl réductase. Consomme 1 NADPH. Stéréoisomère D (contrairement à la β-oxydation qui produit le stéréoisomère L).',
+    },
+  },
+  enoyl_acp: {
+    id: 'enoyl_acp',
+    type: 'metabolite',
+    position: { x: 3100, y: 1460 },
+    data: {
+      label: 'Trans-Δ2-énoyl-ACP',
+      pathways: ['AGbiosynthesis'],
+      formula: 'R-CH=CH-S-ACP',
+      description: 'Déshydratation du D-β-hydroxyacyl-ACP. Création d\'une double liaison en Δ2 en configuration trans.',
+    },
+  },
+  acyl_acp: {
+    id: 'acyl_acp',
+    type: 'metabolite',
+    position: { x: 2900, y: 1460 },
+    data: {
+      label: 'Acyl-ACP (n+2 C)',
+      pathways: ['AGbiosynthesis'],
+      formula: 'R-CH₂-CH₂-S-ACP',
+      description: 'Réduction de l\'énoyl-ACP par l\'énoyl réductase. Consomme 1 NADPH. Chaîne allongée de 2 carbones. Transféré sur le site EC pour un nouveau cycle.',
+    },
+  },
+
+  // ── Produits finaux de l'hélice de Wakil ──────────────────────────────────
+
+  palmityl_acp: {
+    id: 'palmityl_acp',
+    type: 'metabolite',
+    position: { x: 2900, y: 1650 },
+    data: {
+      label: 'Palmityl-ACP (C16)',
+      pathways: ['AGbiosynthesis'],
+      formula: 'C₁₆H₃₁-S-ACP',
+      description: 'Obtenu après 7 cycles de l\'hélice de Wakil. Chaîne de 16 carbones encore liée à l\'ACP de l\'acide gras synthase.',
+    },
+  },
+  palmiticacid: {
+    id: 'palmiticacid',
+    type: 'metabolite',
+    position: { x: 2900, y: 1820 },
+    data: {
+      label: 'Acide palmitique (16:0)',
+      pathways: ['AGbiosynthesis'],
+      formula: 'C₁₆H₃₂O₂',
+      description: 'Produit final de l\'acide gras synthase. La palmityl thioestérase hydrolyse la liaison thioester entre le palmityl et l\'ACP. Premier acide gras saturé libre.',
+    },
+  },
+
+  // ── Élongation ─────────────────────────────────────────────────────────────
+
+  stearicacid: {
+    id: 'stearicacid',
+    type: 'metabolite',
+    position: { x: 2900, y: 1990 },
+    data: {
+      label: 'Acide stéarique (18:0)',
+      pathways: ['AGbiosynthesis'],
+      formula: 'C₁₈H₃₆O₂',
+      description: 'Obtenu par élongation de l\'acide palmitique (+2C). Principalement dans le réticulum endoplasmique lisse (malonyl-CoA). Peut aussi se former dans la mitochondrie (acétyl-CoA).',
+    },
+  },
+  arachidicacid: {
+    id: 'arachidicacid',
+    type: 'metabolite',
+    position: { x: 2900, y: 2160 },
+    data: {
+      label: 'Acide arachidique (20:0)',
+      pathways: ['AGbiosynthesis'],
+      formula: 'C₂₀H₄₀O₂',
+      description: 'Obtenu par élongation de l\'acide stéarique (+2C) dans le REL par les élongases.',
+    },
+  },
+
+  // ── Junctions ─────────────────────────────────────────────────────────────
+
+  junction_acc: {
+    id: 'junction_acc',
+    type: 'junction',
+    position: { x: 2900, y: 820 },
+    data: { label: '', pathways: ['AGbiosynthesis'] },
+  },
+  junction_condensation: {
+    id: 'junction_condensation',
+    type: 'junction',
+    position: { x: 3020, y: 990 },
+    data: { label: '', pathways: ['AGbiosynthesis'] },
+  },
+  junction_wakil_loop: {
+    id: 'junction_wakil_loop',
+    type: 'junction',
+    position: { x: 2780, y: 1200 },
+    data: { label: '', pathways: ['AGbiosynthesis'] },
+  },
+  junction_thioesterase: {
+    id: 'junction_thioesterase',
+    type: 'junction',
+    position: { x: 2900, y: 1730 },
+    data: { label: '', pathways: ['AGbiosynthesis'] },
+  },
+  junction_elongase_1: {
+    id: 'junction_elongase_1',
+    type: 'junction',
+    position: { x: 2900, y: 1905 },
+    data: { label: '', pathways: ['AGbiosynthesis'] },
+  },
+  junction_elongase_2: {
+    id: 'junction_elongase_2',
+    type: 'junction',
+    position: { x: 2900, y: 2075 },
+    data: { label: '', pathways: ['AGbiosynthesis'] },
+  },
+}
+
 // Tous les métabolites, sans doublon
 export const metabolites: Record<string, MetaboliteNode> = {
   glucose: {
@@ -281,7 +456,7 @@ export const metabolites: Record<string, MetaboliteNode> = {
     id: 'acetylcoa',
     position: { x: 1250, y: 960 },
     type: 'metabolite',
-    data: { label: 'Acétyl-CoA', pathways: ['glycolysis', 'krebs', 'betaoxydation'], formula: 'C₂₃H₃₈N₇O₁₇P₃S' },
+    data: { label: 'Acétyl-CoA', pathways: ['glycolysis', 'krebs', 'betaoxydation', 'AGbiosynthesis'], formula: 'C₂₃H₃₈N₇O₁₇P₃S' },
   },
   oxaloacetate: {
     id: 'oxaloacetate',
@@ -313,4 +488,5 @@ export const metabolites: Record<string, MetaboliteNode> = {
   ...krebsOnlyMetabolites,
   ...ureaOnlyMetabolites,
   ...betaoxydationOnlyMetabolites,
+  ...AGbiosynthesisOnlyMetabolites,
 }

@@ -41,6 +41,16 @@ export const PATHWAYS: PathwayConfig[] = [
     badge: 'rgba(248, 113, 113, 0.15)',
     text: 'rgba(248, 113, 113, 1)',
   },
+  {
+    id: 'AGbiosynthesis',
+    label: 'Biosynthèse des AG',
+    description: 'Synthèse des acides gras à partir de l\'acétyl-CoA. Comprend la formation du malonyl-CoA (ACC), l\'hélice de Wakil (7 cycles) catalysée par l\'acide gras synthase, et l\'élongation par les élongases dans le REL.',
+    defaultEnabled: true,
+    border: '#38bdf8',   // bleu ciel
+    glow: 'rgba(56, 189, 248, 0.3)',
+    badge: 'rgba(56, 189, 248, 0.15)',
+    text: 'rgba(56, 189, 248, 1)',
+  },
 ]
 
 export const SHARED_COLOR = {

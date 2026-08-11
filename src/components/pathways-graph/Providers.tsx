@@ -58,7 +58,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   }
 
   const glucides = PATHWAYS.filter(p => ['glycolysis', 'krebs'].includes(p.id))
-  const lipides = PATHWAYS.filter(p => ['betaoxydation'].includes(p.id))
+  const lipides = PATHWAYS.filter(p => ['betaoxydation', 'AGbiosynthesis'].includes(p.id))
   const protides = PATHWAYS.filter(p => ['urea'].includes(p.id))
   
   return (
