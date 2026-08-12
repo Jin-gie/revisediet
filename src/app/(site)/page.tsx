@@ -44,15 +44,6 @@ const SECTIONS = [
   },
 ];
 
-const POPULATIONS = [
-  { emoji: "🧑", label: "Adulte sain", href: "/populations/adulte" },
-  { emoji: "👶", label: "Enfant / ado", href: "/populations/enfant" },
-  { emoji: "🤰", label: "Femme enceinte", href: "/populations/grossesse" },
-  { emoji: "👴", label: "Personne âgée", href: "/populations/personne-agee" },
-  { emoji: "🏃", label: "Sportif", href: "/populations/sportif" },
-  { emoji: "🌿", label: "Végétarien / vegan", href: "/populations/vegetarien" },
-];
-
 const PATHOLOGIES = [
   { emoji: "🩸", label: "Diabète (1 & 2)", href: "/pathologies/diabete" },
   { emoji: "⚖️", label: "Obésité / surpoids", href: "/pathologies/obesite" },
@@ -121,27 +112,6 @@ function SectionCard({ section }: { section: typeof SECTIONS[0] }) {
   );
 }
 
-function FicheGrid({ title, items }: { title: string; items: typeof POPULATIONS }) {
-  return (
-    <div>
-      <h3 className="text-xs font-semibold text-stone-400 uppercase tracking-widest mb-4">{title}</h3>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-        {items.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="flex items-center gap-2.5 px-3.5 py-3 bg-white border border-stone-100 rounded-xl hover:border-emerald-200 hover:bg-emerald-50/40 transition-all group"
-          >
-            <span className="text-lg">{item.emoji}</span>
-            <span className="text-sm font-medium text-stone-700 group-hover:text-emerald-800 transition-colors">
-              {item.label}
-            </span>
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 
@@ -195,10 +165,6 @@ export default function HomePage() {
           {/* <Link href="/apprendre" className="text-sm text-emerald-700 hover:underline">
             Voir tout →
           </Link> */}
-        </div>
-        <div className="grid md:grid-cols-2 gap-8">
-          <FicheGrid title="Populations" items={POPULATIONS} />
-          <FicheGrid title="Pathologies" items={PATHOLOGIES} />
         </div>
       </section>
 
