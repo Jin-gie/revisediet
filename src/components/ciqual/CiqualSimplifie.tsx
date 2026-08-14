@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import data from "@/data/ciqual-simplifie.json"
+import data from "@/data/ciqual-simplifie-ration.json"
 
 type Row = typeof data[0]
 
@@ -9,12 +9,12 @@ const COLUMNS: { key: keyof Row; label: string; unit: string; color: string }[] 
   { key: "proteines",  label: "P",       unit: "g",  color: "text-red-500" },
   { key: "lipides",    label: "L",       unit: "g",  color: "text-amber-400" },
   { key: "glucides",   label: "G",       unit: "g",  color: "text-blue-500" },
+  { key: "fibres",     label: "Fibres",  unit: "g",  color: "text-stone-500" },
   { key: "calcium",    label: "Ca",      unit: "mg", color: "text-cyan-500" },
   { key: "fer",        label: "Fer",     unit: "mg", color: "text-stone-500" },
   { key: "sodium",     label: "Na",      unit: "mg", color: "text-orange-400" },
   { key: "potassium",  label: "K",       unit: "mg", color: "text-stone-500" },
   { key: "vitamine_c", label: "Vit C",   unit: "mg", color: "text-emerald-500" },
-  { key: "fibres",     label: "Fibres",  unit: "g",  color: "text-stone-500" },
 ]
 
 const GROUPES = Array.from(new Set(data.map((d) => d.groupe)))

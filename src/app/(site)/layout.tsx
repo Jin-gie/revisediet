@@ -40,6 +40,7 @@ export default function SiteLayout({
           <div>
             <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Apprendre</p>
             <ul className="space-y-2 text-sm text-stone-500">
+              <li><a href="/portions" className="hover:text-emerald-700 transition-colors">Fiche portions</a></li>
               <li><a href="/populations" className="hover:text-emerald-700 transition-colors">Fiches populations</a></li>
               <li><a href="/pathologies" className="hover:text-emerald-700 transition-colors">Fiches pathologies</a></li>
               <li><a href="/flashcards" className="hover:text-emerald-700 transition-colors">Flashcards</a></li>

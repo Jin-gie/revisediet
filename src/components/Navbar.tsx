@@ -36,6 +36,7 @@ const NAV_ITEMS = [
       {
         title: "Fiches",
         items: [
+          { emoji: "🍽️", label: "Portions", sub: "Grammages de référence par âge et repas", href: "/portions" },
           { emoji: "👥", label: "Par population", sub: "Adulte, enfant, sportif, senior…", href: "/populations" },
           { emoji: "🩺", label: "Par pathologie", sub: "Diabète, IRC, obésité, TCA…", href: "/pathologies" },
         ],

@@ -36,6 +36,7 @@ const SECTIONS = [
     ctaHref: "/apprendre",
     ctaStyle: "bg-stone-900 text-white hover:bg-stone-800",
     items: [
+      { emoji: "🍽️", label: "Portions", href: "/rations"},
       { emoji: "👥", label: "Fiches populations", href: "/populations" },
       { emoji: "🩺", label: "Fiches pathologies", href: "/pathologies" },
       { emoji: "🃏", label: "Flashcards ANC & valeurs", href: "/flashcards" },

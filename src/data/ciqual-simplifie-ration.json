@@ -1,0 +1,38 @@
+[
+  { 
+    "aliment": "Lait ½ écrémé", "groupe": "Produits laitiers", "proteines": 3, "lipides": 2, "glucides": 5, "calcium": 120, "sodium": 40, "potassium": 160, "vitamine_c": null, "fibres": null 
+  },
+  { 
+    "aliment": "Yaourt 1 pot 125 g", "groupe": "Produits laitiers", "proteines": 5, "lipides": 3, "glucides": 7, "calcium": 160, "fer": 0.25, "sodium": 50, "potassium": 160, "vitamine_c": null, "fibres": null 
+  },
+  { 
+    "aliment": "Fromage moy", "groupe": "Produits laitiers", "proteines": 20, "lipides": 27, "glucides": null, "calcium": 600, "fer": 0.3, "sodium": 510, "potassium": 120, "vitamine_c": null, "fibres": null 
+  },
+  { 
+    "aliment": "VPO moy", "groupe": "Viandes / Poissons / Œufs", "proteines": 20, "lipides": 10, "glucides": null, "calcium": 35, "fer": 2, "sodium": 130, "potassium": 300, "vitamine_c": null, "fibres": null 
+  },
+  { 
+    "aliment": "Pain", "groupe": "Féculents", "proteines": 8, "lipides": 1, "glucides": 55, "calcium": 30, "fer": 0.5, "sodium": 500, "potassium": 160, "vitamine_c": null, "fibres": 4 
+  },
+  { 
+    "aliment": "Féculent cru et assimilés", "groupe": "Féculents", "proteines": 5, "lipides": null, "glucides": 70, "calcium": 20, "fer": 1, "sodium": 10, "potassium": 160, "vitamine_c": null, "fibres": 2
+  },
+  { 
+    "aliment": "Légumes moy", "groupe": "Légumes", "proteines": 2, "lipides": null, "glucides": 5, "calcium": 30, "fer": 0.5, "sodium": 20, "potassium": 260, "vitamine_c": 10, "fibres": 3 
+  },
+  { 
+    "aliment": "Fruits moy", "groupe": "Fruits", "proteines": null, "lipides": null, "glucides": 12, "calcium": 15, "fer": null, "sodium": 3.5, "potassium": 200, "vitamine_c": 20, "fibres": 2 
+  },
+  { 
+    "aliment": "Fruits à coque", "groupe": "Matières grasses", "proteines": 15, "lipides": 55, "glucides": 10, "calcium": 120, "fer": 3, "sodium": 5, "potassium": 860, "vitamine_c": 20, "fibres": 12 
+  },
+  { 
+    "aliment": "Beurre", "groupe": "Matières grasses", "proteines": null, "lipides": 82, "glucides": null, "calcium": 20, "fer": null, "sodium": 25, "potassium": 30, "vitamine_c": null, "fibres": null 
+  },
+  { 
+    "aliment": "Huile", "groupe": "Matières grasses", "proteines": null, "lipides": 100, "glucides": null, "calcium": null, "fer": null, "sodium": 3.8, "potassium": 0.2, "vitamine_c": null, "fibres": null 
+  },
+  { 
+    "aliment": "Sucre", "groupe": "Glucides", "proteines": null, "lipides": null, "glucides": 100, "calcium": null, "fer": null, "sodium": null, "potassium": 15, "vitamine_c": null, "fibres": null 
+  }
+]
