@@ -170,3 +170,98 @@ html, body {
   min-height: 0 !important;
   box-shadow: none !important;
 }
+
+.prose h2 {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: #1c1917 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.prose h3 {
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: #44403c !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.prose p {
+  font-size: 0.875rem !important;
+  color: #78716c !important;
+  line-height: 1.6 !important;
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.prose ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.prose ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.prose li {
+  display: list-item !important;
+  font-size: 0.875rem !important;
+  color: #78716c !important;
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.prose ul ul,
+.prose ol ol,
+.prose ul ol,
+.prose ol ul {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
+  padding-left: 1.25rem !important;
+}
+
+.prose li {
+  font-size: 0.875rem !important;
+  color: #78716c !important;
+}
+
+.prose table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin-top: 0.75rem !important;
+  margin-bottom: 1rem !important;
+  font-size: 0.875rem !important;
+}
+
+.prose thead {
+  border-bottom: 2px solid #e7e5e4 !important;
+}
+
+.prose th {
+  text-align: left !important;
+  padding: 0.5rem 0.75rem !important;
+  font-weight: 600 !important;
+  color: #44403c !important;
+  font-size: 0.8125rem !important;
+}
+
+.prose td {
+  padding: 0.5rem 0.75rem !important;
+  color: #78716c !important;
+  border-bottom: 1px solid #f5f5f4 !important;
+  vertical-align: top !important;
+}
+
+.prose tbody tr:hover {
+  background-color: #fafaf9 !important;
+}
+
+.prose tbody tr:nth-child(even) {
+  background-color: #fafaf9 !important;
+}
