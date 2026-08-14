@@ -60,26 +60,31 @@ export default function PopulationsPage() {
 
           <div className="grid sm:grid-cols-2 gap-3 mb-6">
             {pop.aet.valeurs.map((v) => {
-              const kcal = parseInt(v.kcal.replace(/[^\d]/g, ""));
-              const kj = isNaN(kcal) ? null : kcalToKj(kcal);
               return (
                 <div
                   key={v.profil}
                   className="bg-stone-50 rounded-xl p-4 text-center border border-stone-100"
                 >
                   <p className="text-xs text-stone-400 mb-1">{v.profil}</p>
-                  {kj && <p className="font-serif text-xl text-emerald-700">{kj.toLocaleString("fr-FR")} kJ</p>}
+                  <p className="font-serif text-xl text-emerald-700">{v.kJ}</p>
                   <p className="text-xs text-stone-400 mt-0.5">{v.kcal}</p>
                 </div>
               );
             })}
           </div>
 
-          <AETCalculatrice 
-            formuleNom= {pop.formule.nom}
-            formuleFemme={pop.formule.femme}
-            formuleHomme={pop.formule.homme}
-          />
+          {pop.formule ? (
+            <AETCalculatrice 
+              formuleNom= {pop.formule.nom}
+              formuleFemme={pop.formule.femme}
+              formuleHomme={pop.formule.homme}
+              status = {pop.slug}
+            />
+          ) : (
+            <p className="text-sm text-stone-500">
+              Pas de formule individuelle : utiliser les valeurs moyennes.
+            </p>
+          )}
         </div>
 
         {/* Tableau de justification */}

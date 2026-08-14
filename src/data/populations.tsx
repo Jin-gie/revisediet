@@ -7,6 +7,8 @@
 
 import type { Formule } from "@/lib/calculs";
 
+export type PopulationSlug =  'adulte' | 'allaitement' | 'grossesse' | 'personne-agee' | 'bebe' | 'enfant-ados' | 'sportif' | 'vegetarien';
+
 // ─────────────────────────────────────────────────────────────────────────
 // Formules de métabolisme de base (MB).
 //
@@ -61,6 +63,46 @@ const BLACK_ET_AL: Formule = {
   },
 };
 
+const HENRY: Formule = {
+  nom: "Henry",
+  femme : {
+    text : (
+      <>
+        MB = 0,0424 x P + 2,38
+      </>
+    ),
+    calcMB: (poids) => 0.0424 * poids + 2.38
+  },
+  homme : {
+    text : (
+      <>
+        MB = 0,0563 x P + 2,15
+      </>
+    ),
+    calcMB : (poids) => 0.0563 * poids + 2.15
+  }
+}
+
+const ADO: Formule = {
+  nom: "Formule à utiliser uniquement au-dessus de 10 ans.",
+  femme: {
+    text: (
+      <>
+        MB = (30,9 x P) + (2016,6 x T) + 907
+      </>
+    ),
+    calcMB: (poids, taille) => 30.9*poids + 2016.6*taille + 907
+  },
+  homme : {
+    text: (
+      <>
+        MB = (69,4 x P) + (322 * T) + 2392
+      </>
+    ),
+    calcMB: (poids, taille) => 69.4*poids + 322*taille + 2392
+  }
+}
+
 // Exemple pour une future formule dans un tout autre style (juste pour
 // montrer que n'importe quelle forme de calcul fonctionne sans changement
 // ailleurs dans le code) :
@@ -75,15 +117,15 @@ const BLACK_ET_AL: Formule = {
 // };
 
 export type Population = {
-  slug: string;
+  slug: PopulationSlug;
   label: string;
   emoji: string;
   description: string;
   tags: string[];
-  formule: Formule;
+  formule?: Formule;
   aet: {
     description: string;
-    valeurs: { profil: string; kcal: string }[];
+    valeurs: { profil: string; kcal: string; kJ: string }[];
   };
 };
 
@@ -98,29 +140,52 @@ export const POPULATIONS: Population[] = [
     aet: {
       description: "L'AET varie selon le sexe, l'âge et le NAP. Valeurs pour NAP modéré (1,63).",
       valeurs: [
-        { profil: "Femme (NAP 1,6)", kcal: "2 100 kcal" },
-        { profil: "Homme (NAP 1,6)", kcal: "2 600 kcal" },
+        { profil: "Femme (NAP 1,6)", kcal: "2 100 kcal", kJ: "8,8 MJ" },
+        { profil: "Homme (NAP 1,6)", kcal: "2 600 kcal", kJ: "10,9 MJ" },
       ],
     },
   },
   {
-    slug: "enfant",
-    label: "Enfant & adolescent",
+    slug: "bebe",
+    label: "0-3 ans",
     emoji: "👶",
-    description: "De 3 à 17 ans, période de croissance intense avec des besoins nutritionnels élevés.",
+    description: "De 0 à 3 ans, période de croissance intense avec des besoins nutritionnels élevé.",
+    tags: ["Croissance", "3–17 ans"],
+    aet: {
+      description: "Les besoins augmentent fortement avec l'âge.",
+      valeurs: [
+        { profil: "0-12 mois", kcal: "92 kcal/kg/j", kJ: "385 kJ/kg/j" },
+        { profil : " ", kcal: " ", kJ: " "},
+        { profil: "Fille 1 an", kcal: "TODO kcal", kJ: "3,8 MJ" },
+        { profil: "Garçon 1 an", kcal: "TODO kcal", kJ: "4 MJ" },
+        { profil: "Fille 2 an", kcal: "TODO kcal", kJ: "4,4 MJ" },
+        { profil: "Garçon 2 ans", kcal: "TODO kcal", kJ: "4,8 MJ" },
+        { profil: "Fille 3 an", kcal: "TODO kcal", kJ: "4,8 MJ" },
+        { profil: "Garçon 3 an", kcal: "TODO kcal", kJ: "5,1 MJ" },
+      ],
+    },
+  },
+  {
+    slug: "enfant-ados",
+    label: "Enfant & adolescent",
+    emoji: "🧒",
+    description: "De 4 à 17 ans, période de croissance intense avec des besoins nutritionnels élevés.",
     tags: ["Croissance", "3–17 ans"],
     // TODO : Harris & Benedict n'est validée que pour l'adulte. BLACK_ET_AL
     // est disponible en exemple (à vérifier/remplacer par la formule
     // pédiatrique de ton choix, ex: Schofield, OMS/FAO).
-    formule: HARRIS_BENEDICT_REVISEE,
+    formule: ADO,
     aet: {
-      description: "Les besoins augmentent fortement avec l'âge et le pic de croissance pubertaire.",
+      description: "Les besoins augmentent fortement avec l'âge et le pic de croissance pubertaire. Jusqu'à 10 ans, prendre uniquement les valeurs moyennes de population.",
       valeurs: [
-        { profil: "Enfant 3–5 ans", kcal: "1 250 kcal" },
-        { profil: "Enfant 6–9 ans", kcal: "1 600 kcal" },
-        { profil: "Enfant 10–12 ans", kcal: "1 900 kcal" },
-        { profil: "Ado fille 13–17 ans", kcal: "2 000 kcal" },
-        { profil: "Ado garçon 13–17 ans", kcal: "2 400 kcal" },
+        { profil: "Fille 4-6 ans", kcal: "TODO kcal", kJ: "5,9 MJ" },
+        { profil: "Garçon 4-6 ans", kcal: "TODO kcal", kJ: "6,4 MJ" },
+        { profil: "Fille 7-10 ans", kcal: "TODO kcal", kJ: "7,2 MJ" },
+        { profil: "Garçon 7-10 ans", kcal: "TODO kcal", kJ: "7,7 MJ" },
+        { profil: "Fille 11-14 ans", kcal: "TODO kcal", kJ: "8,6 MJ" },
+        { profil: "Garçon 11-14 ans", kcal: "TODO kcal", kJ: "9,5 MJ" },
+        { profil: "Fille 15-17 ans", kcal: "TODO kcal", kJ: "9,4 MJ" },
+        { profil: "Garçon 15-17 ans", kcal: "TODO kcal", kJ: "11,8 MJ" },
       ],
     },
   },
@@ -130,14 +195,13 @@ export const POPULATIONS: Population[] = [
     emoji: "👴",
     description: "Personnes de 65 ans et plus. Risque de dénutrition, sarcopénie et carences spécifiques.",
     tags: ["65 ans et +", "Dénutrition"],
-    formule: HARRIS_BENEDICT_REVISEE,
+    formule: HENRY,
     aet: {
       description: "L'AET diminue avec l'âge mais les besoins en protéines restent élevés pour prévenir la sarcopénie.",
       valeurs: [
-        { profil: "Femme 65–74 ans", kcal: "1 800 kcal" },
-        { profil: "Femme 75 ans et +", kcal: "1 600 kcal" },
-        { profil: "Homme 65–74 ans", kcal: "2 100 kcal" },
-        { profil: "Homme 75 ans et +", kcal: "1 900 kcal" },
+        { profil: "Femme > 65 ans", kcal: "TODO kcal", kJ: "7,8 MJ" },
+        { profil: "Homme > 65 ans", kcal: "TODO kcal", kJ: "9,6 MJ" },
+        { profil: "Femmes ménopausées 50-60 ans", kcal: "TODO kcal", kJ: "8,6 MJ" },
       ],
     },
   },
@@ -147,15 +211,29 @@ export const POPULATIONS: Population[] = [
     emoji: "🤰",
     description: "Grossesse unique sans complication. Besoins augmentés pour la croissance fœtale et les modifications maternelles.",
     tags: ["Grossesse", "Prénatal"],
-    formule: HARRIS_BENEDICT_REVISEE,
+    formule: BLACK_ET_AL,
     aet: {
-      description: "Le surplus calorique est modeste et évolue selon le trimestre. La qualité prime sur la quantité.",
+      description: "Le surplus calorique évolue selon le trimestre. La qualité prime sur la quantité.",
       valeurs: [
-        { profil: "1er trimestre (+0 kcal)", kcal: "≈ 2 000 kcal" },
-        { profil: "2e trimestre (+300 kcal)", kcal: "≈ 2 300 kcal" },
-        { profil: "3e trimestre (+500 kcal)", kcal: "≈ 2 500 kcal" },
+        { profil: "1er trimestre (+0,3 MJ)", kcal: "2 000 kcal" , kJ: "9,1 MJ"},
+        { profil: "2e trimestre (+1,1 MJ)", kcal: "2 300 kcal", kJ: "9,9 MJ" },
+        { profil: "3e trimestre (+2 MJ)", kcal: "2 500 kcal", kJ: "10,8 MJ" },
       ],
     },
+  },
+  {
+    slug: "allaitement",
+    label: "Allaitement",
+    emoji: "🤱",
+    description: "Allaitement. Besoins augmentés pour cicatrisation post-accouchement et production de lait maternel.",
+    tags: ["Allaitement"],
+    formule: BLACK_ET_AL, 
+    aet: {
+      description : "Surplus calorique de 500 kcal (2,1 MJ).",
+      valeurs: [
+        { profil : "Toute personne (+2 MJ)", kcal: "2 600 kcal", kJ: "10,8 MJ"}
+      ]
+    }
   },
   {
     slug: "sportif",
@@ -163,32 +241,32 @@ export const POPULATIONS: Population[] = [
     emoji: "🏃",
     description: "Pratique sportive régulière et intensive. Besoins énergétiques et en macronutriments augmentés.",
     tags: ["Sport", "Performance"],
-    formule: HARRIS_BENEDICT_REVISEE,
+    formule: BLACK_ET_AL,
     aet: {
-      description: "L'AET dépend de la discipline, de l'intensité et du volume. Valeurs indicatives pour un sport d'endurance.",
+      description: "L'AET dépend de la discipline, de l'intensité et du volume. Valeurs indicatives pour un sport d'endurance. Voici les valeurs du MB (hors NAP).",
       valeurs: [
-        { profil: "Sportive endurance (modéré)", kcal: "2 200–2 500 kcal" },
-        { profil: "Sportif endurance (modéré)", kcal: "2 700–3 000 kcal" },
-        { profil: "Sportif endurance (intense)", kcal: "3 500–4 500 kcal" },
-        { profil: "Sport de force / musculation", kcal: "3 000–4 000 kcal" },
+        { profil: "Femme, majoré de 5% (hors NAP)", kcal: "TODO kcal", kJ: "5,7 MJ" },
+        { profil: "Homme, majoré de 5% (hors NAP)", kcal: "TODO kcal", kJ: "7 MJ" },
+        { profil: "Femme, mojoré de 10% (hors NAP)", kcal: "TODO kcal", kJ: "6 MJ" },
+        { profil: "Homme, majoré de 10% (hors NAP)", kcal: "TODO kcal", kJ: "7,4 MJ" },
       ],
     },
   },
-  {
-    slug: "vegetarien",
-    label: "Végétarien / vegan",
-    emoji: "🌿",
-    description: "Régime végétarien (sans viande ni poisson) ou vegan (sans aucun produit animal). Carences spécifiques à prévenir.",
-    tags: ["Végétarien", "Vegan"],
-    formule: HARRIS_BENEDICT_REVISEE,
-    aet: {
-      description: "L'AET est identique à la population générale. Les ajustements portent sur la qualité et la complémentarité des protéines.",
-      valeurs: [
-        { profil: "Femme végétarienne/vegan", kcal: "2 000 kcal" },
-        { profil: "Homme végétarien/vegan", kcal: "2 500 kcal" },
-      ],
-    },
-  },
+  // {
+  //   slug: "vegetarien",
+  //   label: "Végétarien / vegan",
+  //   emoji: "🌿",
+  //   description: "Régime végétarien (sans viande ni poisson) ou vegan (sans aucun produit animal). Carences spécifiques à prévenir.",
+  //   tags: ["Végétarien", "Vegan"],
+  //   formule: HARRIS_BENEDICT_REVISEE,
+  //   aet: {
+  //     description: "L'AET est identique à la population générale. Les ajustements portent sur la qualité et la complémentarité des protéines.",
+  //     valeurs: [
+  //       { profil: "Femme végétarienne/vegan", kcal: "2 000 kcal" },
+  //       { profil: "Homme végétarien/vegan", kcal: "2 500 kcal" },
+  //     ],
+  //   },
+  // },
 ];
 
 export function getPopulation(slug: string): Population | undefined {

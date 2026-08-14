@@ -29,6 +29,7 @@ export type Formule = {
   nom: string;
   femme: FormuleSexe;
   homme: FormuleSexe;
+
 };
 
 export function calcAET(
@@ -36,13 +37,21 @@ export function calcAET(
   taille: number, // m (ex: 1.75)
   age: number,
   formuleSexe: FormuleSexe,
-  nap: number = 1.63
+  nap: number = 1.63,
+  T1 : boolean = false,
+  T2 : boolean = false,
+  T3 : boolean = false,
+  allaite : boolean = false
 ): number | null {
   if (!poids || !taille || !age || poids <= 0 || taille <= 0 || age <= 0) return null;
-  const mb = formuleSexe.calcMB(poids, taille, age);
-  console.log(0.963 * Math.pow(poids, 0.48) * Math.pow(taille, 0.5) * Math.pow(age, -0.13))
-  console.log("mb : ", mb*nap)
-  return Math.round(mb * nap * 10) / 10;
+  const mb = formuleSexe.calcMB(poids, taille, age) * nap;
+
+  return (
+    T1 ? Math.round((mb + 300) * 10) / 10 :
+    T2 ? Math.round((mb + 1100) * 10) / 10:
+    T3 || allaite ? Math.round((mb + 2000) * 10) / 10:
+    Math.round(mb * 10) / 10
+  )
 }
 
 export function kcalToKj(kcal: number): number {

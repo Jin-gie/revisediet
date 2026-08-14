@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Logo from "@/assets/logo.svg";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function SiteLayout({
   children,
@@ -13,6 +14,8 @@ export default function SiteLayout({
       <main>
         {children}
       </main>
+
+      <ScrollToTop />
 
       <footer className="border-t border-stone-100 bg-white mt-24">
         <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">

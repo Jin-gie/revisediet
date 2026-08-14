@@ -3,28 +3,41 @@
 
 import { useState } from "react";
 import { calcAET, kcalToKj, parseDecimal, FormuleSexe, kjToKcal } from "@/lib/calculs";
+import { PopulationSlug } from "@/data/populations";
 
 type AETCalculatriceProps = {
   /** Nom / source de la formule, ex: "Harris & Benedict révisé — Roche et al., 1984" */
   formuleNom: string;
   formuleFemme: FormuleSexe;
   formuleHomme: FormuleSexe;
+  status : PopulationSlug;
 };
 
-export default function AETCalculatrice({ formuleNom, formuleFemme, formuleHomme }: AETCalculatriceProps) {
+type Trimestre = 1 | 2 | 3;
+
+const SUPPLEMENT_TRIMESTRE_MJ: Record<Trimestre, number> = {
+  1: 300,
+  2: 1100,
+  3: 2000
+}
+
+export default function AETCalculatrice({ formuleNom, formuleFemme, formuleHomme, status }: AETCalculatriceProps) {
   const [sexe, setSexe] = useState<"homme" | "femme">("femme");
   const [poids, setPoids] = useState("");
   const [taille, setTaille] = useState("");
   const [age, setAge] = useState("");
   const [NAP, setNAP] = useState("1.63");
+  const [trimestre, setTrimestre] = useState<Trimestre>(1)
 
   const poidsNum = parseDecimal(poids);
   const tailleNum = parseDecimal(taille); // en mètres, ex: 1.75
   const ageNum = parseDecimal(age);
   const napNum = parseDecimal(NAP) || 1.63;
 
-  const formule = sexe === "femme" ? formuleFemme : formuleHomme;
-  const aet = calcAET(poidsNum, tailleNum, ageNum || 30, formule, napNum);
+  const formule = status === "grossesse" || status === "allaitement" || sexe === "femme" ? formuleFemme : formuleHomme;
+  const aetBase = calcAET(poidsNum, tailleNum, ageNum || 30, formule, napNum);
+  const supplement = status === "grossesse" ? SUPPLEMENT_TRIMESTRE_MJ[trimestre] : 0;
+  const aet = aetBase !== null ? aetBase + supplement : null;
 
   return (
     <div className="space-y-4">
@@ -33,7 +46,21 @@ export default function AETCalculatrice({ formuleNom, formuleFemme, formuleHomme
       </p>
 
       <div className="flex flex-wrap gap-2 items-end" suppressHydrationWarning>
-        {(["femme", "homme"] as const).map((s) => (
+        {status === "grossesse" ? (
+          <div className="flex flex-col gap-1">
+            <label className="text-[11px] text-stone-400 font-medium px-1">Trimestre</label>
+            <select
+              value={trimestre}
+              onChange={(e) => setTrimestre(Number(e.target.value) as Trimestre)}
+              className="px-3 py-2 text-sm rounded-lg border border-stone-200 bg-white text-stone-700 focus:outline-none focus:border-emerald-400 transition-colors"
+            >
+              <option value={1}>Trimestre 1</option>
+              <option value={2}>Trimestre 2</option>
+              <option value={3}>Trimestre 3</option>
+            </select>
+          </div>
+
+        ) : (["femme", "homme"] as const).map((s) => (
           <button
             key={s}
             onClick={() => setSexe(s)}
@@ -98,7 +125,7 @@ export default function AETCalculatrice({ formuleNom, formuleFemme, formuleHomme
         <p className="text-xs text-stone-500 font-mono leading-relaxed">
           {formule.text}
           <br />
-          AET = MB × NAP ({napNum})
+          AET = MB × NAP ({napNum}) {status === "grossesse" && supplement > 0 ? ` + ${supplement} kJ` : ''} {status === "allaitement" && ' + 2000 kJ'}
         </p>
         <p className="text-[11px] text-stone-400 mt-2">
           P = poids (kg) · T = taille (m) · Â = âge (ans)
