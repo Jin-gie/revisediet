@@ -1,7 +1,5 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
-import { POPULATIONS } from "@/data/populations"
-import { PATHOLOGIES } from "@/data/pathologies"
 import SuiviClient from "@/components/SuiviClient"
 
 export default async function SuiviPage() {
@@ -9,15 +7,32 @@ export default async function SuiviPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect("/connexion?redirect=/suivi")
 
-  const { data: progress } = await supabase
-    .from("user_progress")
-    .select("*")
-    .eq("user_id", user.id)
+  console.log(user.id)
 
-  const items = [
-    ...POPULATIONS.map((p) => ({ type: "population" as const, slug: p.slug, label: p.label, emoji: p.emoji })),
-    ...PATHOLOGIES.map((p) => ({ type: "pathologie" as const, slug: p.slug, label: p.label, emoji: p.emoji })),
-  ]
+  const [{ data: subjects }, { data: modules }, { data: exercices }] = await Promise.all([
+    supabase
+      .from("subjects")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("position", { ascending: true }),
+    supabase
+      .from("modules")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("position", { ascending: true }),
+    supabase
+      .from("corrected_exercises")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("position", { ascending: true }),
+  ])
 
-  return <SuiviClient items={items} progress={progress ?? []} userId={user.id} />
+  return (
+    <SuiviClient
+      userId={user.id}
+      initialSubjects={subjects ?? []}
+      initialModules={modules ?? []}
+      initialExercices={exercices ?? []}
+    />
+  )
 }
