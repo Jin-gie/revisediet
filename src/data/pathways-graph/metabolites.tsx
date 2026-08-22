@@ -438,13 +438,13 @@ export const metabolites: Record<string, MetaboliteNode> = {
     id: 'glucose',
     position: { x: 250, y: 0 },
     type: 'metabolite',
-    data: { label: 'Glucose', pathways: ['glycolysis'], formula: 'C₆H₁₂O₆', description: 'Glucose is the primary source of energy for most cells.' },
+    data: { label: 'Glucose', pathways: ['glycolysis'], formula: 'C₆H₁₂O₆', description: "Source primaire d'énergie de la plupart des cellules. Il provient de l'alimentation (amidon, glycogène, lactose, saccharose, etc. contenu dans les féculents, légumes, fruits, produits laitiers et confiseries), surtout en contexte post-prandial. Il a aussi une origine endogène en contexte de jeune, d'abord de la glycogénolyse, puis de la néoglucogenèse." },
   },
   g6p: {
     id: 'g6p',
     position: {x: 250, y:120},
     type: 'metabolite',
-    data: {label: 'Glucose 6-P', pathways: ['glycolysis'], formula: 'C₆H₁₂O₆'}
+    data: {label: 'Glucose 6-P', pathways: ['glycolysis'], formula: 'C₆H₁₂O₆', description: "Glucose phosphorylé pour éviter qu'il ne sorte de la cellule."}
   },
   pyruvate: {
     id: 'pyruvate',

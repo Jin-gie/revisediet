@@ -21,7 +21,7 @@ export const krebsEdges: MetaboliteEdge[] = [
     label: 'Pyruvate DH',
     sourceHandle: 'source-right',
     targetHandle: 'target-left',
-    data: { pathway: 'krebs', enzyme: 'Pyruvate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', ecNumber: 'EC 1.2.4.1' },
+    data: { pathway: 'krebs', enzyme: 'Pyruvate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', ecNumber: 'EC 1.2.4.1', description: "Réaction de décarboxylation oxydative. Se fait en milieu aérobie, dans la mitochondrie : le pyruvate entre dans la mitochondrie grâce à une protéine membranaire spécifique avec un transport de type facilité."  },
   },
   // Entrée dans le cycle
   // Acétyl-CoA → junction

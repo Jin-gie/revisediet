@@ -128,6 +128,6 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('pyruvate', 'acetylcoa'),
     type: 'enzyme',
     label: 'Pyruvate DH',
-    data: { pathway: 'glycolysis', enzyme: 'Pyruvate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂' },
+    data: { pathway: 'glycolysis', enzyme: 'Pyruvate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', description: "Réaction de décarboxylation oxydative. Se fait en milieu aérobie, dans la mitochondrie : le pyruvate entre dans la mitochondrie grâce à une protéine membranaire spécifique avec un transport de type facilité." },
   },
 ]

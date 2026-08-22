@@ -4,7 +4,7 @@ export const PATHWAYS: PathwayConfig[] = [
   {
     id: 'glycolysis',
     label: 'Glycolyse',
-    description: 'Dégradation du glucose en pyruvate, produisant 2 ATP et 2 NADH. Se déroule dans le cytoplasme.',
+    description: '1 Glucose (6C) + 2 NAD+ + 2 ADP + 2 Pi → 2 pyruvate (3C) + 2 ATP + 2 H2O + 2 NADH, H+. Dégradation du glucose en pyruvate, produisant 2 ATP et 2 NADH. Se déroule dans le cytoplasme.',
     defaultEnabled: true,
     border: '#34d399',  // vert émeraude
     glow: 'rgba(52, 211, 153, 0.3)',

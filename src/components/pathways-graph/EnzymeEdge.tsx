@@ -45,6 +45,8 @@ export const EnzymeEdge = memo(({
     hideTimeout.current = setTimeout(() => setVisible(false), 150)
   }
 
+  console.log(data?.description)
+
   return (
     <>
       <BaseEdge
