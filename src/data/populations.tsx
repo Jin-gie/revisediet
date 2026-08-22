@@ -103,18 +103,15 @@ const ADO: Formule = {
   }
 }
 
-// Exemple pour une future formule dans un tout autre style (juste pour
-// montrer que n'importe quelle forme de calcul fonctionne sans changement
-// ailleurs dans le code) :
-//
-// const MA_NOUVELLE_FORMULE: Formule = {
-//   nom: "Nom, année",
-//   femme: {
-//     text: <>MB = ...</>,
-//     calcMB: (poids, taille, age) => { /* ton calcul ici */ return 0; },
-//   },
-//   homme: { ... },
-// };
+export type RepereGroupe = {
+  /** Nom du groupe alimentaire, ex: "Produits laitiers" */
+  groupe: string;
+  emoji?: string;
+  /** Nombre de portions/jour, ex: "3 à 4" */
+  portionsParJour: string;
+  /** Ex: "150 ml de lait ou 1 yaourt ou 30 g de fromage" */
+  tailleReference?: string;
+};
 
 export type Population = {
   slug: PopulationSlug;
@@ -126,6 +123,13 @@ export type Population = {
   aet: {
     description: string;
     valeurs: { profil: string; kcal: string; kJ: string }[];
+  };
+  reperes?: {
+    introduction?: string;
+    groupes: RepereGroupe[];
+    alimentsFavoriser?: string[];
+    alimentsLimiter?: string[];
+    particularites?: string[];
   };
 };
 
@@ -144,10 +148,32 @@ export const POPULATIONS: Population[] = [
         { profil: "Homme (NAP 1,6)", kcal: "2 600 kcal", kJ: "10,9 MJ" },
       ],
     },
+    reperes: {
+      introduction: "Repères PNNS pour un adulte sans pathologie, en dehors de toute restriction particulière.",
+      groupes: [
+        { groupe: "Fruits et légumes", emoji: "🥦", portionsParJour: "5", tailleReference: "1 portion ≈ 80-100 g" },
+        { groupe: "Féculents", emoji: "🍞", portionsParJour: "3 à 4", tailleReference: "Selon l'appétit, à chaque repas" },
+        { groupe: "Produits laitiers", emoji: "🥛", portionsParJour: "2", tailleReference: "150 ml de lait, 1 yaourt ou 30 g de fromage" },
+        { groupe: "Viandes, poissons, œufs", emoji: "🍗", portionsParJour: "1 à 2", tailleReference: "Privilégier le poisson 2 fois/semaine" },
+        { groupe: "Matières grasses", emoji: "🫒", portionsParJour: "3 à 4", tailleReference: "En favorisant les huiles végétales" },
+      ],
+      alimentsFavoriser: [
+        "Fruits et légumes de saison, crus et cuits",
+        "Légumineuses (au moins 2 fois par semaine)",
+        "Poissons gras (sardine, maquereau, saumon)",
+        "Huiles de colza, noix ou olive",
+      ],
+      alimentsLimiter: [
+        "Produits sucrés et boissons sucrées",
+        "Charcuterie",
+        "Sel ajouté",
+        "Produits ultra-transformés",
+      ],
+    },
   },
   {
     slug: "bebe",
-    label: "0-3 ans",
+    label: "Enfant bas âge",
     emoji: "👶",
     description: "De 0 à 3 ans, période de croissance intense avec des besoins nutritionnels élevé.",
     tags: ["Croissance", "3–17 ans"],

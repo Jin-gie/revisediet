@@ -5,6 +5,21 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import Logo from "@/assets/logo.svg";
+import { POPULATIONS, PopulationSlug } from "@/data/populations";
+import { PATHOLOGIES } from "@/data/pathologies";
+
+// Sous-titres courts pour les menus (les `description` des données sont
+// écrites pour les pages de contenu, trop longues pour un dropdown).
+const POPULATION_NAV_BLURB: Record<PopulationSlug, string> = {
+  adulte: "Référence 18–59 ans",
+  bebe: "0–3 ans",
+  "enfant-ados": "4–17 ans",
+  "personne-agee": "65 ans et plus",
+  grossesse: "Besoins par trimestre",
+  allaitement: "Post-partum",
+  sportif: "Endurance / performance",
+  vegetarien: "Végétarien"
+};
 
 const NAV_ITEMS = [
   {
@@ -30,23 +45,48 @@ const NAV_ITEMS = [
     ],
   },
   {
-    label: "Apprendre",
-    href: "/apprendre",
+    label: "Conception alimentation",
+    href: "/population",
     sections: [
       {
-        title: "Fiches",
-        items: [
-          { emoji: "🍽️", label: "Portions", sub: "Grammages de référence par âge et repas", href: "/portions" },
-          { emoji: "👥", label: "Par population", sub: "Adulte, enfant, sportif, senior…", href: "/populations" },
-          { emoji: "🩺", label: "Par pathologie", sub: "Diabète, IRC, obésité, TCA…", href: "/pathologies" },
-        ],
+        // Un lien direct par population : plus besoin de passer par /populations
+        // puis de cliquer un switch pour trouver la bonne fiche.
+        title: "Par population",
+        items: POPULATIONS.map((p) => ({
+          emoji: p.emoji,
+          label: p.label,
+          sub: POPULATION_NAV_BLURB[p.slug] ?? p.description,
+          href: `/population/${p.slug}`,
+        })),
       },
       {
-        title: "Outils de révision",
+        title: "Fiches transversales",
         items: [
-          { emoji: "🃏", label: "Flashcards", sub: "ANC, formules, valeurs clés", href: "/flashcards" },
-          { emoji: "📖", label: "Glossaire", sub: "Termes & définitions", href: "/glossaire" },
-          { emoji: "📐", label: "Références & formules", sub: "PNNS, ANSES, Harris-Benedict…", href: "/references" },
+          { emoji: "🍽️", label: "Tableau des portions", sub: "Grammages complets, toutes populations", href: "/portions" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Thérapeutique",
+    href: "/pathologies",
+    sections: [
+      {
+        // ⚠️ À 18 pathologies, cette liste devient trop longue pour un dropdown :
+        // regrouper par tag (Digestif, Rénal…) ou repasser par un lien unique
+        // vers le catalogue filtrable /pathologies.
+        title: "Par pathologie",
+        items: PATHOLOGIES.map((patho) => ({
+          emoji: patho.emoji,
+          label: patho.labelCourt,
+          sub: patho.tags.join(" · "),
+          href: `/pathologies/${patho.slug}`,
+        })),
+      },
+      {
+        title: "Catalogue",
+        items: [
+          { emoji: "🗂️", label: "Toutes les pathologies", sub: "Filtrer par tag ou système", href: "/pathologies" },
         ],
       },
     ],
@@ -60,6 +100,14 @@ const NAV_ITEMS = [
         items: [
           { emoji: "🧮", label: "Besoins énergétiques", sub: "AET, IMC, NAP", href: "/calculateur" },
           { emoji: "🥦", label: "Table Ciqual", sub: "Valeurs nutritionnelles des aliments", href: "/ciqual" },
+        ],
+      },
+      {
+        title: "Révision",
+        items: [
+          { emoji: "🃏", label: "Flashcards", sub: "ANC, formules, valeurs clés", href: "/flashcards" },
+          { emoji: "📖", label: "Glossaire", sub: "Termes & définitions", href: "/glossaire" },
+          { emoji: "📐", label: "Références & formules", sub: "PNNS, ANSES, Harris-Benedict…", href: "/references" },
         ],
       },
       {
