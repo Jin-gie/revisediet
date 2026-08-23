@@ -17,7 +17,7 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     label: 'Acyl-CoA synthétase',
     type: 'enzyme',
     data: {
-      pathway: 'betaoxydation',
+      pathway: ['betaoxydation'],
       enzyme: 'Acyl-CoA synthétase',
       cofactor: 'ATP + CoA → AMP + PPi',
       description: 'Activation de l\'acide gras en acyl-CoA dans le cytoplasme. Nécessite le transport vers la mitochondrie via la carnitine.',
@@ -34,7 +34,7 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     sourceHandle: 'source-right',
     targetHandle: 'target-top',
     data: {
-      pathway: 'betaoxydation',
+      pathway: ['betaoxydation'],
       enzyme: 'Acyl-CoA déshydrogénase',
       cofactor: 'FAD → FADH₂',
       ecNumber: 'EC 1.3.99.3',
@@ -48,7 +48,7 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     label: 'Énoyl-CoA hydratase',
     type: 'enzyme',
     data: {
-      pathway: 'betaoxydation',
+      pathway: ['betaoxydation'],
       enzyme: 'Énoyl-CoA hydratase',
       cofactor: 'H₂O',
       ecNumber: 'EC 4.2.1.17',
@@ -64,7 +64,7 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     sourceHandle: 'source-bottom',
     targetHandle: 'target-right',
     data: {
-      pathway: 'betaoxydation',
+      pathway: ['betaoxydation'],
       enzyme: 'L-β-hydroxyacyl-CoA déshydrogénase',
       cofactor: 'NAD⁺ → NADH',
       ecNumber: 'EC 1.1.1.35',
@@ -77,7 +77,7 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     target: 'junction_thiolase',
     sourceHandle: 'source-left',
     targetHandle: 'target-right',
-    data: { pathway: 'betaoxydation' },
+    data: { pathway: ['betaoxydation'] },
   },
   {
     id: 'beta-e5b',
@@ -88,7 +88,7 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     sourceHandle: 'source-left',
     targetHandle: 'target-right',
     data: {
-      pathway: 'betaoxydation',
+      pathway: ['betaoxydation'],
       enzyme: 'Thiolase (acyl-CoA acétyltransférase)',
       cofactor: 'CoA',
       ecNumber: 'EC 2.3.1.16',
@@ -105,7 +105,7 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     sourceHandle: 'source-left',
     targetHandle: 'target-bottom',
     data: {
-      pathway: 'betaoxydation',
+      pathway: ['betaoxydation'],
       enzyme: 'Thiolase (acyl-CoA acétyltransférase)',
       cofactor: 'CoA',
       reversible: false,
@@ -121,7 +121,7 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     sourceHandle: 'source-top',
     targetHandle: 'target-left',
     data: {
-      pathway: 'betaoxydation',
+      pathway: ['betaoxydation'],
       description: 'L\'acyl-CoA raccourci de 2 carbones repart dans un nouveau cycle de bêta-oxydation jusqu\'à épuisement complet de la chaîne.',
       reversible: false,
     },

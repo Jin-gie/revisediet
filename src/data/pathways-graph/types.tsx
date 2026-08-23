@@ -33,7 +33,7 @@ export type MetaboliteData = {
 export type MetaboliteNode = Node<MetaboliteData>
 
 export type MetaboliteEdgeData = {
-  pathway: Pathway              // une réaction appartient toujours à un seul pathway
+  pathway: Pathway[]
   enzyme?: string
   cofactor?: string
   description?: string

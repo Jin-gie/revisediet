@@ -20,7 +20,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('glucose', 'g6p'),
     type: 'enzyme',
     label: 'Hexokinase',
-    data: { pathway: 'glycolysis', enzyme: 'Hexokinase', cofactor: 'ATP → ADP', reversible: false },
+    data: { pathway: ['glycolysis'], enzyme: 'Hexokinase', cofactor: 'ATP → ADP', reversible: false },
   },
   {
     id: 'gly-e2',
@@ -29,7 +29,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('g6p', 'f6p'),
     type: 'enzyme',
     label: 'Phosphoglucose isomérase',
-    data: { pathway: 'glycolysis', enzyme: 'Phosphoglucose isomérase' },
+    data: { pathway: ['glycolysis', 'ngg'], enzyme: 'Phosphoglucose isomérase' },
   },
   {
     id: 'gly-e3',
@@ -38,7 +38,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('f6p', 'fructose16bisphosphate'),
     type: 'enzyme',
     label: 'PFK-1',
-    data: { pathway: 'glycolysis', enzyme: 'Phosphofructokinase-1', cofactor: 'ATP → ADP', reversible: false },
+    data: { pathway: ['glycolysis'], enzyme: 'Phosphofructokinase-1', cofactor: 'ATP → ADP', reversible: false },
   },
   {
     id: 'gly-e4',
@@ -49,7 +49,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('fructose16bisphosphate', 'junction_f16bp_aldolase'),
     sourceHandle: 'source-bottom',
     targetHandle: 'target-top',
-    data: { pathway: 'glycolysis', enzyme: '' },
+    data: { pathway: ['glycolysis', 'ngg'], enzyme: '' },
   },
   {
     id: 'gly-e5',
@@ -57,7 +57,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     target: 'dhap',
     label: '',
     ...autoHandles('junction_f16bp_aldolase', 'dhap'),
-    data: { pathway: 'glycolysis', enzyme: '' },
+    data: { pathway: ['glycolysis', 'ngg'], enzyme: '' },
   },
   {
     id: 'gly-e5-2',
@@ -65,7 +65,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     target: 'glyceraldehyde3phosphate',
     label: '',
     ...autoHandles('junction_f16bp_aldolase', 'glyceraldehyde3phosphate'),
-    data: { pathway: 'glycolysis', enzyme: '' },
+    data: { pathway: ['glycolysis', 'ngg'], enzyme: '' },
   },
   {
     id: 'gly-e6',
@@ -74,7 +74,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('dhap', 'glyceraldehyde3phosphate'),
     type: 'enzyme',
     label: 'TPI',
-    data: { pathway: 'glycolysis', enzyme: 'Triose phosphate isomérase' },
+    data: { pathway: ['glycolysis', 'ngg'], enzyme: 'Triose phosphate isomérase' },
   },
   {
     id: 'gly-e7',
@@ -83,7 +83,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('glyceraldehyde3phosphate', 'bisphosphoglycerate13'),
     type: 'enzyme',
     label: 'GAPDH',
-    data: { pathway: 'glycolysis', enzyme: 'Glycéraldéhyde-3-phosphate déshydrogénase', cofactor: 'NAD⁺ → NADH' },
+    data: { pathway: ['glycolysis', 'ngg'], enzyme: 'Glycéraldéhyde-3-phosphate déshydrogénase', cofactor: 'NAD⁺ → NADH', description: "Réaction d'oxydo-réduction" },
   },
   {
     id: 'gly-e8',
@@ -92,7 +92,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('bisphosphoglycerate13', 'phosphoglycerate3'),
     type: 'enzyme',
     label: 'Phosphoglycérate kinase',
-    data: { pathway: 'glycolysis', enzyme: 'Phosphoglycérate kinase', cofactor: 'ADP → ATP' },
+    data: { pathway: ['glycolysis', 'ngg'], enzyme: 'Phosphoglycérate kinase', cofactor: 'ADP → ATP' },
   },
   {
     id: 'gly-e9',
@@ -101,7 +101,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('phosphoglycerate3', 'phosphoglycerate2'),
     type: 'enzyme',
     label: 'Phosphoglycérate mutase',
-    data: { pathway: 'glycolysis', enzyme: 'Phosphoglycérate mutase' },
+    data: { pathway: ['glycolysis', 'ngg'], enzyme: 'Phosphoglycérate mutase', description: 'Réaction de réarrangement' },
   },
   {
     id: 'gly-e10',
@@ -110,7 +110,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('phosphoglycerate2', 'phosphoenolpyruvate'),
     type: 'enzyme',
     label: 'Enolase',
-    data: { pathway: 'glycolysis', enzyme: 'Enolase', cofactor: 'H₂O' },
+    data: { pathway: ['glycolysis', 'ngg'], enzyme: 'Enolase', cofactor: 'H₂O' },
   },
   {
     id: 'gly-e11',
@@ -119,7 +119,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('phosphoenolpyruvate', 'pyruvate'),
     type: 'enzyme',
     label: 'Pyruvate kinase',
-    data: { pathway: 'glycolysis', enzyme: 'Pyruvate kinase', cofactor: 'ADP → ATP', reversible: false },
+    data: { pathway: ['glycolysis'], enzyme: 'Pyruvate kinase', cofactor: 'ADP → ATP', reversible: false },
   },
   {
     id: 'gly-e12',
@@ -128,6 +128,6 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('pyruvate', 'acetylcoa'),
     type: 'enzyme',
     label: 'Pyruvate DH',
-    data: { pathway: 'glycolysis', enzyme: 'Pyruvate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', description: "Réaction de décarboxylation oxydative. Se fait en milieu aérobie, dans la mitochondrie : le pyruvate entre dans la mitochondrie grâce à une protéine membranaire spécifique avec un transport de type facilité.", reversible: false },
+    data: { pathway: ['glycolysis'], enzyme: 'Pyruvate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', description: "Réaction de décarboxylation oxydative. Se fait en milieu aérobie, dans la mitochondrie : le pyruvate entre dans la mitochondrie grâce à une protéine membranaire spécifique avec un transport de type facilité.", reversible: false },
   },
 ]

@@ -15,14 +15,14 @@ export const ureaEdges: MetaboliteEdge[] = [
     id: 'nh4-carbomyP',
     source: 'nh4',
     target: 'carbamoylphosphate',
-    data: {pathway: 'urea'}
+    data: {pathway: ['urea']}
   },
 
   {
     id: 'urea-e1a',
     source: 'carbamoylphosphate',
     target: 'junction_otc',
-    data: { pathway: 'urea' },
+    data: { pathway: ['urea'] },
   },
   {
     id: 'urea-e1b',
@@ -30,7 +30,7 @@ export const ureaEdges: MetaboliteEdge[] = [
     target: 'junction_otc',
     sourceHandle: 'source-top',
     targetHandle: 'target-left',
-    data: { pathway: 'urea' },
+    data: { pathway: ['urea'] },
   },
   {
     id: 'urea-e1c',
@@ -40,7 +40,7 @@ export const ureaEdges: MetaboliteEdge[] = [
     label: 'OTC',
     sourceHandle: "source-right",
     targetHandle: "target-left",
-    data: { pathway: 'urea', enzyme: 'Ornithine transcarbamylase', cofactor: 'ATP', reversible: false },
+    data: { pathway: ['urea'], enzyme: 'Ornithine transcarbamylase', cofactor: 'ATP', reversible: false },
   },
 
   {
@@ -48,14 +48,14 @@ export const ureaEdges: MetaboliteEdge[] = [
     source: 'citrulline',
     target: 'junction_ass',
     sourceHandle: "source-right",
-    data: { pathway: 'urea' },
+    data: { pathway: ['urea'] },
   },
   {
     id: 'urea-e2b',
     source: 'aspartate',
     target: 'junction_ass',
     sourceHandle: 'source-left',
-    data: { pathway: 'urea' },
+    data: { pathway: ['urea'] },
   },
   {
     id: 'urea-e2c',
@@ -63,14 +63,14 @@ export const ureaEdges: MetaboliteEdge[] = [
     target: 'argininosuccinate',
     type: 'enzyme',
     label: 'ASS',
-    data: { pathway: 'urea', enzyme: 'Argininosuccinate synthétase', cofactor: 'ATP → AMP + PPi', reversible: false },
+    data: { pathway: ['urea'], enzyme: 'Argininosuccinate synthétase', cofactor: 'ATP → AMP + PPi', reversible: false },
   },
 
   {
     id: 'urea-e3a',
     source: 'argininosuccinate',
     target: 'junction_asl',
-    data: { pathway: 'urea' },
+    data: { pathway: ['urea'] },
   },
   {
     id: 'urea-e3b',
@@ -79,7 +79,7 @@ export const ureaEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'ASL',
     targetHandle: 'target-right',
-    data: { pathway: 'urea', enzyme: 'Argininosuccinate lyase' },
+    data: { pathway: ['urea'], enzyme: 'Argininosuccinate lyase' },
   },
   {
     id: 'urea-e3c',
@@ -87,7 +87,7 @@ export const ureaEdges: MetaboliteEdge[] = [
     target: 'fumarate',
     sourceHandle: 'source-right',
     targetHandle: 'target-left',
-    data: { pathway: 'urea', enzyme: 'Argininosuccinate lyase', cofactor: '→ Krebs' },
+    data: { pathway: ['urea'], enzyme: 'Argininosuccinate lyase', cofactor: '→ Krebs' },
   },
 
   {
@@ -96,7 +96,7 @@ export const ureaEdges: MetaboliteEdge[] = [
     target: 'junction_arginase',
     sourceHandle: 'source-left',
     targetHandle: 'target-right',
-    data: { pathway: 'urea' },
+    data: { pathway: ['urea'] },
   },
   {
     id: 'urea-e4b',
@@ -106,7 +106,7 @@ export const ureaEdges: MetaboliteEdge[] = [
     label: 'Arginase',
     targetHandle: 'target-bottom',
     sourceHandle: 'source-left',
-    data: { pathway: 'urea', enzyme: 'Arginase', cofactor: 'H₂O', reversible: false },
+    data: { pathway: ['urea'], enzyme: 'Arginase', cofactor: 'H₂O', reversible: false },
   },
   {
     id: 'urea-e4c',
@@ -114,7 +114,7 @@ export const ureaEdges: MetaboliteEdge[] = [
     target: 'urea',
     sourceHandle: 'source-left',
     targetHandle: 'target-right',
-    data: { pathway: 'urea', enzyme: 'Arginase', reversible: false },
+    data: { pathway: ['urea'], enzyme: 'Arginase', reversible: false },
   },
 
   {
@@ -125,6 +125,6 @@ export const ureaEdges: MetaboliteEdge[] = [
     targetHandle: 'target-right',
     type: 'enzyme',
     label: 'Transaminase',
-    data: { pathway: 'urea', enzyme: 'Aspartate aminotransférase', cofactor: 'Glutamate → α-Cétoglutarate' },
+    data: { pathway: ['urea'], enzyme: 'Aspartate aminotransférase', cofactor: 'Glutamate → α-Cétoglutarate' },
   },
 ]

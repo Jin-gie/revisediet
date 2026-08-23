@@ -20,14 +20,14 @@ export const krebsEdges: MetaboliteEdge[] = [
     label: 'Pyruvate DH',
     sourceHandle: 'source-right',
     targetHandle: 'target-left',
-    data: { pathway: 'krebs', enzyme: 'Pyruvate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', ecNumber: 'EC 1.2.4.1', description: "Réaction de décarboxylation oxydative. Se fait en milieu aérobie, dans la mitochondrie : le pyruvate entre dans la mitochondrie grâce à une protéine membranaire spécifique avec un transport de type facilité.", reversible: false },
+    data: { pathway: ['krebs'], enzyme: 'Pyruvate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', ecNumber: 'EC 1.2.4.1', description: "Réaction de décarboxylation oxydative. Se fait en milieu aérobie, dans la mitochondrie : le pyruvate entre dans la mitochondrie grâce à une protéine membranaire spécifique avec un transport de type facilité.", reversible: false },
   },
   {
     id: 'krebs-j1a',
     source: 'acetylcoa',
     target: 'junction_citrate_synthase',
     sourceHandle: 'source-bottom',
-    data: { pathway: 'krebs' },
+    data: { pathway: ['krebs']},
   },
   {
     id: 'krebs-j1b',
@@ -35,7 +35,7 @@ export const krebsEdges: MetaboliteEdge[] = [
     target: 'junction_citrate_synthase',
     sourceHandle: 'source-right',
     targetHandle: 'target-left',
-    data: { pathway: 'krebs' },
+    data: { pathway: ['krebs']},
   },
   {
     id: 'krebs-j1c',
@@ -45,7 +45,7 @@ export const krebsEdges: MetaboliteEdge[] = [
     label: 'Citrate synthase',
     sourceHandle: 'source-right',
     targetHandle: 'target-left',
-    data: { pathway: 'krebs', enzyme: 'Citrate synthase', reversible: false },
+    data: { pathway: ['krebs'], enzyme: 'Citrate synthase', reversible: false },
   },
   {
     id: 'krebs-e3',
@@ -54,7 +54,7 @@ export const krebsEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'Aconitase',
     sourceHandle: 'source-right',
-    data: { pathway: 'krebs', enzyme: 'Aconitase', cofactor: 'H₂O' },
+    data: { pathway: ['krebs'], enzyme: 'Aconitase', cofactor: 'H₂O' },
   },
   {
     id: 'krebs-e4',
@@ -62,7 +62,7 @@ export const krebsEdges: MetaboliteEdge[] = [
     target: 'alphaketoglutarate',
     type: 'enzyme',
     label: 'Isocitrate DH',
-    data: { pathway: 'krebs', enzyme: 'Isocitrate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', reversible: false },
+    data: { pathway: ['krebs'], enzyme: 'Isocitrate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', reversible: false },
   },
   {
     id: 'krebs-e5',
@@ -71,7 +71,7 @@ export const krebsEdges: MetaboliteEdge[] = [
     targetHandle: 'target-right',
     type: 'enzyme',
     label: 'α-Cétoglutarate DH',
-    data: { pathway: 'krebs', enzyme: 'α-Cétoglutarate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', reversible: false },
+    data: { pathway: ['krebs'], enzyme: 'α-Cétoglutarate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', reversible: false },
   },
   {
     id: 'krebs-e6',
@@ -81,7 +81,7 @@ export const krebsEdges: MetaboliteEdge[] = [
     targetHandle: 'target-right',
     type: 'enzyme',
     label: 'Succinyl-CoA synthétase',
-    data: { pathway: 'krebs', enzyme: 'Succinyl-CoA synthétase', cofactor: 'ADP → ATP' },
+    data: { pathway: ['krebs'], enzyme: 'Succinyl-CoA synthétase', cofactor: 'ADP → ATP' },
   },
   {
     id: 'krebs-e7',
@@ -91,7 +91,7 @@ export const krebsEdges: MetaboliteEdge[] = [
     targetHandle: 'target-bottom',
     type: 'enzyme',
     label: 'Succinate DH',
-    data: { pathway: 'krebs', enzyme: 'Succinate déshydrogénase', cofactor: 'FAD → FADH₂' },
+    data: { pathway: ['krebs'], enzyme: 'Succinate déshydrogénase', cofactor: 'FAD → FADH₂' },
   },
   {
     id: 'krebs-e8',
@@ -99,7 +99,7 @@ export const krebsEdges: MetaboliteEdge[] = [
     target: 'malate',
     type: 'enzyme',
     label: 'Fumarase',
-    data: { pathway: 'krebs', enzyme: 'Fumarase', cofactor: 'H₂O' },
+    data: { pathway: ['krebs'], enzyme: 'Fumarase', cofactor: 'H₂O' },
   },
   {
     id: 'krebs-e9',
@@ -109,6 +109,6 @@ export const krebsEdges: MetaboliteEdge[] = [
     targetHandle: 'target-left',
     type: 'enzyme',
     label: 'Malate DH',
-    data: { pathway: 'krebs', enzyme: 'Malate déshydrogénase', cofactor: 'NAD⁺ → NADH' },
+    data: { pathway: ['krebs'], enzyme: 'Malate déshydrogénase', cofactor: 'NAD⁺ → NADH' },
   },
 ]

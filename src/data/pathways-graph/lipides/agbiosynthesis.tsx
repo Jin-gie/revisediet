@@ -17,7 +17,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'ACC',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       enzyme: 'Acétyl-CoA carboxylase (ACC)',
       ecNumber: 'EC 6.4.1.2',
       cofactor: 'ATP + CO₂ + Biotine (vitamine B8)',
@@ -31,7 +31,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     target: 'malonylcoa',
     type: 'enzyme',
     label: '',
-    data: { pathway: 'AGbiosynthesis', reversible: false },
+    data: { pathway: ['AGbiosynthesis'], reversible: false },
   },
 
   {
@@ -41,7 +41,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'Acyl transférase',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       enzyme: 'Acyl transférase',
       description: 'Transfert de l\'acétyl-CoA sur le site EC (enzyme de condensation) de l\'acide gras synthase.',
     },
@@ -53,7 +53,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'Acyl transférase',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       enzyme: 'Acyl transférase',
       description: 'Transfert du groupement malonyl du CoA vers l\'ACP (protéine de transport d\'acyle, liée à la vitamine B5 — acide pantothénique).',
     },
@@ -63,13 +63,13 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     id: 'bio-e3a',
     source: 'acetyl_ec',
     target: 'junction_condensation',
-    data: { pathway: 'AGbiosynthesis' },
+    data: { pathway: ['AGbiosynthesis'] },
   },
   {
     id: 'bio-e3b',
     source: 'malonyl_acp',
     target: 'junction_condensation',
-    data: { pathway: 'AGbiosynthesis' },
+    data: { pathway: ['AGbiosynthesis'] },
   },
   {
     id: 'bio-e3c',
@@ -78,7 +78,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'EC (condensation)',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       enzyme: 'Enzyme de condensation (EC) — β-cétoacyl-ACP synthase',
       ecNumber: 'EC 2.3.1.41',
       description: 'Condensation de l\'acétyl-EC et du malonyl-ACP avec décarboxylation (libération CO₂). Addition nette de 2 carbones à la chaîne.',
@@ -93,7 +93,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'β-cétoacyl réductase',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       enzyme: 'β-cétoacyl-ACP réductase',
       ecNumber: 'EC 1.1.1.100',
       cofactor: 'NADPH → NADP⁺',
@@ -108,7 +108,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'Déshydratase',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       enzyme: 'β-hydroxyacyl-ACP déshydratase',
       ecNumber: 'EC 4.2.1.59',
       description: 'Déshydratation : élimination d\'eau et formation d\'une double liaison trans en Δ2.',
@@ -122,7 +122,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'Énoyl réductase',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       enzyme: 'Énoyl-ACP réductase',
       ecNumber: 'EC 1.3.1.9',
       cofactor: 'NADPH → NADP⁺',
@@ -137,7 +137,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'Acyl transférase',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       enzyme: 'Acyl transférase',
       description: 'L\'acyl-ACP est transféré sur le site EC de l\'autre sous-unité de l\'AG synthase. Un nouveau malonyl-CoA se fixe sur l\'ACP pour débuter un nouveau cycle.',
     },
@@ -149,7 +149,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: '× 7 cycles',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       description: '7 cycles au total pour obtenir le palmityl-ACP (C16). Bilan par cycle : 1 malonyl-CoA + 2 NADPH consommés.',
       reversible: false,
     },
@@ -160,7 +160,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     source: 'acyl_acp',
     target: 'palmityl_acp',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       description: 'Après 7 cycles, l\'acyl-ACP correspond au palmityl-ACP (C16:0).',
     },
   },
@@ -168,7 +168,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     id: 'bio-e8b',
     source: 'palmityl_acp',
     target: 'junction_thioesterase',
-    data: { pathway: 'AGbiosynthesis' },
+    data: { pathway: ['AGbiosynthesis'] },
   },
   {
     id: 'bio-e8c',
@@ -177,7 +177,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'Palmityl thioestérase',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       enzyme: 'Palmityl thioestérase',
       ecNumber: 'EC 3.1.2.14',
       description: 'Hydrolyse la liaison thioester entre le palmityl et l\'ACP. Libère l\'acide palmitique (C16:0) libre. Met fin à l\'action de l\'acide gras synthase.',
@@ -189,7 +189,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     id: 'bio-e9a',
     source: 'palmiticacid',
     target: 'junction_elongase_1',
-    data: { pathway: 'AGbiosynthesis' },
+    data: { pathway: ['AGbiosynthesis'] },
   },
   {
     id: 'bio-e9b',
@@ -198,7 +198,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'Élongase (REL)',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       enzyme: 'Élongase (ELOVL)',
       cofactor: 'Malonyl-CoA (+2C) + 2 NADPH',
       description: 'Allongement dans le réticulum endoplasmique lisse (principalement). Les 2C proviennent du malonyl-CoA. Peut aussi se produire dans la mitochondrie (acétyl-CoA).',
@@ -209,7 +209,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     id: 'bio-e10a',
     source: 'stearicacid',
     target: 'junction_elongase_2',
-    data: { pathway: 'AGbiosynthesis' },
+    data: { pathway: ['AGbiosynthesis'] },
   },
   {
     id: 'bio-e10b',
@@ -218,7 +218,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     type: 'enzyme',
     label: 'Élongase (REL)',
     data: {
-      pathway: 'AGbiosynthesis',
+      pathway: ['AGbiosynthesis'],
       enzyme: 'Élongase (ELOVL)',
       cofactor: 'Malonyl-CoA (+2C) + 2 NADPH',
       description: 'Deuxième élongation dans le REL. Produit l\'acide arachidique (C20:0).',

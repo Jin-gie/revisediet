@@ -36,9 +36,9 @@ export function getPathwayElements(active: Pathway[]) {
   )
   const nodeIds = new Set(nodes.map(n => n.id))
 
-  // Un edge est visible si son pathway est actif ET ses deux nœuds sont visibles
+  // Un edge est visible si au moins un des ses pathway sont actifs ET ses deux nœuds sont visibles
   const edges = allEdges.filter(e =>
-    e.data && active.includes(e.data.pathway) &&
+    e.data && e.data.pathway.some(p => active.includes(p)) &&
     nodeIds.has(e.source) &&
     nodeIds.has(e.target)
   )
