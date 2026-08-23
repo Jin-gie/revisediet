@@ -1,3 +1,5 @@
+// EnzymeEdge.tsx
+
 'use client'
 import { memo, useState, useRef } from 'react'
 import {
@@ -17,7 +19,6 @@ export const EnzymeEdge = memo(({
   sourcePosition, targetPosition,
   data,
   label,
-  markerEnd,
   style,
 }: EdgeProps<Edge<MetaboliteEdgeData>>) => {
   const [visible, setVisible] = useState(false)
@@ -25,10 +26,35 @@ export const EnzymeEdge = memo(({
   const { getZoom } = useReactFlow()
   const zoom = getZoom()
 
-  const [edgePath, labelX, labelY] = getBezierPath({
+  const [defaultPath, defaultLabelX, defaultLabelY] = getBezierPath({
     sourceX, sourceY, sourcePosition,
     targetX, targetY, targetPosition,
   })
+
+  // Décalage manuel optionnel du label, défini dans data.labelOffset
+  const offsetX = data?.labelOffset?.x ?? 0
+  const offsetY = data?.labelOffset?.y ?? 0
+  const hasOffset = offsetX !== 0 || offsetY !== 0
+
+  const waypointX = defaultLabelX + offsetX
+  const waypointY = defaultLabelY + offsetY
+
+  let edgePath = defaultPath
+  let labelX = defaultLabelX
+  let labelY = defaultLabelY
+
+  if (hasOffset) {
+    const controlX = 2 * waypointX - 0.5 * (sourceX + targetX)
+    const controlY = 2 * waypointY - 0.5 * (sourceY + targetY)
+
+    edgePath = `M ${sourceX},${sourceY} Q ${controlX},${controlY} ${targetX},${targetY}`
+    labelX = waypointX
+    labelY = waypointY
+  }
+
+  const reversible = data?.reversible ?? true
+  const markerId = `enzyme-arrow-end-${id}`
+  const markerStartId = `enzyme-arrow-start-${id}`
 
   const ENZYME_COLORS = {
     border: '#64748b',                    // slate-500 au lieu de #334155
@@ -45,14 +71,43 @@ export const EnzymeEdge = memo(({
     hideTimeout.current = setTimeout(() => setVisible(false), 150)
   }
 
-  console.log(data?.description)
-
   return (
     <>
+      {/* Définitions des flèches, propres à cet edge (ids uniques) */}
+      <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+        <defs>
+          <marker
+            id={markerId}
+            viewBox="0 0 10 10"
+            refX="8.5"
+            refY="5"
+            markerWidth="7"
+            markerHeight="7"
+            orient="auto"
+          >
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+          </marker>
+          {reversible && (
+            <marker
+              id={markerStartId}
+              viewBox="0 0 10 10"
+              refX="8.5"
+              refY="5"
+              markerWidth="7"
+              markerHeight="7"
+              orient="auto-start-reverse"
+            >
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+            </marker>
+          )}
+        </defs>
+      </svg>
+
       <BaseEdge
         id={id}
         path={edgePath}
-        markerEnd={markerEnd}
+        markerEnd={`url(#${markerId})`}
+        markerStart={reversible ? `url(#${markerStartId})` : undefined}
         style={{
           stroke: '#64748b',
           strokeWidth: 1.5,

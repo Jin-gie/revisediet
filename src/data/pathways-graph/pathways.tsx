@@ -1,9 +1,10 @@
-import { Pathway, type PathwayConfig } from './types'
+import { Pathway, PathwayCategory, type PathwayConfig } from './types'
 
 export const PATHWAYS: PathwayConfig[] = [
   {
     id: 'glycolysis',
     label: 'Glycolyse',
+    category: 'glucides',
     description: '1 Glucose (6C) + 2 NAD+ + 2 ADP + 2 Pi → 2 pyruvate (3C) + 2 ATP + 2 H2O + 2 NADH, H+. Dégradation du glucose en pyruvate, produisant 2 ATP et 2 NADH. Se déroule dans le cytoplasme.',
     defaultEnabled: true,
     border: '#34d399',  // vert émeraude
@@ -12,8 +13,20 @@ export const PATHWAYS: PathwayConfig[] = [
     text: 'rgba(52, 211, 153, 1)',
   },
   {
+    id: 'ngg',
+    label: 'Néoglugogenèse',
+    category: 'glucides',
+    description: "2 pyruvate + 4 ATP + 2 GTP + 2 NADH,H+ + 6 H2O → glucose + 4 ADP + 2 GDP + 6 Pi + 2 NAD+. Permet la synthèse du glucose par l'organisme à partir de lactate, d'acides aminés (alanine, glutamine) ou glycérol. Plus coûteux que la glycolyse, donc intérêt à la faire que quand on en a vraiment besoin, d'où forte régulation. C'est une voie antagoniste à la glycolyse.",
+    defaultEnabled: true,
+    border: '#a78bfa',  // violet
+    glow: 'rgba(167, 139, 250, 0.3)',
+    badge: 'rgba(167, 139, 250, 0.15)',
+    text: 'rgba(167, 139, 250, 1)',
+  },
+  {
     id: 'krebs',
     label: 'Cycle de Krebs',
+    category: 'glucides',
     description: 'Cycle de l\'acide citrique. Oxydation de l\'acétyl-CoA en CO₂, produisant NADH, FADH₂ et GTP. Se déroule dans la matrice mitochondriale.',
     defaultEnabled: true,
     border: '#f59e0b',  // ambre
@@ -24,6 +37,7 @@ export const PATHWAYS: PathwayConfig[] = [
   {
     id: 'urea',
     label: 'Cycle de l\'urée',
+    category: 'protides',
     description: 'Détoxification de l\'ammoniaque en urée. Se déroule entre le cytoplasme et la mitochondrie hépatique.',
     defaultEnabled: true,
     border: '#818cf8',  // indigo
@@ -34,6 +48,7 @@ export const PATHWAYS: PathwayConfig[] = [
   {
     id: 'betaoxydation',
     label: 'Bêta Oxydation',
+    category: 'lipides',
     description: "Aussi appelée hélice de Lynen. Réctions en chaîne (qui se répètent) pour faire une dégradation oxydative complète, 2 carbones par 2 carbones, des acides gras en acétyl-CoA. Elle nécessite des coenzymes FAD et NAD+. Elle a lieu dans la matrice mitochrondriale, ce qui nécessite un transport préalable de l'AG du cytoplasme vers la mitochondrie grâce à la carnitine (AA). Au préalable il y a une activation de l'AG en acyl-CoA.",
     defaultEnabled: true,
     border: '#f87171',  // rouge corail
@@ -44,6 +59,7 @@ export const PATHWAYS: PathwayConfig[] = [
   {
     id: 'AGbiosynthesis',
     label: 'Biosynthèse des AG',
+    category: 'lipides',
     description: 'Synthèse des acides gras à partir de l\'acétyl-CoA. Comprend la formation du malonyl-CoA (ACC), l\'hélice de Wakil (7 cycles) catalysée par l\'acide gras synthase, et l\'élongation par les élongases dans le REL.',
     defaultEnabled: true,
     border: '#38bdf8',   // bleu ciel
@@ -64,3 +80,12 @@ export const SHARED_COLOR = {
 export const PATHWAYS_BY_ID = Object.fromEntries(
   PATHWAYS.map(p => [p.id, p])
 ) as Record<Pathway, PathwayConfig>
+
+// Groupement par catégorie, dans l'ordre où les catégories apparaissent dans PATHWAYS
+export function getPathwaysByCategory(): Record<PathwayCategory, PathwayConfig[]> {
+  return PATHWAYS.reduce((acc, p) => {
+    if (!acc[p.category]) acc[p.category] = []
+    acc[p.category].push(p)
+    return acc
+  }, {} as Record<PathwayCategory, PathwayConfig[]>)
+}

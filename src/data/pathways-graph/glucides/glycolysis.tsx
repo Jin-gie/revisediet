@@ -1,8 +1,9 @@
-import { type MetaboliteEdge } from './types'
-import { glycolysisOnlyMetabolites, metabolites } from './metabolites'
-import { autoHandles } from './utils'
+// glucides/glycolysis.tsx
 
-// On réutilise les nœuds depuis metabolites, pas de duplication
+import { type MetaboliteEdge } from '../types'
+import { glycolysisOnlyMetabolites, metabolites } from '../metabolites'
+import { autoHandles } from '../utils'
+
 export const glycolysisNodes = [
   metabolites.glucose,
   metabolites.g6p,
@@ -19,7 +20,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('glucose', 'g6p'),
     type: 'enzyme',
     label: 'Hexokinase',
-    data: { pathway: 'glycolysis', enzyme: 'Hexokinase', cofactor: 'ATP → ADP' },
+    data: { pathway: 'glycolysis', enzyme: 'Hexokinase', cofactor: 'ATP → ADP', reversible: false },
   },
   {
     id: 'gly-e2',
@@ -37,7 +38,7 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('f6p', 'fructose16bisphosphate'),
     type: 'enzyme',
     label: 'PFK-1',
-    data: { pathway: 'glycolysis', enzyme: 'Phosphofructokinase-1', cofactor: 'ATP → ADP' },
+    data: { pathway: 'glycolysis', enzyme: 'Phosphofructokinase-1', cofactor: 'ATP → ADP', reversible: false },
   },
   {
     id: 'gly-e4',
@@ -118,9 +119,8 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('phosphoenolpyruvate', 'pyruvate'),
     type: 'enzyme',
     label: 'Pyruvate kinase',
-    data: { pathway: 'glycolysis', enzyme: 'Pyruvate kinase', cofactor: 'ADP → ATP' },
+    data: { pathway: 'glycolysis', enzyme: 'Pyruvate kinase', cofactor: 'ADP → ATP', reversible: false },
   },
-  // Jonction glycolyse → Krebs
   {
     id: 'gly-e12',
     source: 'pyruvate',
@@ -128,6 +128,6 @@ export const glycolysisEdges: MetaboliteEdge[] = [
     ...autoHandles('pyruvate', 'acetylcoa'),
     type: 'enzyme',
     label: 'Pyruvate DH',
-    data: { pathway: 'glycolysis', enzyme: 'Pyruvate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', description: "Réaction de décarboxylation oxydative. Se fait en milieu aérobie, dans la mitochondrie : le pyruvate entre dans la mitochondrie grâce à une protéine membranaire spécifique avec un transport de type facilité." },
+    data: { pathway: 'glycolysis', enzyme: 'Pyruvate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', description: "Réaction de décarboxylation oxydative. Se fait en milieu aérobie, dans la mitochondrie : le pyruvate entre dans la mitochondrie grâce à une protéine membranaire spécifique avec un transport de type facilité.", reversible: false },
   },
 ]

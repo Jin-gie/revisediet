@@ -7,11 +7,14 @@ export type Colors = {
   text: string;
 }
 
-export type Pathway = 'glycolysis' | 'krebs' | 'urea' | 'betaoxydation' | 'AGbiosynthesis'
+export type Pathway = 'glycolysis' | 'ngg' | 'krebs' | 'urea' | 'betaoxydation' | 'AGbiosynthesis'
+
+export type PathwayCategory = 'glucides' | 'lipides' | 'protides'
 
 export type PathwayConfig = {
 	id: Pathway
 	label: string
+  category: PathwayCategory
 	description: string
 	defaultEnabled: boolean
   border: string
@@ -35,6 +38,8 @@ export type MetaboliteEdgeData = {
   cofactor?: string
   description?: string
   ecNumber?: string
+  reversible?: boolean
+  labelOffset?: {x: number, y: number}
 }
 
 export type MetaboliteEdge = Edge<MetaboliteEdgeData> & {

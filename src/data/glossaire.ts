@@ -85,6 +85,34 @@ export const GLOSSAIRE: GlossaryEntry[] = [
     category: ["nutrition", "reglementation"],
     items: ["tbd"],
   },
+  {
+    term: "anabolisme",
+    title: "Anabolisme",
+    category: ["biochimie"],
+    items: ["Permet la synthèse de molécules grosses et complexes (protéines, glycogène, acides nucléiques, …) à partir de précurseurs relativement simples (acides aminés, glucose, …)."]
+  },
+  {
+    term: "catabolisme",
+    title: "Catabolisme",
+    category: ["biochimie"],
+    items: ["Correspond aux réactions de dégradation des molécules complexes en molécules simples au sein de l'organisme."]
+  },
+  {
+    term: "phosphatase",
+    title: "Phosphatase",
+    category: ["biochimie"],
+    items: ["Enzyme catalysant le retrait d'un groupement phosphate d'une molécule. C'est une réaction d'hydrolyse, qui nécessite donc une molécule d'eau."]
+  },
+  {
+    term: "cycle de Cori",
+    title: "Cycle de Cori",
+    category: ["biochimie"],
+    items: [
+      "Cycle permettant de régénérer le lactate produit par les tissus en pyruvate pour la néoglucogenèse",
+      "Dans les tissus : Glucose -> Pyruvate -> Lactate",
+      "Dans le foie (et les reins en moindre quantité) : Lactate -> Pyruvate -> Glucose"
+    ]
+  },
 ];
 
 export function getGlossaryEntry(term: string): GlossaryEntry | undefined {

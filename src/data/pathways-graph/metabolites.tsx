@@ -1,3 +1,5 @@
+// metabolites.tsx
+
 import { type MetaboliteNode } from './types'
 
 export const glycolysisOnlyMetabolites: Record<string, MetaboliteNode> = {
@@ -5,56 +7,56 @@ export const glycolysisOnlyMetabolites: Record<string, MetaboliteNode> = {
     id: 'f6p',
     position: { x: 250, y: 240 },
     type: 'metabolite',
-    data: { label: 'Fructose-6-phosphate', pathways: ['glycolysis'], formula: 'C₆H₁₃O₉P' },
+    data: { label: 'Fructose-6-phosphate', pathways: ['glycolysis', 'ngg'], formula: 'C₆H₁₃O₉P' },
   },
   fructose16bisphosphate: {
     id: 'fructose16bisphosphate',
     position: { x: 250, y: 360 },
     type: 'metabolite',
-    data: { label: 'Fructose-1,6-bisphosphate', pathways: ['glycolysis'], formula: 'C₆H₁₄O₁₂P₂' },
+    data: { label: 'Fructose-1,6-bisphosphate', pathways: ['glycolysis', 'ngg'], formula: 'C₆H₁₄O₁₂P₂' },
   },
   dhap: {
     id: 'dhap',
     position: { x: 50, y: 480 },
     type: 'metabolite',
-    data: { label: 'Dihydroxyacétone phosphate', pathways: ['glycolysis'], formula: 'C₃H₇O₆P' },
+    data: { label: 'Dihydroxyacétone phosphate', pathways: ['glycolysis', 'ngg'], formula: 'C₃H₇O₆P' },
   },
   glyceraldehyde3phosphate: {
     id: 'glyceraldehyde3phosphate',
     position: { x: 450, y: 480 },
     type: 'metabolite',
-    data: { label: 'Glycéraldéhyde-3-phosphate', pathways: ['glycolysis'], formula: 'C₃H₇O₆P' },
+    data: { label: 'Glycéraldéhyde-3-phosphate', pathways: ['glycolysis', 'ngg'], formula: 'C₃H₇O₆P' },
   },
   bisphosphoglycerate13: {
     id: 'bisphosphoglycerate13',
     position: { x: 450, y: 600 },
     type: 'metabolite',
-    data: { label: '1,3-Bisphosphoglycérate', pathways: ['glycolysis'], formula: 'C₃H₈O₁₀P₂' },
+    data: { label: '1,3-Bisphosphoglycérate', pathways: ['glycolysis', 'ngg'], formula: 'C₃H₈O₁₀P₂' },
   },
   phosphoglycerate3: {
     id: 'phosphoglycerate3',
     position: { x: 450, y: 720 },
     type: 'metabolite',
-    data: { label: '3-Phosphoglycérate', pathways: ['glycolysis'], formula: 'C₃H₇O₇P' },
+    data: { label: '3-Phosphoglycérate', pathways: ['glycolysis', 'ngg'], formula: 'C₃H₇O₇P' },
   },
   phosphoglycerate2: {
     id: 'phosphoglycerate2',
     position: { x: 450, y: 840 },
     type: 'metabolite',
-    data: { label: '2-Phosphoglycérate', pathways: ['glycolysis'], formula: 'C₃H₇O₇P' },
+    data: { label: '2-Phosphoglycérate', pathways: ['glycolysis', 'ngg'], formula: 'C₃H₇O₇P' },
   },
   phosphoenolpyruvate: {
     id: 'phosphoenolpyruvate',
     position: { x: 450, y: 960 },
     type: 'metabolite',
-    data: { label: 'Phosphoénolpyruvate', pathways: ['glycolysis'], formula: 'C₃H₅O₆P' },
+    data: { label: 'Phosphoénolpyruvate', pathways: ['glycolysis', 'ngg'], formula: 'C₃H₅O₆P' },
   },
   junction_f16bp_aldolase: {
     id: 'junction_f16bp_aldolase',
     type: 'junction',
-    position: { x: 330, y: 480 },  // entre fructose-1,6-biphospahte et les 2 métabolites
+    position: { x: 330, y: 480 },
     data: {
-      pathways: ['glycolysis'],
+      pathways: ['glycolysis', 'ngg'],
       label: ''
     },
   },
@@ -432,25 +434,29 @@ export const AGbiosynthesisOnlyMetabolites: Record<string, MetaboliteNode> = {
   },
 }
 
+export const NGGOnlyMetabolites: Record<string, MetaboliteNode> = {
+
+}
+
 // Tous les métabolites, sans doublon
 export const metabolites: Record<string, MetaboliteNode> = {
   glucose: {
     id: 'glucose',
     position: { x: 250, y: 0 },
     type: 'metabolite',
-    data: { label: 'Glucose', pathways: ['glycolysis'], formula: 'C₆H₁₂O₆', description: "Source primaire d'énergie de la plupart des cellules. Il provient de l'alimentation (amidon, glycogène, lactose, saccharose, etc. contenu dans les féculents, légumes, fruits, produits laitiers et confiseries), surtout en contexte post-prandial. Il a aussi une origine endogène en contexte de jeune, d'abord de la glycogénolyse, puis de la néoglucogenèse." },
+    data: { label: 'Glucose', pathways: ['glycolysis', 'ngg'], formula: 'C₆H₁₂O₆', description: "Source primaire d'énergie de la plupart des cellules. Il provient de l'alimentation (amidon, glycogène, lactose, saccharose, etc. contenu dans les féculents, légumes, fruits, produits laitiers et confiseries), surtout en contexte post-prandial. Il a aussi une origine endogène en contexte de jeune, d'abord de la glycogénolyse, puis de la néoglucogenèse." },
   },
   g6p: {
     id: 'g6p',
     position: {x: 250, y:120},
     type: 'metabolite',
-    data: {label: 'Glucose 6-P', pathways: ['glycolysis'], formula: 'C₆H₁₂O₆', description: "Glucose phosphorylé pour éviter qu'il ne sorte de la cellule."}
+    data: {label: 'Glucose 6-P', pathways: ['glycolysis', 'ngg'], formula: 'C₆H₁₂O₆', description: "Glucose phosphorylé pour éviter qu'il ne sorte de la cellule."}
   },
   pyruvate: {
     id: 'pyruvate',
     position: { x: 850, y: 960 },
     type: 'metabolite',
-    data: { label: 'Pyruvate', pathways: ['glycolysis', 'krebs'], formula: 'C₃H₄O₃', description: 'Pyruvate is the end product of glycolysis and can be further metabolized in the mitochondria.' },
+    data: { label: 'Pyruvate', pathways: ['glycolysis', 'krebs', 'ngg'], formula: 'C₃H₄O₃', description: 'Pyruvate is the end product of glycolysis and can be further metabolized in the mitochondria.' },
   },
   acetylcoa: {
     id: 'acetylcoa',
@@ -462,7 +468,7 @@ export const metabolites: Record<string, MetaboliteNode> = {
     id: 'oxaloacetate',
     position: { x: 1050, y: 1100 },
     type: 'metabolite',
-    data: { label: 'Oxaloacétate', pathways: ['krebs', 'urea'], formula: 'C₄H₄O₅' },
+    data: { label: 'Oxaloacétate', pathways: ['krebs', 'urea', 'ngg'], formula: 'C₄H₄O₅' },
   },
   alphaketoglutarate: {
     id: 'alphaketoglutarate',
@@ -489,4 +495,5 @@ export const metabolites: Record<string, MetaboliteNode> = {
   ...ureaOnlyMetabolites,
   ...betaoxydationOnlyMetabolites,
   ...AGbiosynthesisOnlyMetabolites,
+  ...NGGOnlyMetabolites
 }

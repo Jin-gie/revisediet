@@ -1,18 +1,17 @@
-import { krebsOnlyMetabolites, metabolites } from "./metabolites";
-import { MetaboliteEdge } from "./types";
+// glucides/krebs.tsx
+
+import { krebsOnlyMetabolites, metabolites } from "../metabolites";
+import { MetaboliteEdge } from "../types";
 
 export const krebsNodes = [
-  // Métabolites partagés depuis metabolites.ts
   metabolites.acetylcoa,
   metabolites.oxaloacetate,
   metabolites.alphaketoglutarate,
   metabolites.fumarate,
-  // Métabolites propres au cycle de Krebs
   ...Object.values(krebsOnlyMetabolites),
 ]
 
 export const krebsEdges: MetaboliteEdge[] = [
-  // Jonction glycolyse → Krebs
   {
     id: 'krebs-e1',
     source: 'pyruvate',
@@ -21,10 +20,8 @@ export const krebsEdges: MetaboliteEdge[] = [
     label: 'Pyruvate DH',
     sourceHandle: 'source-right',
     targetHandle: 'target-left',
-    data: { pathway: 'krebs', enzyme: 'Pyruvate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', ecNumber: 'EC 1.2.4.1', description: "Réaction de décarboxylation oxydative. Se fait en milieu aérobie, dans la mitochondrie : le pyruvate entre dans la mitochondrie grâce à une protéine membranaire spécifique avec un transport de type facilité."  },
+    data: { pathway: 'krebs', enzyme: 'Pyruvate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', ecNumber: 'EC 1.2.4.1', description: "Réaction de décarboxylation oxydative. Se fait en milieu aérobie, dans la mitochondrie : le pyruvate entre dans la mitochondrie grâce à une protéine membranaire spécifique avec un transport de type facilité.", reversible: false },
   },
-  // Entrée dans le cycle
-  // Acétyl-CoA → junction
   {
     id: 'krebs-j1a',
     source: 'acetylcoa',
@@ -32,7 +29,6 @@ export const krebsEdges: MetaboliteEdge[] = [
     sourceHandle: 'source-bottom',
     data: { pathway: 'krebs' },
   },
-  // Oxaloacétate → junction
   {
     id: 'krebs-j1b',
     source: 'oxaloacetate',
@@ -41,7 +37,6 @@ export const krebsEdges: MetaboliteEdge[] = [
     targetHandle: 'target-left',
     data: { pathway: 'krebs' },
   },
-  // junction → Citrate (avec le label de l'enzyme ici)
   {
     id: 'krebs-j1c',
     source: 'junction_citrate_synthase',
@@ -50,10 +45,8 @@ export const krebsEdges: MetaboliteEdge[] = [
     label: 'Citrate synthase',
     sourceHandle: 'source-right',
     targetHandle: 'target-left',
-    data: { pathway: 'krebs', enzyme: 'Citrate synthase' },
+    data: { pathway: 'krebs', enzyme: 'Citrate synthase', reversible: false },
   },
-
-
   {
     id: 'krebs-e3',
     source: 'citrate',
@@ -69,7 +62,7 @@ export const krebsEdges: MetaboliteEdge[] = [
     target: 'alphaketoglutarate',
     type: 'enzyme',
     label: 'Isocitrate DH',
-    data: { pathway: 'krebs', enzyme: 'Isocitrate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂' },
+    data: { pathway: 'krebs', enzyme: 'Isocitrate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', reversible: false },
   },
   {
     id: 'krebs-e5',
@@ -78,7 +71,7 @@ export const krebsEdges: MetaboliteEdge[] = [
     targetHandle: 'target-right',
     type: 'enzyme',
     label: 'α-Cétoglutarate DH',
-    data: { pathway: 'krebs', enzyme: 'α-Cétoglutarate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂' },
+    data: { pathway: 'krebs', enzyme: 'α-Cétoglutarate déshydrogénase', cofactor: 'NAD⁺ → NADH + CO₂', reversible: false },
   },
   {
     id: 'krebs-e6',

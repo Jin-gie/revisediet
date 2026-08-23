@@ -1,16 +1,14 @@
-import { type MetaboliteEdge } from "./types";
-import { AGbiosynthesisOnlyMetabolites, metabolites } from "./metabolites";
+// lipides/agbiosynthesis.tsx
+
+import { type MetaboliteEdge } from "../types";
+import { AGbiosynthesisOnlyMetabolites, metabolites } from "../metabolites";
 
 export const AGbiosynthesisNodes = [
-  // Métabolites partagés
   metabolites.acetylcoa,
-  // Métabolites propres à la biosynthèse
   ...Object.values(AGbiosynthesisOnlyMetabolites),
 ]
 
 export const AGbiosynthesisEdges: MetaboliteEdge[] = [
-
-  // ── Étape 1 : Acétyl-CoA → Malonyl-CoA (ACC) ─────────────────────────────
 
   {
     id: 'bio-e1',
@@ -24,6 +22,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
       ecNumber: 'EC 6.4.1.2',
       cofactor: 'ATP + CO₂ + Biotine (vitamine B8)',
       description: 'Étape régulatrice et irréversible. Addition d\'un groupement carboxyle (-COOH) sur l\'acétyl-CoA. Inhibée par le glucagon et les acides gras ; activée par l\'insuline et le citrate.',
+      reversible: false,
     },
   },
   {
@@ -32,10 +31,8 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     target: 'malonylcoa',
     type: 'enzyme',
     label: '',
-    data: { pathway: 'AGbiosynthesis' },
+    data: { pathway: 'AGbiosynthesis', reversible: false },
   },
-
-  // ── Chargement sur l'AG synthase ──────────────────────────────────────────
 
   {
     id: 'bio-e2a',
@@ -62,8 +59,6 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     },
   },
 
-  // ── Condensation ──────────────────────────────────────────────────────────
-
   {
     id: 'bio-e3a',
     source: 'acetyl_ec',
@@ -87,12 +82,10 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
       enzyme: 'Enzyme de condensation (EC) — β-cétoacyl-ACP synthase',
       ecNumber: 'EC 2.3.1.41',
       description: 'Condensation de l\'acétyl-EC et du malonyl-ACP avec décarboxylation (libération CO₂). Addition nette de 2 carbones à la chaîne.',
+      reversible: false,
     },
   },
 
-  // ── Hélice de Wakil — 4 étapes ────────────────────────────────────────────
-
-  // Étape 1 : Réduction → D-β-hydroxyacyl-ACP
   {
     id: 'bio-e4',
     source: 'ketoacyl_acp',
@@ -108,7 +101,6 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     },
   },
 
-  // Étape 2 : Déshydratation → Trans-Δ2-énoyl-ACP
   {
     id: 'bio-e5',
     source: 'hydroxyacyl_acp',
@@ -123,7 +115,6 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     },
   },
 
-  // Étape 3 : Réduction → Acyl-ACP (n+2C)
   {
     id: 'bio-e6',
     source: 'enoyl_acp',
@@ -138,8 +129,6 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
       description: 'Réduction de la double liaison. Chaîne saturée allongée de 2 carbones. Fin d\'un cycle de l\'hélice de Wakil.',
     },
   },
-
-  // ── Rebouclage du cycle (× 7) ─────────────────────────────────────────────
 
   {
     id: 'bio-e7a',
@@ -162,10 +151,9 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
     data: {
       pathway: 'AGbiosynthesis',
       description: '7 cycles au total pour obtenir le palmityl-ACP (C16). Bilan par cycle : 1 malonyl-CoA + 2 NADPH consommés.',
+      reversible: false,
     },
   },
-
-  // ── Après 7 cycles : Palmityl-ACP → Acide palmitique ─────────────────────
 
   {
     id: 'bio-e8a',
@@ -193,10 +181,9 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
       enzyme: 'Palmityl thioestérase',
       ecNumber: 'EC 3.1.2.14',
       description: 'Hydrolyse la liaison thioester entre le palmityl et l\'ACP. Libère l\'acide palmitique (C16:0) libre. Met fin à l\'action de l\'acide gras synthase.',
+      reversible: false,
     },
   },
-
-  // ── Élongation : palmitique → stéarique → arachidique ────────────────────
 
   {
     id: 'bio-e9a',
@@ -215,6 +202,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
       enzyme: 'Élongase (ELOVL)',
       cofactor: 'Malonyl-CoA (+2C) + 2 NADPH',
       description: 'Allongement dans le réticulum endoplasmique lisse (principalement). Les 2C proviennent du malonyl-CoA. Peut aussi se produire dans la mitochondrie (acétyl-CoA).',
+      reversible: false,
     },
   },
   {
@@ -234,6 +222,7 @@ export const AGbiosynthesisEdges: MetaboliteEdge[] = [
       enzyme: 'Élongase (ELOVL)',
       cofactor: 'Malonyl-CoA (+2C) + 2 NADPH',
       description: 'Deuxième élongation dans le REL. Produit l\'acide arachidique (C20:0).',
+      reversible: false,
     },
   },
 ]

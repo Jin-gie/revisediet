@@ -1,9 +1,9 @@
 'use client'
 import { Sidebar, SidebarContent, SidebarHeader, SidebarProvider, SidebarTrigger, useSidebar } from "@/components/ui/sidebar"
-import { PATHWAYS } from '@/data/pathways-graph/pathways'
-import { type Pathway } from '@/data/pathways-graph/types'
+import { PATHWAYS, getPathwaysByCategory } from '@/data/pathways-graph/pathways'
+import { type Pathway, type PathwayCategory } from '@/data/pathways-graph/types'
 import { useState, createContext, useContext } from "react"
-import { Beef, Candy, Droplets, PanelLeftClose, PanelLeftOpen } from "lucide-react"
+import { Beef, Candy, Droplets, PanelLeftClose, PanelLeftOpen, type LucideIcon } from "lucide-react"
 import { PathwayGroup } from "./GraphSidebarPathwayGroup"
 
 
@@ -21,6 +21,15 @@ export function usePathways() {
   const ctx = useContext(PathwayContext)
   if (!ctx) throw new Error('usePathways must be used within Providers')
   return ctx
+}
+
+// Config d'affichage par catégorie : libellé + icône.
+// Ajouter une entrée ici seulement si une nouvelle catégorie (autre que
+// glucides/lipides/protides) est un jour créée dans types.tsx.
+const CATEGORY_CONFIG: Record<PathwayCategory, { label: string; icon: LucideIcon }> = {
+  glucides: { label: 'Glucides', icon: Candy },
+  lipides: { label: 'Lipides', icon: Droplets },
+  protides: { label: 'Protides', icon: Beef },
 }
 
 function SidebarToggleButton() {
@@ -44,11 +53,9 @@ function SidebarToggleButton() {
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  
   const [active, setActive] = useState<Pathway[]>(
-      PATHWAYS.filter(p => p.defaultEnabled).map(p => p.id)
-    )
-  
+    PATHWAYS.filter(p => p.defaultEnabled).map(p => p.id)
+  )
   function toggle(pathway: Pathway) {
     setActive(prev =>
       prev.includes(pathway)
@@ -57,12 +64,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
     )
   }
 
-  const glucides = PATHWAYS.filter(p => ['glycolysis', 'krebs'].includes(p.id))
-  const lipides = PATHWAYS.filter(p => ['betaoxydation', 'AGbiosynthesis'].includes(p.id))
-  const protides = PATHWAYS.filter(p => ['urea'].includes(p.id))
-  
+  const byCategory = getPathwaysByCategory()
+
   return (
-    <PathwayContext.Provider value={{active, toggle}}>
+    <PathwayContext.Provider value={{ active, toggle }}>
       <SidebarProvider className="border-r-0">
         {/* Sidebar */}
         <Sidebar className="border-r-0">
@@ -86,30 +91,18 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 Voies métaboliques
               </div>
             </SidebarHeader>
-            
             {/* Content */}
             <SidebarContent style={{ padding: '12px 0' }}>
-              <PathwayGroup 
-                label="Glucides" 
-                icon={Candy} 
-                pathways={glucides}
-                active={active}
-                toggle={toggle}
-              />
-              <PathwayGroup 
-                label="Lipides" 
-                icon={Droplets} 
-                pathways={lipides}
-                active={active}
-                toggle={toggle}
-              />
-              <PathwayGroup 
-                label="Protides" 
-                icon={Beef} 
-                pathways={protides}
-                active={active}
-                toggle={toggle}
-              />
+              {(Object.entries(byCategory) as [PathwayCategory, typeof byCategory[PathwayCategory]][]).map(([category, pathways]) => (
+                <PathwayGroup
+                  key={category}
+                  label={CATEGORY_CONFIG[category].label}
+                  icon={CATEGORY_CONFIG[category].icon}
+                  pathways={pathways}
+                  active={active}
+                  toggle={toggle}
+                />
+              ))}
             </SidebarContent>
           </div>
         </Sidebar>

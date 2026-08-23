@@ -10,8 +10,9 @@ import React, {
 } from "react";
 import { NodeToolbar, Position, type NodeToolbarProps } from "@xyflow/react";
 import { getToolbarBaseStyle } from "./CustomTooltip";
-import { Colors } from "@/data//pathways-graph/types";
- 
+import { Colors } from "@/data/pathways-graph/types";
+import { SegmentedBorder } from "./SegmentedBorder";
+
 /* TOOLTIP CONTEXT ---------------------------------------------------------- */
 
 type TooltipContextType = {
@@ -34,7 +35,6 @@ export function NodeTooltip({ children }: ComponentProps<"div">) {
   }, []);
 
   const hideTooltip = useCallback(() => {
-    // Délai de 150ms — laisse le temps de déplacer la souris vers le contenu
     hideTimeoutRef.current = setTimeout(() => setIsVisible(false), 150)
   }, []);
 
@@ -79,6 +79,9 @@ export function NodeTooltipTrigger(props: ComponentProps<"div">) {
 
 type NodeTooltipContentProps = NodeToolbarProps & {
   colors: Colors,
+  // Une couleur par pathway actif — si fourni (et > 1 élément), le contour
+  // uni est remplacé par un contour segmenté. Sinon, comportement inchangé.
+  borderColors?: string[],
 };
 
 export function NodeTooltipContent({
@@ -86,6 +89,7 @@ export function NodeTooltipContent({
   position,
   className,
   style,
+  borderColors,
   ...props
 }: NodeTooltipContentProps) {
   const tooltipContext = useContext(TooltipContext);
@@ -94,13 +98,19 @@ export function NodeTooltipContent({
   }
   const { isVisible, showTooltip, hideTooltip } = tooltipContext;
 
+  const segmented = !!borderColors && borderColors.length > 1
+  const baseStyle = getToolbarBaseStyle(props.colors)
+
   return (
     <div>
       <NodeToolbar
         isVisible={isVisible}
-        style = {{
-          ...getToolbarBaseStyle(props.colors),
-          ...style
+        style={{
+          ...baseStyle,
+          // Contour uni retiré si segmenté ; SegmentedBorder le remplace
+          border: segmented ? 'none' : baseStyle.border,
+          position: 'relative',
+          ...style,
         }}
         tabIndex={1}
         position={Position.Right}
@@ -110,6 +120,9 @@ export function NodeTooltipContent({
         {...props}
       >
         {children}
+        {segmented && (
+          <SegmentedBorder colors={borderColors!} strokeWidth={1} radius={8} />
+        )}
       </NodeToolbar>
     </div>
   );

@@ -1,13 +1,12 @@
-import { type MetaboliteEdge } from "./types";
-import { ureaOnlyMetabolites, metabolites } from "./metabolites";
+// protides/urea.tsx
+import { type MetaboliteEdge } from "../types";
+import { ureaOnlyMetabolites, metabolites } from "../metabolites";
 
 export const ureaNodes = [
-  // Métabolites partagés depuis metabolites.ts
   metabolites.oxaloacetate,
   metabolites.alphaketoglutarate,
   metabolites.fumarate,
   metabolites.nh4,
-  // Métabolites propres au cycle de l'urée
   ...Object.values(ureaOnlyMetabolites),
 ]
 
@@ -19,15 +18,12 @@ export const ureaEdges: MetaboliteEdge[] = [
     data: {pathway: 'urea'}
   },
 
-  // ── Réaction 1 : OTC ──────────────────────────────────────────────────────
-  // Carbamoyl-phosphate → junction_otc
   {
     id: 'urea-e1a',
     source: 'carbamoylphosphate',
     target: 'junction_otc',
     data: { pathway: 'urea' },
   },
-  // Ornithine → junction_otc
   {
     id: 'urea-e1b',
     source: 'ornithine',
@@ -36,7 +32,6 @@ export const ureaEdges: MetaboliteEdge[] = [
     targetHandle: 'target-left',
     data: { pathway: 'urea' },
   },
-  // junction_otc → Citrulline
   {
     id: 'urea-e1c',
     source: 'junction_otc',
@@ -45,11 +40,9 @@ export const ureaEdges: MetaboliteEdge[] = [
     label: 'OTC',
     sourceHandle: "source-right",
     targetHandle: "target-left",
-    data: { pathway: 'urea', enzyme: 'Ornithine transcarbamylase', cofactor: 'ATP' },
+    data: { pathway: 'urea', enzyme: 'Ornithine transcarbamylase', cofactor: 'ATP', reversible: false },
   },
 
-  // ── Réaction 2 : ASS ──────────────────────────────────────────────────────
-  // Citrulline → junction_ass
   {
     id: 'urea-e2a',
     source: 'citrulline',
@@ -57,7 +50,6 @@ export const ureaEdges: MetaboliteEdge[] = [
     sourceHandle: "source-right",
     data: { pathway: 'urea' },
   },
-  // Aspartate → junction_ass
   {
     id: 'urea-e2b',
     source: 'aspartate',
@@ -65,25 +57,21 @@ export const ureaEdges: MetaboliteEdge[] = [
     sourceHandle: 'source-left',
     data: { pathway: 'urea' },
   },
-  // junction_ass → Argininosuccinate
   {
     id: 'urea-e2c',
     source: 'junction_ass',
     target: 'argininosuccinate',
     type: 'enzyme',
     label: 'ASS',
-    data: { pathway: 'urea', enzyme: 'Argininosuccinate synthétase', cofactor: 'ATP → AMP + PPi' },
+    data: { pathway: 'urea', enzyme: 'Argininosuccinate synthétase', cofactor: 'ATP → AMP + PPi', reversible: false },
   },
 
-  // ── Réaction 3 : ASL ──────────────────────────────────────────────────────
-  // Argininosuccinate → junction_asl
   {
     id: 'urea-e3a',
     source: 'argininosuccinate',
     target: 'junction_asl',
     data: { pathway: 'urea' },
   },
-  // junction_asl → Arginine
   {
     id: 'urea-e3b',
     source: 'junction_asl',
@@ -93,7 +81,6 @@ export const ureaEdges: MetaboliteEdge[] = [
     targetHandle: 'target-right',
     data: { pathway: 'urea', enzyme: 'Argininosuccinate lyase' },
   },
-  // junction_asl → Fumarate (jonction avec Krebs)
   {
     id: 'urea-e3c',
     source: 'junction_asl',
@@ -103,8 +90,6 @@ export const ureaEdges: MetaboliteEdge[] = [
     data: { pathway: 'urea', enzyme: 'Argininosuccinate lyase', cofactor: '→ Krebs' },
   },
 
-  // ── Réaction 4 : Arginase ─────────────────────────────────────────────────
-  // Arginine → junction_arginase
   {
     id: 'urea-e4a',
     source: 'arginine',
@@ -113,7 +98,6 @@ export const ureaEdges: MetaboliteEdge[] = [
     targetHandle: 'target-right',
     data: { pathway: 'urea' },
   },
-  // junction_arginase → Ornithine (bouclage)
   {
     id: 'urea-e4b',
     source: 'junction_arginase',
@@ -122,20 +106,17 @@ export const ureaEdges: MetaboliteEdge[] = [
     label: 'Arginase',
     targetHandle: 'target-bottom',
     sourceHandle: 'source-left',
-    data: { pathway: 'urea', enzyme: 'Arginase', cofactor: 'H₂O' },
+    data: { pathway: 'urea', enzyme: 'Arginase', cofactor: 'H₂O', reversible: false },
   },
-  // junction_arginase → Urée (produit final)
   {
     id: 'urea-e4c',
     source: 'junction_arginase',
     target: 'urea',
     sourceHandle: 'source-left',
     targetHandle: 'target-right',
-    data: { pathway: 'urea', enzyme: 'Arginase' },
+    data: { pathway: 'urea', enzyme: 'Arginase', reversible: false },
   },
 
-  // ── Jonction Krebs → Urée ─────────────────────────────────────────────────
-  // Oxaloacétate → Aspartate (transamination)
   {
     id: 'urea-e5a',
     source: 'oxaloacetate',

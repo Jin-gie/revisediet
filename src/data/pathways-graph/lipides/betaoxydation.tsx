@@ -1,16 +1,14 @@
-import { type MetaboliteEdge } from "./types";
-import { betaoxydationOnlyMetabolites, metabolites } from "./metabolites";
+// lipides/betaoxydation.tsx
+
+import { type MetaboliteEdge } from "../types";
+import { betaoxydationOnlyMetabolites, metabolites } from "../metabolites";
 
 export const betaoxydationNodes = [
-  // Métabolites partagés depuis metabolites.ts
   metabolites.acetylcoa,
-  // Métabolites propres à la bêta-oxydation
   ...Object.values(betaoxydationOnlyMetabolites),
 ]
 
 export const betaoxydationEdges: MetaboliteEdge[] = [
-
-  // ── Activation de l'acide gras ────────────────────────────────────────────
 
   {
     id: 'beta-e1',
@@ -23,12 +21,10 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
       enzyme: 'Acyl-CoA synthétase',
       cofactor: 'ATP + CoA → AMP + PPi',
       description: 'Activation de l\'acide gras en acyl-CoA dans le cytoplasme. Nécessite le transport vers la mitochondrie via la carnitine.',
+      reversible: false,
     },
   },
 
-  // ── Tour 1 du cycle ───────────────────────────────────────────────────────
-
-  // Étape 1 : Oxydation → trans-Δ2-énoyl-CoA
   {
     id: 'beta-e2',
     source: 'acylcoa',
@@ -45,7 +41,6 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     },
   },
 
-  // Étape 2 : Hydratation → L-3-hydroxyacyl-CoA
   {
     id: 'beta-e3',
     source: 'trans2enoylcoa',
@@ -60,7 +55,6 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     },
   },
 
-  // Étape 3 : Oxydation → 3-cétoacyl-CoA
   {
     id: 'beta-e4',
     source: 'hydroxyacylcoa',
@@ -77,8 +71,6 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     },
   },
 
-  // Étape 4 : Thiolyse → acétyl-CoA + acyl-CoA (n-2)
-  // 3-cétoacyl-CoA → junction_thiolase
   {
     id: 'beta-e5a',
     source: 'ketoacylcoa',
@@ -87,7 +79,6 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     targetHandle: 'target-right',
     data: { pathway: 'betaoxydation' },
   },
-  // junction_thiolase → acétyl-CoA (vers Krebs)
   {
     id: 'beta-e5b',
     source: 'junction_thiolase',
@@ -102,9 +93,9 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
       cofactor: 'CoA',
       ecNumber: 'EC 2.3.1.16',
       description: 'Clivage thiolytique libérant un acétyl-CoA et un acyl-CoA raccourci de 2 carbones.',
+      reversible: false,
     },
   },
-  // junction_thiolase → acyl-CoA (n-2) (rebouclage)
   {
     id: 'beta-e5c',
     source: 'junction_thiolase',
@@ -117,10 +108,9 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
       pathway: 'betaoxydation',
       enzyme: 'Thiolase (acyl-CoA acétyltransférase)',
       cofactor: 'CoA',
+      reversible: false,
     },
   },
-
-  // ── Rebouclage du cycle ───────────────────────────────────────────────────
 
   {
     id: 'beta-e6',
@@ -133,6 +123,7 @@ export const betaoxydationEdges: MetaboliteEdge[] = [
     data: {
       pathway: 'betaoxydation',
       description: 'L\'acyl-CoA raccourci de 2 carbones repart dans un nouveau cycle de bêta-oxydation jusqu\'à épuisement complet de la chaîne.',
+      reversible: false,
     },
   },
 ]
