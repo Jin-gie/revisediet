@@ -113,6 +113,15 @@ export const GLOSSAIRE: GlossaryEntry[] = [
       "Dans le foie (et les reins en moindre quantité) : Lactate -> Pyruvate -> Glucose"
     ]
   },
+  {
+    term: "H2O2",
+    title: "Peroxyde d'hydrogène",
+    category: ['biochimie'],
+    items: [
+      "Appartient à la famille des radicaux libres, molécules capables d'altérer l'ADN",
+      "La glutathion réductase (un tripeptide) est capable de le transformer en éléments assimilables"
+    ]
+  }
 ];
 
 export function getGlossaryEntry(term: string): GlossaryEntry | undefined {

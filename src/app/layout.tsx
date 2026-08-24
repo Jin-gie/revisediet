@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Serif_Display, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { PreferencesProvider } from "@/components/preferences/PreferencesContext";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -36,7 +37,7 @@ export default function RootLayout({
       )}
     >
       <body className="bg-white text-stone-900 antialiased">
-        {children}
+        <PreferencesProvider>{children}</PreferencesProvider>
       </body>
     </html>
   );

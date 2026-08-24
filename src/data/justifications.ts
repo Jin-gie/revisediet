@@ -705,7 +705,8 @@ export const JUSTIFICATIONS: PopulationJustification[] = [
         title: "Protéines",
         apports: [
           "IR : 12-20 % de l'AET, soit xx - xx g",
-          "Minimum 1 g/kg/j, soit xx g/j, d'après l'ANSES (en moyenne 60 g/j)",
+          "femmes ménopausées < 65 ans : Minimum 0,83 g/kg/j, soit xx g/j, d'après l'ANSES (en moyenne 47 g/j)",
+          "> 65 ans : Minimum 1 g/kg/j, soit xx g/j, d'après l'ANSES (en moyenne 60 g/j)",
           "Rapport P animales / P végétales > 1",
         ],
         justification: [

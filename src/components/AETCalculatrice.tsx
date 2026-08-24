@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { calcAET, kcalToKj, parseDecimal, FormuleSexe, kjToKcal } from "@/lib/calculs";
 import { PopulationSlug } from "@/data/populations";
+import { usePreferences } from "./preferences/PreferencesContext";
 
 type AETCalculatriceProps = {
   /** Nom / source de la formule, ex: "Harris & Benedict révisé — Roche et al., 1984" */
@@ -33,6 +34,8 @@ export default function AETCalculatrice({ formuleNom, formuleFemme, formuleHomme
   const tailleNum = parseDecimal(taille); // en mètres, ex: 1.75
   const ageNum = parseDecimal(age);
   const napNum = parseDecimal(NAP) || 1.63;
+
+  const { unit } = usePreferences();
 
   const formule = status === "grossesse" || status === "allaitement" || sexe === "femme" ? formuleFemme : formuleHomme;
   const aetBase = calcAET(poidsNum, tailleNum, ageNum || 30, formule, napNum);
@@ -109,8 +112,20 @@ export default function AETCalculatrice({ formuleNom, formuleFemme, formuleHomme
           {/* <p className="font-serif text-3xl text-emerald-700">{aet.toLocaleString("fr-FR")} kcal/j</p>
           <p className="text-sm text-emerald-600 mt-0.5">{kcalToKj(aet).toLocaleString("fr-FR")} kJ/j</p> */}
 
-          <p className="font-serif text-3xl text-emerald-700">{aet.toLocaleString("fr-FR")} kJ/j</p>
-          <p className="text-sm text-emerald-600 mt-0.5">{kjToKcal(aet).toLocaleString("fr-FR")} kcal/j</p>
+          <p className="font-serif text-3xl text-emerald-700">
+            {
+              unit === "kJ" ? 
+              <>{aet.toLocaleString("fr-FR")} kJ/j</> : 
+              <>{kjToKcal(aet).toLocaleString("fr-FR")} kcal/j</>
+            }
+          </p>
+          <p className="text-sm text-emerald-600 mt-0.5">
+            {
+              unit === "kcal" ?
+              <>{aet.toLocaleString("fr-FR")} kJ/j</>:
+              <>{kjToKcal(aet).toLocaleString("fr-FR")} kcal/j</>
+            }
+          </p>
         </div>
       ) : (
         <div className="bg-stone-50 border border-stone-100 rounded-xl px-5 py-4">

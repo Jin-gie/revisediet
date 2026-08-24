@@ -76,10 +76,10 @@ const HENRY: Formule = {
   homme : {
     text : (
       <>
-        MB = 0,0563 x P + 2,15
+        MB = 0,0478 x P + 2,26 * T - 1,07
       </>
     ),
-    calcMB : (poids) => 0.0563 * poids + 2.15
+    calcMB : (poids, taille) => 0.0478 * poids + 2.26 * taille - 1.07
   }
 }
 
@@ -219,15 +219,16 @@ export const POPULATIONS: Population[] = [
     slug: "personne-agee",
     label: "Personne âgée",
     emoji: "👴",
-    description: "Personnes de 65 ans et plus. Risque de dénutrition, sarcopénie et carences spécifiques.",
+    description: "Personnes de 65 ans et plus et femmes ménopausées à partir de 51 ans. Risque de dénutrition, sarcopénie et carences spécifiques.",
     tags: ["65 ans et +", "Dénutrition"],
     formule: HENRY,
     aet: {
       description: "L'AET diminue avec l'âge mais les besoins en protéines restent élevés pour prévenir la sarcopénie.",
       valeurs: [
-        { profil: "Femme > 65 ans", kcal: "TODO kcal", kJ: "7,8 MJ" },
-        { profil: "Homme > 65 ans", kcal: "TODO kcal", kJ: "9,6 MJ" },
-        { profil: "Femmes ménopausées 50-60 ans", kcal: "TODO kcal", kJ: "8,6 MJ" },
+        { profil: "Femmes ménopausées 51-59 ans", kcal: "2056,7 kcal", kJ: "8,6 MJ" },
+        { profil: "Femme 60-65 ans", kcal: "1927,7 kcal", kJ: "8,1 MJ" },
+        { profil: "Femme > 65 ans", kcal: "1877,8 kcal", kJ: "7,8 MJ" },
+        { profil: "Homme > 65 ans", kcal: "2308 kcal", kJ: "9,6 MJ" },
       ],
     },
   },

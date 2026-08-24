@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/client"
 import type { User } from "@supabase/supabase-js"
+import PreferencesMenu from "@/components/preferences/PreferencesMenu"
 
 export default function AuthButton() {
   const supabase = createClient()
@@ -25,6 +26,7 @@ export default function AuthButton() {
   if (user) {
     return (
       <div className="flex items-center gap-2">
+        <PreferencesMenu />
         <Link
           href="/suivi"
           className="text-sm font-medium text-stone-500 hover:text-stone-800 px-3 py-2 rounded-lg hover:bg-stone-50 transition-all"
@@ -43,6 +45,7 @@ export default function AuthButton() {
 
   return (
     <div className="flex items-center gap-2">
+      <PreferencesMenu />
       <Link
         href="/connexion"
         className="hidden sm:block text-sm font-medium text-stone-500 hover:text-stone-800 px-3 py-2 rounded-lg hover:bg-stone-50 transition-all"

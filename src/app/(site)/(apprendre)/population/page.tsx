@@ -1,10 +1,12 @@
+"use client"
 // app/(site)/(apprendre)/population/page.tsx
 import Link from "next/link"
 import { POPULATIONS } from "@/data/populations"
-
-const MAX_VALEURS_VISIBLES = 2
+import { usePreferences } from "@/components/preferences/PreferencesContext"
 
 export default function PopulationIndexPage() {
+  const { unit } = usePreferences();
+
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       {/* En-tête */}
@@ -67,12 +69,15 @@ export default function PopulationIndexPage() {
                 <p className="text-[10px] font-semibold text-stone-400 uppercase tracking-wider">
                   AET
                 </p>
-                {p.aet.valeurs.map((v) => (
-                  <div key={v.profil} className="flex items-baseline justify-between gap-3">
-                    <span className="text-xs text-stone-400 truncate">{v.profil}</span>
-                    <span className="text-sm font-medium text-stone-700 flex-shrink-0">{v.kJ}</span>
-                  </div>
-                ))}
+                {p.aet.valeurs.map((v) => {
+                  const valeur = unit === "kcal" ? v.kcal : v.kJ
+                  return (
+                    <div key={v.profil} className="flex items-baseline justify-between gap-3">
+                      <span className="text-xs text-stone-400 truncate">{v.profil}</span>
+                      <span className="text-sm font-medium text-stone-700 flex-shrink-0">{valeur}</span>
+                    </div>
+                  )
+                })}
               </div>
             </Link>
           )

@@ -119,19 +119,7 @@ export default async function PopulationPage({
 
           {/* Besoins énergétiques */}
           <Section id="besoins" title="Besoins énergétiques" emoji="🔥">
-            <p className="text-sm text-stone-400 leading-relaxed mb-4">{pop.aet.description}</p>
-
-            <div className="grid sm:grid-cols-2 gap-3 mb-5">
-              {pop.aet.valeurs.map((v) => (
-                <div key={v.profil} className="border border-stone-100 rounded-xl p-4">
-                  <p className="text-xs text-stone-400 mb-1">{v.profil}</p>
-                  <p className="text-lg font-semibold text-stone-900">{v.kcal}</p>
-                  <p className="text-xs text-stone-400">{v.kJ}</p>
-                </div>
-              ))}
-            </div>
-
-            {pop.formule && <AETSection slug={pop.slug} />}
+            <AETSection slug={pop.slug} />
           </Section>
 
           {/* Repères journaliers */}
