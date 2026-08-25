@@ -10,11 +10,13 @@ import { PathwayGroup } from "./GraphSidebarPathwayGroup"
 type PathwayContextType = {
   active: Pathway[]
   toggle: (pathway: Pathway) => void
+  toggleCategory: (pathways: Pathway[], enable: boolean) => void
 }
 
 export const PathwayContext = createContext<PathwayContextType>({
   active: PATHWAYS.filter(p => p.defaultEnabled).map(p => p.id),
   toggle: () => {},
+  toggleCategory: () => {},
 })
 
 export function usePathways() {
@@ -23,9 +25,6 @@ export function usePathways() {
   return ctx
 }
 
-// Config d'affichage par catégorie : libellé + icône.
-// Ajouter une entrée ici seulement si une nouvelle catégorie (autre que
-// glucides/lipides/protides) est un jour créée dans types.tsx.
 const CATEGORY_CONFIG: Record<PathwayCategory, { label: string; icon: LucideIcon }> = {
   glucides: { label: 'Glucides', icon: Candy },
   lipides: { label: 'Lipides', icon: Droplets },
@@ -56,6 +55,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const [active, setActive] = useState<Pathway[]>(
     PATHWAYS.filter(p => p.defaultEnabled).map(p => p.id)
   )
+
   function toggle(pathway: Pathway) {
     setActive(prev =>
       prev.includes(pathway)
@@ -64,12 +64,26 @@ export function Providers({ children }: { children: React.ReactNode }) {
     )
   }
 
+  // Active ou désactive en bloc tous les pathways passés en argument
+  // (typiquement tous ceux d'une catégorie)
+  function toggleCategory(pathways: Pathway[], enable: boolean) {
+    setActive(prev => {
+      if (enable) {
+        // Ajoute ceux qui ne sont pas déjà actifs, sans doublon
+        const toAdd = pathways.filter(p => !prev.includes(p))
+        return [...prev, ...toAdd]
+      } else {
+        // Retire tous les pathways de la catégorie
+        return prev.filter(p => !pathways.includes(p))
+      }
+    })
+  }
+
   const byCategory = getPathwaysByCategory()
 
   return (
-    <PathwayContext.Provider value={{ active, toggle }}>
+    <PathwayContext.Provider value={{ active, toggle, toggleCategory }}>
       <SidebarProvider className="border-r-0">
-        {/* Sidebar */}
         <Sidebar className="border-r-0">
           <div style={{
             height: '100%',
@@ -91,7 +105,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 Voies métaboliques
               </div>
             </SidebarHeader>
-            {/* Content */}
             <SidebarContent style={{ padding: '12px 0' }}>
               {(Object.entries(byCategory) as [PathwayCategory, typeof byCategory[PathwayCategory]][]).map(([category, pathways]) => (
                 <PathwayGroup
@@ -101,6 +114,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
                   pathways={pathways}
                   active={active}
                   toggle={toggle}
+                  toggleCategory={toggleCategory}
                 />
               ))}
             </SidebarContent>
