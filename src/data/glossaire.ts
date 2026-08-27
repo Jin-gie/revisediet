@@ -113,6 +113,16 @@ export const GLOSSAIRE: GlossaryEntry[] = [
       "Dans le foie (et les reins en moindre quantité) : Lactate -> Pyruvate -> Glucose"
     ]
   },
+  {
+    term: "sarcopénie",
+    title: "Sarcopénie",
+    category: ['clinique', 'nutrition', 'dietetique'],
+    items: [
+      "Syndrome gériatrique",
+      "Diminution des capacités musculiares due à l'âge qui, en s'aggravant, sera à l'origine d'une détérioration de la force musculaire et des performances physiques",
+      "Imputable au processus de vieillissement, mais peut être accéléré par des facteurs pathologiques et comportementaux (dénutrition, sédentarité, ...)"
+    ]
+  },
 ];
 
 export function getGlossaryEntry(term: string): GlossaryEntry | undefined {
