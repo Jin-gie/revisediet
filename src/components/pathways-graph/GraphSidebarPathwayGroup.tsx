@@ -1,6 +1,6 @@
 'use client'
 import { type LucideIcon } from 'lucide-react'
-import { CircleHelp } from 'lucide-react'
+import { CircleHelp, Eye, EyeOff } from 'lucide-react'
 import {
   SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
 } from "@/components/ui/sidebar"
@@ -14,9 +14,14 @@ type PathwayGroupProps = {
   pathways: PathwayConfig[]
   active: Pathway[]
   toggle: (pathway: Pathway) => void
+  toggleCategory: (pathways: Pathway[], enable: boolean) => void
 }
 
-export function PathwayGroup({ label, icon: Icon, pathways, active, toggle }: PathwayGroupProps) {
+export function PathwayGroup({ label, icon: Icon, pathways, active, toggle, toggleCategory }: PathwayGroupProps) {
+  const categoryPathwayIds = pathways.map(p => p.id)
+  const allActive = categoryPathwayIds.every(id => active.includes(id))
+  const someActive = categoryPathwayIds.some(id => active.includes(id))
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel style={{
@@ -29,10 +34,41 @@ export function PathwayGroup({ label, icon: Icon, pathways, active, toggle }: Pa
         fontFamily: 'monospace',
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'space-between',
         gap: 6,
       }}>
-        <Icon size={12} />
-        {label}
+        <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <Icon size={12} />
+          {label}
+        </span>
+
+        <button
+          onClick={() => toggleCategory(categoryPathwayIds, !allActive)}
+          title={allActive ? `Masquer ${label.toLowerCase()}` : `Afficher ${label.toLowerCase()}`}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 20,
+            height: 20,
+            borderRadius: 4,
+            border: 'none',
+            background: 'transparent',
+            color: someActive ? '#94a3b8' : '#475569',
+            cursor: 'pointer',
+            transition: 'color 0.15s ease, background 0.15s ease',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = 'rgba(148, 163, 184, 0.1)'
+            e.currentTarget.style.color = '#f1f5f9'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = 'transparent'
+            e.currentTarget.style.color = someActive ? '#94a3b8' : '#475569'
+          }}
+        >
+          {allActive ? <Eye size={13} /> : <EyeOff size={13} />}
+        </button>
       </SidebarGroupLabel>
 
       <SidebarGroupContent>

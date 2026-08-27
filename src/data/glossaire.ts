@@ -121,7 +121,17 @@ export const GLOSSAIRE: GlossaryEntry[] = [
       "Appartient à la famille des radicaux libres, molécules capables d'altérer l'ADN",
       "La glutathion réductase (un tripeptide) est capable de le transformer en éléments assimilables"
     ]
-  }
+  },
+  {
+    term: "sarcopénie",
+    title: "Sarcopénie",
+    category: ['clinique', 'nutrition', 'dietetique'],
+    items: [
+      "Syndrome gériatrique",
+      "Diminution des capacités musculiares due à l'âge qui, en s'aggravant, sera à l'origine d'une détérioration de la force musculaire et des performances physiques",
+      "Imputable au processus de vieillissement, mais peut être accéléré par des facteurs pathologiques et comportementaux (dénutrition, sédentarité, ...)"
+    ]
+  },
 ];
 
 export function getGlossaryEntry(term: string): GlossaryEntry | undefined {

@@ -2,6 +2,7 @@
 
 import { krebsOnlyMetabolites, metabolites } from "../metabolites";
 import { MetaboliteEdge } from "../types";
+import { autoHandles } from "../utils";
 
 export const krebsNodes = [
   metabolites.acetylcoa,
@@ -98,6 +99,7 @@ export const krebsEdges: MetaboliteEdge[] = [
     source: 'fumarate',
     target: 'malate',
     type: 'enzyme',
+    ...autoHandles('fumarate', 'malate'),
     label: 'Fumarase',
     data: { pathway: ['krebs'], enzyme: 'Fumarase', cofactor: 'H₂O' },
   },
@@ -109,6 +111,11 @@ export const krebsEdges: MetaboliteEdge[] = [
     targetHandle: 'target-left',
     type: 'enzyme',
     label: 'Malate DH',
-    data: { pathway: ['krebs'], enzyme: 'Malate déshydrogénase', cofactor: 'NAD⁺ → NADH' },
+    data: { 
+      pathway: ['krebs', 'ngg'], 
+      enzyme: 'Malate déshydrogénase', 
+      cofactor: 'NAD⁺ → NADH',
+      description : "Dans la NGG, transformation de l'AOA en malate, qui peut passer la membrane mitochondriale. Une fois dans le cytosol, le malade se retransforme en AOA par la malade DH et accéder à la NGG." 
+    },
   },
 ]

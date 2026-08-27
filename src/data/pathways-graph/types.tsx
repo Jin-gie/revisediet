@@ -7,7 +7,7 @@ export type Colors = {
   text: string;
 }
 
-export type Pathway = 'glycolysis' | 'ngg' | 'krebs' | 'urea' | 'betaoxydation' | 'AGbiosynthesis'
+export type Pathway = 'glycolysis' | 'ngg' | 'krebs' | 'urea' | 'betaoxydation' | 'AGbiosynthesis' | 'galactose' | 'fructose' | 'glycogenogenesis' | 'glycogenolysis'
 
 export type PathwayCategory = 'glucides' | 'lipides' | 'protides'
 

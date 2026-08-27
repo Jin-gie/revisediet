@@ -863,6 +863,10 @@ export const JUSTIFICATIONS: PopulationJustification[] = [
         ],
         justification: [
           "À adapter selon le rythme de vie pour maintenir un apport énergétique satisfaisant",
+          "Faire en sorte que les prises alimentaires ne soient ni trop proches ni trop espacées dans le temps",
+          "Veiller à ce que le jeûne nocturne n'excède pas 12h",
+          "Éviter le grignotage de produits gras, salés et sucrés en dehors de repas principaux",
+          "Déroulement et durée des repas doivent être plus longs, peuvent prendre jusqu'à 1h voire plus"
         ],
       },
       {
