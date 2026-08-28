@@ -18,7 +18,7 @@ export default function SiteLayout({
       <ScrollToTop />
 
       <footer className="border-t border-stone-100 bg-white mt-24">
-        <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-5 gap-8">
+        <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-3">
               <Logo className="w-7 h-7 text-emerald-700" />
@@ -28,7 +28,7 @@ export default function SiteLayout({
               Outil pédagogique pour étudiants en BTS Diététique. Contenus basés sur les référentiels ANSES & PNNS.
             </p>
           </div>
-          <div>
+          {/* <div>
             <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">S'entraîner</p>
             <ul className="space-y-2 text-sm text-stone-500">
               <li><a href="/cas/aleatoire" className="hover:text-emerald-700 transition-colors">Cas nutrition</a></li>
@@ -38,7 +38,7 @@ export default function SiteLayout({
               <li><a href="/flashcards" className="hover:text-emerald-700 transition-colors">Flashcards</a></li>
               <li><a href="/quiz" className="hover:text-emerald-700 transition-colors">Quiz rapide</a></li>
             </ul>
-          </div>
+          </div> */}
           <div>
             <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Conception alimentation</p>
             <ul className="space-y-2 text-sm text-stone-500">

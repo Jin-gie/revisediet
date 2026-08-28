@@ -23,28 +23,28 @@ const POPULATION_NAV_BLURB: Record<PopulationSlug, string> = {
 };
 
 const NAV_ITEMS = [
-  {
-    label: "S'entraîner",
-    href: "/s-entrainer",
-    sections: [
-      {
-        title: "Cas concrets",
-        items: [
-          { emoji: "🎲", label: "Cas nutrition", sub: "Un profil aléatoire sans pathologie, par population", href: "/cas/aleatoire" },
-          { emoji: "⚠️", label: "Cas pathologie", sub: "Un profil aléatoire avec pathologie, par population", href: "/cas/aleatoire-patho" },
-          { emoji: "📋", label: "Catalogue de cas", sub: "Filtrer par population ou pathologie", href: "/cas" },
-          { emoji: "🍽️", label: "Atelier culinaire", sub: "S'entraîner à faire un atelier culinaire", href: "/atelier-culinaire" },
-        ],
-      },
-      {
-        title: "Quiz",
-        items: [
-          { emoji: "🃏", label: "Flashcards", sub: "ANC, formules, valeurs clés", href: "/flashcards" },
-          { emoji: "⚡", label: "Quiz rapide", sub: "5 questions en 3 minutes", href: "/quiz" },
-        ],
-      },
-    ],
-  },
+  // {
+  //   label: "S'entraîner",
+  //   href: "/s-entrainer",
+  //   sections: [
+  //     {
+  //       title: "Cas concrets",
+  //       items: [
+  //         { emoji: "🎲", label: "Cas nutrition", sub: "Un profil aléatoire sans pathologie, par population", href: "/cas/aleatoire" },
+  //         { emoji: "⚠️", label: "Cas pathologie", sub: "Un profil aléatoire avec pathologie, par population", href: "/cas/aleatoire-patho" },
+  //         { emoji: "📋", label: "Catalogue de cas", sub: "Filtrer par population ou pathologie", href: "/cas" },
+  //         { emoji: "🍽️", label: "Atelier culinaire", sub: "S'entraîner à faire un atelier culinaire", href: "/atelier-culinaire" },
+  //       ],
+  //     },
+  //     {
+  //       title: "Quiz",
+  //       items: [
+  //         { emoji: "🃏", label: "Flashcards", sub: "ANC, formules, valeurs clés", href: "/flashcards" },
+  //         { emoji: "⚡", label: "Quiz rapide", sub: "5 questions en 3 minutes", href: "/quiz" },
+  //       ],
+  //     },
+  //   ],
+  // },
   {
     label: "Conception alimentation",
     href: "/population",

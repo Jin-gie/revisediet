@@ -36,10 +36,10 @@ const PILLARS = [
 ];
 
 const TOOLS = [
-  { emoji: "🧮", label: "Calculateur de besoins", sub: "AET, IMC, NAP", href: "/calculateur" },
   { emoji: "🥦", label: "Table Ciqual", sub: "Valeurs nutritionnelles des aliments", href: "/ciqual" },
   { emoji: "🔬", label: "Voies métaboliques", sub: "Visualisation des voies à connaître", href: "/metabolisme" },
   { emoji: "📐", label: "Références", sub: "PNNS, GEMRCN, ANSES, HAS…", href: "/references" },
+  { emoji: "📖", label: "Glossaire", sub: "Définitions des termes techniques", href: "/glossaire" },
 ];
 
 // ── Composants ────────────────────────────────────────────────────────────────
@@ -147,10 +147,10 @@ export default function HomePage() {
       <section className="max-w-4xl mx-auto px-6 mt-16 mb-4">
         <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-8 text-center">
           <h2 className="font-serif text-2xl text-stone-900 mb-3">
-            kcal ou kJ, à toi de choisir
+            Suis efficacement tes progrès
           </h2>
           <p className="text-stone-500 text-sm mb-6 max-w-sm mx-auto">
-            Crée un compte gratuit pour fixer ta préférence d'unité une fois pour toutes — elle te suit sur tout le site, à chaque connexion.
+            Crée un compte gratuit et suis tes progrès, ajoute tes favoris et accède à des fonctionnalités supplémentaires pour t'aider à réviser efficacement.
           </p>
           <Link
             href="/connexion?mode=register"
