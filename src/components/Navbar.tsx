@@ -22,28 +22,29 @@ const POPULATION_NAV_BLURB: Record<PopulationSlug, string> = {
 };
 
 const NAV_ITEMS = [
-  {
-    label: "S'entraîner",
-    href: "/s-entrainer",
-    sections: [
-      {
-        title: "Cas cliniques",
-        items: [
-          { emoji: "🎯", label: "Cas du jour", sub: "Un profil patient chaque matin", href: "/cas/du-jour" },
-          { emoji: "📋", label: "Catalogue de cas", sub: "Filtrer par population ou pathologie", href: "/cas" },
-          { emoji: "🎲", label: "Cas aléatoire", sub: "Profil généré à la volée", href: "/cas/aleatoire" },
-        ],
-      },
-      {
-        title: "S'exercer",
-        items: [
-          { emoji: "🍽️", label: "Atelier rations", sub: "Construire et vérifier un menu", href: "/rations" },
-          { emoji: "🔍", label: "Ration à corriger", sub: "Trouver les erreurs d'un menu", href: "/rations/corriger" },
-          { emoji: "⚡", label: "Quiz rapide", sub: "5 questions en 3 minutes", href: "/quiz" },
-        ],
-      },
-    ],
-  },
+  // {
+  //   label: "S'entraîner",
+  //   href: "/s-entrainer",
+  //   sections: [
+  //     {
+  //       title: "Cas cliniques",
+  //       items: [
+  //         { emoji: "🎯", label: "Cas du jour", sub: "Un profil patient chaque matin", href: "/cas/du-jour" },
+  //         { emoji: "📋", label: "Catalogue de cas", sub: "Filtrer par population ou pathologie", href: "/cas" },
+  //         { emoji: "🎲", label: "Cas aléatoire", sub: "Profil généré à la volée", href: "/cas/aleatoire" },
+  //       ],
+  //     },
+  //     {
+  //       title: "S'exercer",
+  //       items: [
+  //         { emoji: "🃏", label: "Flashcards", sub: "ANC, formules, valeurs clés", href: "/flashcards" },
+  //         { emoji: "🍽️", label: "Atelier rations", sub: "Construire et vérifier un menu", href: "/rations" },
+  //         { emoji: "🔍", label: "Ration à corriger", sub: "Trouver les erreurs d'un menu", href: "/rations/corriger" },
+  //         { emoji: "⚡", label: "Quiz rapide", sub: "5 questions en 3 minutes", href: "/quiz" },
+  //       ],
+  //     },
+  //   ],
+  // },
   {
     label: "Conception alimentation",
     href: "/population",
@@ -96,24 +97,12 @@ const NAV_ITEMS = [
     href: "/outils",
     sections: [
       {
-        title: "Calculateurs",
+        title: "",
         items: [
-          { emoji: "🧮", label: "Besoins énergétiques", sub: "AET, IMC, NAP", href: "/calculateur" },
           { emoji: "🥦", label: "Table Ciqual", sub: "Valeurs nutritionnelles des aliments", href: "/ciqual" },
-        ],
-      },
-      {
-        title: "Révision",
-        items: [
-          { emoji: "🃏", label: "Flashcards", sub: "ANC, formules, valeurs clés", href: "/flashcards" },
+          { emoji: "🔬", label: "Voies métaboliques", sub: "Visualisation des voies à connaître pour le BTS", href: "/metabolisme" },
+          { emoji: "📐", label: "Références", sub: "PNNS, GEMRC, ANSES, toutes les sources au même endroit", href: "/references" },
           { emoji: "📖", label: "Glossaire", sub: "Termes & définitions", href: "/glossaire" },
-          { emoji: "📐", label: "Références & formules", sub: "PNNS, ANSES, Harris-Benedict…", href: "/references" },
-        ],
-      },
-      {
-        title: "Autres",
-        items: [
-          { emoji: "🔬", label: "Voies métaboliques", sub: "Visualisation React Flow", href: "/metabolisme" },
         ],
       },
     ],
