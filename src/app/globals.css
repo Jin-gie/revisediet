@@ -265,3 +265,26 @@ html, body {
 .prose tbody tr:nth-child(even) {
   background-color: #fafaf9 !important;
 }
+
+
+/* Animations homepage : entrée en fondu */
+.fade-up {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fade-up 0.5s ease-out forwards;
+}
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

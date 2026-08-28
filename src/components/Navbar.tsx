@@ -1,3 +1,4 @@
+// Navbar.tsx
 "use client";
 import AuthButton from "@/components/AuthButton"
 
@@ -22,29 +23,28 @@ const POPULATION_NAV_BLURB: Record<PopulationSlug, string> = {
 };
 
 const NAV_ITEMS = [
-  // {
-  //   label: "S'entraîner",
-  //   href: "/s-entrainer",
-  //   sections: [
-  //     {
-  //       title: "Cas cliniques",
-  //       items: [
-  //         { emoji: "🎯", label: "Cas du jour", sub: "Un profil patient chaque matin", href: "/cas/du-jour" },
-  //         { emoji: "📋", label: "Catalogue de cas", sub: "Filtrer par population ou pathologie", href: "/cas" },
-  //         { emoji: "🎲", label: "Cas aléatoire", sub: "Profil généré à la volée", href: "/cas/aleatoire" },
-  //       ],
-  //     },
-  //     {
-  //       title: "S'exercer",
-  //       items: [
-  //         { emoji: "🃏", label: "Flashcards", sub: "ANC, formules, valeurs clés", href: "/flashcards" },
-  //         { emoji: "🍽️", label: "Atelier rations", sub: "Construire et vérifier un menu", href: "/rations" },
-  //         { emoji: "🔍", label: "Ration à corriger", sub: "Trouver les erreurs d'un menu", href: "/rations/corriger" },
-  //         { emoji: "⚡", label: "Quiz rapide", sub: "5 questions en 3 minutes", href: "/quiz" },
-  //       ],
-  //     },
-  //   ],
-  // },
+  {
+    label: "S'entraîner",
+    href: "/s-entrainer",
+    sections: [
+      {
+        title: "Cas concrets",
+        items: [
+          { emoji: "🎲", label: "Cas nutrition", sub: "Un profil aléatoire sans pathologie, par population", href: "/cas/aleatoire" },
+          { emoji: "⚠️", label: "Cas pathologie", sub: "Un profil aléatoire avec pathologie, par population", href: "/cas/aleatoire-patho" },
+          { emoji: "📋", label: "Catalogue de cas", sub: "Filtrer par population ou pathologie", href: "/cas" },
+          { emoji: "🍽️", label: "Atelier culinaire", sub: "S'entraîner à faire un atelier culinaire", href: "/atelier-culinaire" },
+        ],
+      },
+      {
+        title: "Quiz",
+        items: [
+          { emoji: "🃏", label: "Flashcards", sub: "ANC, formules, valeurs clés", href: "/flashcards" },
+          { emoji: "⚡", label: "Quiz rapide", sub: "5 questions en 3 minutes", href: "/quiz" },
+        ],
+      },
+    ],
+  },
   {
     label: "Conception alimentation",
     href: "/population",

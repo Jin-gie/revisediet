@@ -18,7 +18,7 @@ export default function SiteLayout({
       <ScrollToTop />
 
       <footer className="border-t border-stone-100 bg-white mt-24">
-        <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-5 gap-8">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-3">
               <Logo className="w-7 h-7 text-emerald-700" />
@@ -31,28 +31,34 @@ export default function SiteLayout({
           <div>
             <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">S'entraîner</p>
             <ul className="space-y-2 text-sm text-stone-500">
-              <li><a href="/cas/du-jour" className="hover:text-emerald-700 transition-colors">Cas du jour</a></li>
+              <li><a href="/cas/aleatoire" className="hover:text-emerald-700 transition-colors">Cas nutrition</a></li>
+              <li><a href="/cas-aleatoire-patho" className="hover:text-emerald-700 transition-colors">Cas pathologie</a></li>
               <li><a href="/cas" className="hover:text-emerald-700 transition-colors">Catalogue de cas</a></li>
-              <li><a href="/rations" className="hover:text-emerald-700 transition-colors">Atelier rations</a></li>
+              <li><a href="/atelier-culinaire" className="hover:text-emerald-700 transition-colors">Atelier culinaire</a></li>
+              <li><a href="/flashcards" className="hover:text-emerald-700 transition-colors">Flashcards</a></li>
               <li><a href="/quiz" className="hover:text-emerald-700 transition-colors">Quiz rapide</a></li>
             </ul>
           </div>
           <div>
-            <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Apprendre</p>
+            <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Conception alimentation</p>
             <ul className="space-y-2 text-sm text-stone-500">
-              <li><a href="/portions" className="hover:text-emerald-700 transition-colors">Fiche portions</a></li>
-              <li><a href="/populations" className="hover:text-emerald-700 transition-colors">Fiches populations</a></li>
+              <li><a href="/population" className="hover:text-emerald-700 transition-colors">Repères par population</a></li>
+              <li><a href="/portions" className="hover:text-emerald-700 transition-colors">Tableau de portions</a></li>
+            </ul>
+          </div>
+          <div>
+            <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Thérapeutique</p>
+            <ul className="space-y-2 text-sm text-stone-500">
               <li><a href="/pathologies" className="hover:text-emerald-700 transition-colors">Fiches pathologies</a></li>
-              <li><a href="/flashcards" className="hover:text-emerald-700 transition-colors">Flashcards</a></li>
-              <li><a href="/glossaire" className="hover:text-emerald-700 transition-colors">Glossaire</a></li>
             </ul>
           </div>
           <div>
             <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">Outils</p>
             <ul className="space-y-2 text-sm text-stone-500">
-              <li><a href="/calculateur" className="hover:text-emerald-700 transition-colors">Calculateur</a></li>
               <li><a href="/ciqual" className="hover:text-emerald-700 transition-colors">Table Ciqual</a></li>
               <li><a href="/metabolisme" className="hover:text-emerald-700 transition-colors">Voies métaboliques</a></li>
+              <li><a href="/references" className="hover:text-emerald-700 transition-colors">Références</a></li>
+              <li><a href="/glossaire" className="hover:text-emerald-700 transition-colors">Glossaire</a></li>
             </ul>
           </div>
         </div>

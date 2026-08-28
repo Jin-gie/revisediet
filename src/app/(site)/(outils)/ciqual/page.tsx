@@ -25,7 +25,7 @@ export default function CiqualPage() {
   const [extraColumns, setExtraColumns] = useState<string[]>([])
   const [compared, setCompared] = useState<CiqualEntry[]>([])
 
-  const [mode, setMode] = useState<"complete" | "simplifiee">("complete")
+  const [mode, setMode] = useState<"complete" | "simplifiee">("simplifiee")
 
   const sousGroupes = useMemo(
     () => (group ? getSousGroupes(data, group) : []),
@@ -68,7 +68,7 @@ export default function CiqualPage() {
         <h1 className="font-serif text-4xl text-stone-900 mb-2">Table Ciqual</h1>
         {/* Toggle */}
         <div className="inline-flex bg-stone-100 p-1 rounded-xl mt-4 mb-8">
-          {(["complete", "simplifiee"] as const).map((m) => (
+          {(["simplifiee", "complete"] as const).map((m) => (
             <button
               key={m}
               onClick={() => setMode(m)}
