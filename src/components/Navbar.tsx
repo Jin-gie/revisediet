@@ -8,6 +8,7 @@ import { useState, useRef, useEffect } from "react";
 import Logo from "@/assets/logo.svg";
 import { POPULATIONS, PopulationSlug } from "@/data/populations";
 import { PATHOLOGIES } from "@/data/pathologies";
+import { getAllPathologies } from "@/data/pathologies";
 
 // Sous-titres courts pour les menus (les `description` des données sont
 // écrites pour les pages de contenu, trop longues pour un dropdown).
@@ -77,7 +78,7 @@ const NAV_ITEMS = [
         // regrouper par tag (Digestif, Rénal…) ou repasser par un lien unique
         // vers le catalogue filtrable /pathologies.
         title: "Par pathologie",
-        items: PATHOLOGIES.map((patho) => ({
+        items: getAllPathologies().map((patho) => ({
           emoji: patho.emoji,
           label: patho.labelCourt,
           sub: patho.tags.join(" · "),

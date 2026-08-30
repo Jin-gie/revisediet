@@ -2,7 +2,10 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { PATHOLOGIES } from "@/data/pathologies"
+import { getAllPathologies } from "@/data/pathologies"
+
+
+const PATHOLOGIES = getAllPathologies()
 
 const ALL_TAGS = Array.from(new Set(PATHOLOGIES.flatMap((p) => p.tags)))
 
@@ -27,7 +30,8 @@ export default function PathologiesPage() {
   })
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12">
+    <div className="max-w-6xl mx-auto px-6 py-12">
+
       {/* En-tête */}
       <div className="mb-10">
         <p className="text-xs font-semibold text-emerald-700 uppercase tracking-widest mb-2">

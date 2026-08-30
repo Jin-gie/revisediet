@@ -5,48 +5,12 @@ import { POPULATIONS, getPopulation } from "@/data/populations"
 import { getJustification } from "@/data/justifications"
 import JustificationTable from "@/components/JustificationTable"
 import AETSection from "@/components/AETSection"
+import LateralMenu from "@/components/LateralMenu"
+import { Badge } from "@/components/ui/badge"
+import { Section, Bullet, EmptyState } from "@/components/shared/Section"
 
 export async function generateStaticParams() {
   return POPULATIONS.map((p) => ({ slug: p.slug }))
-}
-
-function Section({
-  id,
-  title,
-  emoji,
-  children,
-}: {
-  id?: string
-  title: string
-  emoji: string
-  children: React.ReactNode
-}) {
-  return (
-    <div id={id} className="bg-white border border-stone-100 rounded-2xl p-6 scroll-mt-20">
-      <h2 className="font-serif text-xl text-stone-900 mb-5 flex items-center gap-2">
-        <span>{emoji}</span> {title}
-      </h2>
-      {children}
-    </div>
-  )
-}
-
-function Bullet({ children }: { children: React.ReactNode }) {
-  return (
-    <li className="flex items-start gap-2 text-sm text-stone-600">
-      <span className="text-emerald-400 mt-0.5 flex-shrink-0">•</span>
-      <span>{children}</span>
-    </li>
-  )
-}
-
-function EmptyState({ id, label }: { id?: string; label: string }) {
-  return (
-    <div id={id} className="border border-dashed border-stone-200 rounded-2xl p-6 text-center scroll-mt-20">
-      <p className="text-sm font-medium text-stone-500 mb-1">{label}</p>
-      <p className="text-xs text-stone-400">Cette section sera disponible prochainement.</p>
-    </div>
-  )
 }
 
 export default async function PopulationPage({
@@ -59,6 +23,13 @@ export default async function PopulationPage({
   if (!pop) notFound()
 
   const justif = getJustification(pop.slug)
+
+  const lateralMenuItems = [
+    { id: "besoins", label: "Besoins énergétiques" },
+    { id: "reperes", label: "Repères journaliers" },
+    { id: "portions", label: "Tailles de portions" },
+    ...(justif ? [{ id: "justification", label: "Justification" }] : []),
+  ]
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
@@ -73,49 +44,27 @@ export default async function PopulationPage({
 
       <div className="flex gap-8 items-start flex-row-reverse">
         {/* Menu latéral */}
-        <nav className="hidden lg:block sticky top-24 w-44 flex-shrink-0">
-          <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">
-            Sur cette page
-          </p>
-          <ul className="space-y-1">
-            {[
-              { id: "besoins", label: "Besoins énergétiques" },
-              { id: "reperes", label: "Repères journaliers" },
-              { id: "portions", label: "Tailles de portions" },
-              ...(justif ? [{ id: "justification", label: "Justification" }] : []),
-            ].map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  className="block text-xs text-stone-400 hover:text-emerald-700 py-1 px-2 rounded-lg hover:bg-emerald-50 transition-all"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <LateralMenu params={Promise.resolve({ slug, items: lateralMenuItems })} />
 
         {/* Contenu */}
         <div className="min-w-0 flex-1 space-y-5">
           {/* En-tête */}
-          <div className="mb-2">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-3xl">{pop.emoji}</span>
-              <h1 className="font-serif text-3xl text-stone-900">{pop.label}</h1>
-            </div>
-            <p className="text-stone-500 text-sm max-w-xl mb-3">{pop.description}</p>
-            <div className="flex flex-wrap gap-2">
+          <header className="space-y-3">
+            <div className="flex flex-wrap items-center gap-2">
               {pop.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2.5 py-1 text-xs font-medium bg-emerald-50 text-emerald-700 rounded-full"
-                >
+                <Badge key={tag} variant="secondary">
                   {tag}
-                </span>
+                </Badge>
               ))}
             </div>
-          </div>
+            <h1 className="text-3xl font-bold tracking-tight text-stone-900">
+              <span className="mr-2">{pop.emoji}</span>
+              {pop.label}
+            </h1>
+            <p className="text-sm text-stone-400 leading-relaxed max-w-2xl">
+              {pop.description}
+            </p>
+          </header>
 
           {/* Besoins énergétiques */}
           <Section id="besoins" title="Besoins énergétiques" emoji="🔥">
@@ -126,7 +75,9 @@ export default async function PopulationPage({
           {pop.reperes ? (
             <Section id="reperes" title="Repères journaliers" emoji="🥗">
               {pop.reperes.introduction && (
-                <p className="text-sm text-stone-400 leading-relaxed mb-4">{pop.reperes.introduction}</p>
+                <p className="text-sm text-stone-400 leading-relaxed mb-4">
+                  {pop.reperes.introduction}
+                </p>
               )}
 
               <div className="grid sm:grid-cols-2 gap-3 mb-5">
@@ -136,7 +87,9 @@ export default async function PopulationPage({
                       {g.emoji && <span className="mr-1.5">{g.emoji}</span>}
                       {g.groupe}
                     </p>
-                    <p className="text-lg font-semibold text-emerald-700">{g.portionsParJour} / jour</p>
+                    <p className="text-lg font-semibold text-emerald-700">
+                      {g.portionsParJour} / jour
+                    </p>
                     {g.tailleReference && (
                       <p className="text-xs text-stone-400 mt-1">{g.tailleReference}</p>
                     )}

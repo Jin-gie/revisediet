@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { POPULATIONS } from "@/data/populations";
-import { PATHOLOGIES } from "@/data/pathologies";
 
 // ── Données ──────────────────────────────────────────────────────────────────
 
@@ -17,20 +16,6 @@ const PILLARS = [
       emoji: p.emoji,
       label: p.label,
       href: `/population/${p.slug}`,
-    })),
-  },
-  {
-    tag: "Thérapeutique",
-    tagColor: "bg-stone-100 text-stone-700",
-    title: "Adapter un régime\nà une pathologie",
-    description:
-      "Physiopathologie, diagnostic, complications puis prise en charge diététique — pour comprendre avant de prescrire.",
-    cta: "Voir les fiches pathologies →",
-    ctaHref: "/pathologies",
-    items: PATHOLOGIES.map((p) => ({
-      emoji: p.emoji,
-      label: p.labelCourt,
-      href: `/pathologies/${p.slug}`,
     })),
   },
 ];

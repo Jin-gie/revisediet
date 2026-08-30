@@ -906,7 +906,7 @@ export const JUSTIFICATIONS: PopulationJustification[] = [
           "3 ans : garçon 5,1 MJ/j ; fille 4,8 MJ/j"
         ],
         justification: [
-          "Couvre les besoins liés au métabolisme de base, à l'activité physique et professionnelle, la thermorégulation et la thermogenèse post-prandiale et le besoin lié à la croissance (très important au cours de la 1ère année",
+          "Couvre les besoins liés au métabolisme de base, à l'activité physique, la thermorégulation et la thermogenèse post-prandiale et le besoin lié à la croissance (très important au cours de la 1ère année",
         ],
       },
       {
@@ -921,7 +921,7 @@ export const JUSTIFICATIONS: PopulationJustification[] = [
           "Assurer les besoins d'entretien, de croissance et de développement de la masse musculaire",
           "Couvrir les besoins liés aux différents rôles des protéines (structural, fonctionnel, immunitaire et énergétique)",
           "Privilégier les protéines de bonne VB et de bon CUD pour apporter l'ensemble des acides aminés essentiels (pas de protéines présentant un facteur limitant)",
-          "Point de vigilence : fonction rénale immature"
+          "Point de vigilance : fonction rénale immature"
         ],
       },
       {
@@ -1009,7 +1009,7 @@ export const JUSTIFICATIONS: PopulationJustification[] = [
         justification: [
           "Rôle dans le développement du volume sanguin",
           "Croissance et oxygénation des tissus : constitution de l'hémoglobine et transport de l'oxygène",
-          "Vigilence : en cas de prématurité, une supplémentation peut être envisagée (carence éventuelle)"
+          "Vigilance : en cas de prématurité, une supplémentation peut être envisagée (carence éventuelle)"
         ],
       },
       {
@@ -1021,7 +1021,7 @@ export const JUSTIFICATIONS: PopulationJustification[] = [
           "RNP 1-3 ans : 180 mg/j",
         ],
         justification: [
-          "Veiller à bien coubrir les besoins car le magnésium a un effet myorelaxant : activité physique et développement musculaire",
+          "Veiller à bien couvrir les besoins car le magnésium a un effet myorelaxant : activité physique et développement musculaire",
         ],
       },
       {
