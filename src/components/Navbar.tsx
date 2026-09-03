@@ -104,6 +104,7 @@ const NAV_ITEMS = [
           { emoji: "🔬", label: "Voies métaboliques", sub: "Visualisation des voies à connaître pour le BTS", href: "/metabolisme" },
           { emoji: "📐", label: "Références", sub: "PNNS, GEMRC, ANSES, toutes les sources au même endroit", href: "/references" },
           { emoji: "📖", label: "Glossaire", sub: "Termes & définitions", href: "/glossaire" },
+          { emoji: "📚", label: "Annales BTS", sub: "Sujets d'examen depuis 2000", href: "/annales" },
         ],
       },
     ],

@@ -59,6 +59,7 @@ export default function SiteLayout({
               <li><a href="/metabolisme" className="hover:text-emerald-700 transition-colors">Voies métaboliques</a></li>
               <li><a href="/references" className="hover:text-emerald-700 transition-colors">Références</a></li>
               <li><a href="/glossaire" className="hover:text-emerald-700 transition-colors">Glossaire</a></li>
+              <li><a href="/annales" className="hover:text-emerald-700 transition-colors">Annales BTS</a></li>
             </ul>
           </div>
         </div>
